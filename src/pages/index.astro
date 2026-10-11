@@ -1,0 +1,30 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+---
+
+<!doctype html>
+<html lang="es">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1>cybersecnews</h1>
+			<p>
+				Serie de seguridad informática. Cada entrega analiza un incidente real con fuentes
+				primarias. Cada hecho lleva su fuente. Lo no confirmado se marca como tal.
+			</p>
+			<p>La serie tiene dos secciones:</p>
+			<ul>
+				<li><a href="/posts/">Posts</a>: artículos escritos.</li>
+				<li><a href="/talks/">Charlas</a>: presentaciones interactivas para conferencias.</li>
+			</ul>
+			<p>Primer tema en preparación: el incidente de seguridad OpenAI–Hugging Face.</p>
+		</main>
+		<Footer />
+	</body>
+</html>

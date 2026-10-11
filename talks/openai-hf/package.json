@@ -1,0 +1,16 @@
+{
+  "name": "openai-hf-talk",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "slidev --open",
+    "build": "slidev build --base /talks/openai-hf/",
+    "export": "slidev export --output openai-hf.pdf"
+  },
+  "devDependencies": {
+    "@slidev/cli": "^52.0.0",
+    "@slidev/theme-default": "^0.25.0",
+    "playwright-chromium": "^1.50.0",
+    "vue": "^3.5.0"
+  }
+}

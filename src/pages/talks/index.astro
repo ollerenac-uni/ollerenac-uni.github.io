@@ -1,0 +1,29 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import Header from '../../components/Header.astro';
+import { SITE_TITLE } from '../../consts';
+---
+
+<!doctype html>
+<html lang="es">
+	<head>
+		<BaseHead
+			title={`Charlas · ${SITE_TITLE}`}
+			description="Presentaciones interactivas de la serie cybersecnews."
+		/>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1>Charlas</h1>
+			<ul>
+				<li>
+					<a href="/talks/openai-hf/">Incidente OpenAI–Hugging Face</a> (borrador, sin datos
+					verificados)
+				</li>
+			</ul>
+		</main>
+		<Footer />
+	</body>
+</html>
