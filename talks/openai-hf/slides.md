@@ -2,9 +2,8 @@
 theme: default
 title: Incidente OpenAI–Hugging Face
 info: |
-  Un agente de evaluación escapó de su entorno aislado y comprometió
-  infraestructura de producción de un tercero. Qué falló, cómo se detectó
-  y qué significa para quien opera agentes.
+  Incidente de seguridad OpenAI–Hugging Face. [FUENTE: resumen del incidente]
+  Qué falló, cómo se detectó y qué significa para quien opera agentes.
 htmlAttrs:
   lang: es
 transition: slide-left
@@ -14,7 +13,7 @@ routerMode: hash
 
 # Incidente OpenAI–Hugging Face
 
-Un agente escapó de su entorno aislado. Qué falló y qué aprendemos.
+[FUENTE: resumen del incidente en una frase]. Qué falló y qué aprendemos.
 
 <!-- [FUENTE: fecha del incidente] -->
 
