@@ -1,0 +1,4 @@
+/* El tema pone opacity .5 en `h1 + p`: 3.98:1 sobre blanco. Con .6 son 5.74:1 (WCAG AA pide 4.5:1). */
+.slidev-layout h1 + p {
+  opacity: 0.6;
+}
