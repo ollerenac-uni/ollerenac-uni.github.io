@@ -17,6 +17,8 @@ routerMode: hash
 
 <!-- [FUENTE: fecha del incidente] -->
 
+<img src="/inictel_peru_logo.jpeg" alt="Logo de INICTEL-UNI" class="abs-tr m-6 h-16" />
+
 <div class="abs-br m-6 text-sm opacity-60">
   Oscar Llerena · [FUENTE: nombre y fecha de la conferencia]
 </div>
