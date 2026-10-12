@@ -36,6 +36,16 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 				padding: 1em;
 				color: rgb(var(--gray-dark));
 			}
+			/* El mapa del incidente necesita más ancho que la columna de texto. */
+			.prose :global(figure.mapa) {
+				position: relative;
+				left: 50%;
+				width: min(1060px, calc(100vw - 2rem));
+				margin: 1.5em 0;
+				transform: translateX(-50%);
+				font-size: 16px;
+				line-height: 1.4;
+			}
 			.title {
 				margin-bottom: 1em;
 				padding: 1em 0;
