@@ -41,6 +41,17 @@
 .pantalla .mapa {
 	font-size: 15px;
 }
+/* Destino del salto interno del PDF (EnlaceRespaldo.vue): al borde superior de la diapositiva, no bajo el título. */
+.slidev-layout.pantalla {
+	position: relative;
+}
+.pantalla #respaldo {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 1px;
+	height: 1px;
+}
 
 /* El contenido de las diapositivas sin mapa se centra en vertical. */
 .pantalla .cuerpo {

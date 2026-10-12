@@ -237,7 +237,7 @@ acto: @@ACTO 32@@
 
 <p class="cierre">Alcance claro · autoridad limitada · respuesta comprobable</p>
 <p class="cierre-sub">Preguntas · 10 minutos</p>
-<p><Link to="33">Respaldo para preguntas: inventario de CVE y límites de la evidencia</Link></p>
+<p><EnlaceRespaldo to="33">Respaldo para preguntas: inventario de CVE y límites de la evidencia</EnlaceRespaldo></p>
 
 <Fuentes>@@PIE 32@@</Fuentes>
 

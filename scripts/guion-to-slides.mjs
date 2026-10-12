@@ -90,7 +90,7 @@ const respaldo = {
 	// Tablas con grupos de filas: [filas por página], texto antes (al principio) y después (al final)
 	B01(id) {
 		const { head, rows, prose } = split(backup[id].body);
-		return [0, 5, 10].map((i, k, a) => page(id, ` (${k + 1}/${a.length})`, `${k === 0 ? paras(prose[0]) + '\n\n' : ''}${table(rows.slice(i, i + 5), head)}\n\n${k === a.length - 1 ? paras(prose.slice(1).join('\n\n')) : ''}`));
+		return [0, 5, 10].map((i, k, a) => page(id, ` (${k + 1}/${a.length})`, `${k === 0 ? '<span id="respaldo"></span>\n\n' + paras(prose[0]) + '\n\n' : ''}${table(rows.slice(i, i + 5), head)}\n\n${k === a.length - 1 ? paras(prose.slice(1).join('\n\n')) : ''}`));
 	},
 	B02(id) {
 		const { head, rows } = split(backup[id].body);
