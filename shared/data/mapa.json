@@ -83,6 +83,7 @@
 	"lanes": {
 		"oa": {
 			"label": "Respuesta OpenAI",
+			"org": "OpenAI",
 			"x": 0,
 			"y": 336,
 			"w": 470,
@@ -91,6 +92,7 @@
 		},
 		"hf": {
 			"label": "Respuesta Hugging Face",
+			"org": "HF",
 			"x": 480,
 			"y": 336,
 			"w": 520,
@@ -1093,13 +1095,11 @@
 				],
 				[
 					"N22",
-					"N05",
-					30
+					"N05"
 				],
 				[
 					"N05",
-					"N23",
-					-34
+					"N23"
 				],
 				[
 					"N23",

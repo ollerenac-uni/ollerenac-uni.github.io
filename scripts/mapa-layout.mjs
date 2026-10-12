@@ -20,8 +20,8 @@ export const zoneHeight = (z) => HEAD + z.rows * ROW + (z.extra ?? 0) + 2;
 
 // Carriles de respuesta (abajo). Cada carril es una zona ancha con dos casillas.
 export const lanes = {
-	oa: { label: 'Respuesta OpenAI', x: 0, y: 336, w: 470, h: 56, tone: 'oa' },
-	hf: { label: 'Respuesta Hugging Face', x: 480, y: 336, w: 520, h: 56, tone: 'hf' },
+	oa: { label: 'Respuesta OpenAI', org: 'OpenAI', x: 0, y: 336, w: 470, h: 56, tone: 'oa' },
+	hf: { label: 'Respuesta Hugging Face', org: 'HF', x: 480, y: 336, w: 520, h: 56, tone: 'hf' },
 };
 
 // zone, col, row, span (casillas de alto, 1 por defecto); short = rótulo en el mapa (el texto completo queda en mapa.md); icon = nombre en el set Carbon
@@ -90,7 +90,7 @@ export const tipos = {
 	X: { nombre: 'INTENTO / RESULTADO NO CONFIRMADO' },
 };
 
-// type; segs = pares [origen, destino, curvatura?] (la curvatura, en px, rodea nodos que quedan en medio) (solo se dibuja un par si sus dos extremos están activos en la escena);
+// type; segs = pares [origen, destino] (solo se dibuja un par si sus dos extremos están activos en la escena; el trazado rodea los demás nodos activos);
 // both = flechas en los dos extremos; blocked = termina en un muro; label = rótulo corto; lo = desplazamiento del rótulo.
 export const links = {
 	L01: { type: 'E', segs: [['N01', 'N03'], ['N02', 'N03']], label: 'corren en' },
@@ -118,7 +118,7 @@ export const links = {
 	L23: { type: 'I', segs: [['N19.host', 'N16.priv'], ['N16.priv', 'N16.pub'], ['N16.pub', 'N25'], ['N16.pub', 'N03']], label: 'datos privados publicados cifrados' },
 	L24: { type: 'A', segs: [['N32', 'N25'], ['N25', 'N20']], label: 'VPN y repos privados' },
 	L25: { type: 'A', segs: [['N20', 'N21']], label: 'PR en borrador' },
-	L26: { type: 'A', segs: [['N29', 'N22'], ['N22', 'N05', 30], ['N05', 'N23', -34], ['N23', 'N12']], label: 'RubyGems: firma y token' },
+	L26: { type: 'A', segs: [['N29', 'N22'], ['N22', 'N05'], ['N05', 'N23'], ['N23', 'N12']], label: 'RubyGems: firma y token' },
 	L27: { type: 'A', segs: [['N29', 'N33']], label: 'imagen externa en caché' },
 	L28: { type: 'X', segs: [['N33', 'N34']], label: 'ejecución posterior NO CONFIRMADA' },
 	L29: { type: 'A', segs: [['N05', 'N35']], label: 'kernel, 19 de julio' },

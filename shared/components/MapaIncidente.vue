@@ -7,6 +7,7 @@ import { computed, ref, useId } from 'vue'
 import mapa from '../data/mapa.json'
 import icons from '../data/icons.json'
 import Icono from './Icono.vue'
+import { around, rounded } from './ruta.js'
 
 const props = defineProps({
 	scene: String,
@@ -39,11 +40,36 @@ function edge(n, [tx, ty], gap = 3) {
 	return [cx + dx * k, cy + dy * k]
 }
 
+// Un tramo va de su origen a su destino por el camino más corto que rodea los demás nodos activos (las líneas van por debajo de los nodos).
+function shape(s) {
+	const A = N[s.a]
+	const B = N[s.b]
+	const [ax, ay] = center(A)
+	const [bx, by] = center(B)
+	const path = around([ax, ay], [bx, by], [...active.value].filter((id) => id !== s.a && id !== s.b).map((id) => N[id]))
+	// Tramos paralelos entre los mismos nodos: se separan unos píxeles, en perpendicular a la cuerda.
+	const len0 = Math.hypot(bx - ax, by - ay) || 1
+	const shift = ([x, y]) => [x - ((by - ay) / len0) * s.off, y + ((bx - ax) / len0) * s.off]
+	const pts = [shift(edge(A, path[1])), ...path.slice(1, -1).map(shift), shift(edge(B, path.at(-2)))]
+	return { ...s, pts, d: rounded(pts), len: pts.reduce((n, p, i) => n + (i ? Math.hypot(p[0] - pts[i - 1][0], p[1] - pts[i - 1][1]) : 0), 0) || 1 }
+}
+// Punto y dirección a la fracción t del recorrido de un tramo.
+function along(s, t) {
+	let d = t * s.len
+	for (let i = 1; i < s.pts.length; i++) {
+		const [x0, y0] = s.pts[i - 1]
+		const [x1, y1] = s.pts[i]
+		const l = Math.hypot(x1 - x0, y1 - y0) || 1
+		if (d <= l || i === s.pts.length - 1) return { x: x0 + ((x1 - x0) * d) / l, y: y0 + ((y1 - y0) * d) / l, ux: (x1 - x0) / l, uy: (y1 - y0) / l }
+		d -= l
+	}
+}
+
 const segs = computed(() => {
 	const all = []
 	for (const lid of cur.value.enlaces) {
 		const l = mapa.links[lid]
-		l.segs.forEach(([a, b, bend = 0]) => active.value.has(a) && active.value.has(b) && all.push({ l, a, b, bend }))
+		l.segs.forEach(([a, b]) => active.value.has(a) && active.value.has(b) && all.push({ l, a, b }))
 	}
 	// Tramos paralelos entre los mismos nodos: se separan unos píxeles.
 	const groups = new Map()
@@ -52,25 +78,7 @@ const segs = computed(() => {
 		groups.set(k, [...(groups.get(k) ?? []), s])
 	}
 	for (const g of groups.values()) g.forEach((s, i) => (s.off = (i - (g.length - 1) / 2) * 8))
-	return all.map((s) => {
-		const A = N[s.a]
-		const B = N[s.b]
-		const ca = center(A)
-		const cb = center(B)
-		const len0 = Math.hypot(cb[0] - ca[0], cb[1] - ca[1]) || 1
-		// Control de la curva: a mitad de camino, desplazado en perpendicular.
-		const c = [(ca[0] + cb[0]) / 2 - ((cb[1] - ca[1]) / len0) * s.bend, (ca[1] + cb[1]) / 2 + ((cb[0] - ca[0]) / len0) * s.bend]
-		let p = edge(A, s.bend ? c : cb)
-		let q = edge(B, s.bend ? c : ca)
-		const len = Math.hypot(q[0] - p[0], q[1] - p[1]) || 1
-		const nx = (-(q[1] - p[1]) / len) * s.off
-		const ny = ((q[0] - p[0]) / len) * s.off
-		p = [p[0] + nx, p[1] + ny]
-		q = [q[0] + nx, q[1] + ny]
-		const mid = s.bend ? [0.25 * p[0] + 0.5 * c[0] + 0.25 * q[0], 0.25 * p[1] + 0.5 * c[1] + 0.25 * q[1]] : null
-		const d = s.bend ? `M${p[0]} ${p[1]} Q${c[0]} ${c[1]} ${q[0]} ${q[1]}` : null
-		return { ...s, p, q, c, len, d, mid }
-	})
+	return all.map(shape)
 })
 
 // Una insignia numerada por conexión, sobre el tramo más largo. Busca un punto que no tape el texto de un nodo activo.
@@ -88,17 +96,10 @@ const badges = computed(() => {
 	const placed = []
 	return cur.value.enlaces.filter((id) => best.has(id)).map((id, i) => {
 		const s = best.get(id)
-		const at = (t) => {
-			if (!s.bend) return [s.p[0] + (s.q[0] - s.p[0]) * t, s.p[1] + (s.q[1] - s.p[1]) * t]
-			const u = 1 - t
-			return [u * u * s.p[0] + 2 * u * t * s.c[0] + t * t * s.q[0], u * u * s.p[1] + 2 * u * t * s.c[1] + t * t * s.q[1]]
-		}
-		const ux = (s.q[0] - s.p[0]) / s.len
-		const uy = (s.q[1] - s.p[1]) / s.len
 		let spot = null
 		search: for (const off of [0, 13, -13, 24, -24, 36, -36]) {
 			for (const t of ts) {
-				const [bx, by] = at(t)
+				const { x: bx, y: by, ux, uy } = along(s, t)
 				const x = bx - uy * off
 				const y = by + ux * off
 				if (!hits(x, y) && placed.every(([px, py]) => Math.hypot(px - x, py - y) > 17)) {
@@ -107,12 +108,32 @@ const badges = computed(() => {
 				}
 			}
 		}
-		spot ??= at(0.5)
+		const mid = along(s, 0.5)
+		spot ??= [mid.x, mid.y]
 		placed.push(spot)
 		return { id, n: i + 1, x: spot[0], y: spot[1], l: s.l }
 	})
 })
-const key = computed(() => badges.value.map((b) => ({ ...b, tipo: b.l.blocked ? 'BLOQUEADA' : mapa.tipos[b.l.type].nombre, cls: b.l.blocked ? 'B' : b.l.type })))
+// Tramos consecutivos (el destino de uno es el origen del siguiente) se leen como una cadena: A → B → C.
+function chain(pairs) {
+	const out = []
+	for (const [a, b] of pairs) {
+		const last = out.at(-1)
+		if (last && last.at(-1) === a) last.push(b)
+		else out.push([a, b])
+	}
+	return out
+}
+// Nombre corto de un extremo. Los dos carriles de respuesta se llaman igual: se distinguen por organización.
+const nameOf = (id) => (N[id].lane ? `${N[id].short} de ${mapa.lanes[N[id].lane].org}` : N[id].short)
+const key = computed(() =>
+	badges.value.map((b) => ({
+		...b,
+		tipo: b.l.blocked ? 'BLOQUEADA' : mapa.tipos[b.l.type].nombre,
+		cls: b.l.blocked ? 'B' : b.l.type,
+		rutas: chain(segs.value.filter((s) => s.l.id === b.id).map((s) => [s.a, s.b])),
+	})),
+)
 
 // Insignia «?» (N28): sobre un nodo o sobre el centro de una conexión.
 const signo = computed(() => {
@@ -146,15 +167,20 @@ const zoneLabel = (z) => wrap(z.label, Math.floor((z.w - 12) / 5.3))
 const zoneList = computed(() => Object.entries(mapa.zones).map(([k, z]) => ({ k, ...z, lines: zoneLabel(z) })))
 const laneList = computed(() => Object.entries(mapa.lanes).map(([k, z]) => ({ k, ...z })))
 const types = Object.keys(mapa.tipos)
-const typeName = { ...Object.fromEntries(Object.entries(mapa.tipos).map(([k, t]) => [k, t.nombre])), B: 'BLOQUEADA' }
-const used = computed(() => [...new Set(key.value.map((k) => k.cls))])
 
 // --- Descripción para lector de pantalla ---
+// Cada nodo con su organización o zona; cada conexión con origen, destino, tipo y restricción. Cambia con la escena.
+const place = (id) => (N[id].lane ? mapa.lanes[N[id].lane] : mapa.zones[N[id].zone]).label
+const full = (id) => `${N[id].label}${id.includes('.') && !N[id].lane ? ` · ${N[id].short}` : ''} (${place(id)})`
+const spoken = (path, l, f) => (l.both ? `entre ${path.map(f).join(' y ')}, en los dos sentidos` : `de ${path.map(f).join(' a ')}`)
 const alt = computed(() => {
-	const names = [...active.value].map((id) => N[id].label + (id.includes('.') ? ` (${N[id].short})` : ''))
-	const conns = key.value.map((k) => `${k.l.label} (${k.tipo.toLowerCase()})`)
-	return `${cur.value.titulo}. ${cur.value.fecha}. Nodos activos: ${names.join(', ') || 'ninguno'}. Conexiones: ${conns.join('; ') || 'ninguna'}.`
+	const nodes = [...active.value].map(full)
+	const conns = key.value.map((k) => `Conexión ${k.n}, ${k.l.label}, ${k.tipo.toLowerCase()}: ${k.rutas.map((r) => spoken(r, k.l, full)).join('; ')}`)
+	const unsure = cur.value.signo ? ` Marca de interrogación: sin confirmar, sobre ${cur.value.signo.startsWith('L') ? `la conexión ${key.value.find((k) => k.id === cur.value.signo)?.n}` : full(cur.value.signo)}.` : ''
+	return `${cur.value.titulo}. ${cur.value.fecha}. Nodos activos: ${nodes.join('; ') || 'ninguno'}. Conexiones: ${conns.join('. ') || 'ninguna'}.${unsure}`
 })
+// Texto de la clave: con mucho texto, la clave gana ancho (columnas) y el mapa se reduce un poco (compacto).
+const chars = computed(() => key.value.reduce((n, k) => n + k.l.label.length + k.tipo.length + k.rutas.flat().reduce((m, r) => m + nameOf(r).length + 4, 0), 0))
 const fronteras = computed(() => cur.value.frontera.map((f) => [f, mapa.fronteras[f].label]))
 
 function go(d) {
@@ -168,19 +194,28 @@ function onKey(ev) {
 	idx.value = Math.min(props.scenes.length - 1, Math.max(0, to))
 }
 const iconBody = (n) => icons.icons[n]
+// Barra transversal al final de una conexión bloqueada, perpendicular a la dirección de llegada.
+function stop(s) {
+	const [rx, ry] = s.pts.at(-2)
+	const [qx, qy] = s.pts.at(-1)
+	const len = Math.hypot(qx - rx, qy - ry) || 1
+	const nx = ((ry - qy) / len) * 7
+	const ny = ((qx - rx) / len) * 7
+	return { x1: qx + nx, y1: qy + ny, x2: qx - nx, y2: qy - ny }
+}
 </script>
 
 <template>
-	<figure class="mapa" :class="{ mini, compacto: cur.compacto }" @keydown="onKey">
+	<figure class="mapa" :class="{ mini, compacto: cur.compacto || chars > 700, larga: chars > 350 }" :data-escena="cur.id" @keydown="onKey">
 		<div v-if="seq" class="ctrl">
-			<button type="button" :disabled="idx === 0" @click="go(-1)">← Anterior</button>
+			<button type="button" :aria-disabled="idx === 0" @click="go(-1)">← Anterior</button>
 			<p aria-live="polite">
 				<strong>Escena {{ idx + 1 }} de {{ scenes.length }}</strong> · {{ cur.fecha }} · {{ cur.titulo }}
 			</p>
-			<button type="button" :disabled="idx === scenes.length - 1" @click="go(1)">Siguiente →</button>
+			<button type="button" :aria-disabled="idx === scenes.length - 1" @click="go(1)">Siguiente →</button>
 		</div>
 
-		<svg class="plano" :viewBox="`0 0 ${W} ${H}`" role="img" :aria-labelledby="`${uid}-t ${uid}-d`" preserveAspectRatio="xMidYMid meet">
+		<svg class="plano" :viewBox="`0 0 ${W} ${H}`" role="img" :aria-labelledby="`${uid}-t`" :aria-describedby="`${uid}-d`" preserveAspectRatio="xMidYMid meet">
 			<title :id="`${uid}-t`">Mapa del incidente · {{ cur.titulo }}</title>
 			<desc :id="`${uid}-d`">{{ alt }}</desc>
 			<defs>
@@ -201,17 +236,16 @@ const iconBody = (n) => icons.icons[n]
 				</g>
 			</template>
 
-			<!-- Conexiones (debajo de los nodos) -->
+			<!-- Conexiones (debajo de los nodos; sus trazados rodean los nodos activos) -->
 			<g class="conexiones">
 				<template v-for="(s, i) in segs" :key="`${s.l.id}-${i}`">
-					<path v-if="s.d" :d="s.d" :class="`ln ln-${s.l.type}`" :marker-end="`url(#${uid}-m-${s.l.type})`" />
-					<line v-else :x1="s.p[0]" :y1="s.p[1]" :x2="s.q[0]" :y2="s.q[1]" :class="`ln ln-${s.l.blocked ? 'B' : s.l.type}`" :marker-end="s.l.blocked ? undefined : `url(#${uid}-m-${s.l.type})`" :marker-start="s.l.both ? `url(#${uid}-m-${s.l.type})` : undefined" />
-					<line v-if="s.l.blocked" :x1="s.q[0] + ((s.p[1] - s.q[1]) / s.len) * 7" :y1="s.q[1] + ((s.q[0] - s.p[0]) / s.len) * 7" :x2="s.q[0] - ((s.p[1] - s.q[1]) / s.len) * 7" :y2="s.q[1] - ((s.q[0] - s.p[0]) / s.len) * 7" class="ln ln-B" />
+					<path :d="s.d" :data-a="s.a" :data-b="s.b" :class="`ln ln-${s.l.blocked ? 'B' : s.l.type}`" :marker-end="s.l.blocked ? undefined : `url(#${uid}-m-${s.l.type})`" :marker-start="s.l.both ? `url(#${uid}-m-${s.l.type})` : undefined" />
+					<line v-if="s.l.blocked" v-bind="stop(s)" class="ln ln-B" />
 				</template>
 			</g>
 
 			<!-- Nodos -->
-			<g v-for="n in nodeList" :key="n.id" :class="['nodo', n.on ? 'on' : 'off', n.zone ? `t-${mapa.zones[n.zone].tone}` : `t-${mapa.lanes[n.lane].tone}`]" :transform="`translate(${n.x} ${n.y})`">
+			<g v-for="n in nodeList" :key="n.id" :data-id="n.id" :class="['nodo', n.on ? 'on' : 'off', n.zone ? `t-${mapa.zones[n.zone].tone}` : `t-${mapa.lanes[n.lane].tone}`]" :transform="`translate(${n.x} ${n.y})`">
 				<rect v-if="n.dos && n.on" :x="5" :y="-5" :width="n.w" :height="n.h" rx="6" class="caja caja2" />
 				<rect :width="n.w" :height="n.h" rx="6" class="caja" />
 				<template v-if="n.icons.length === 2">
@@ -268,19 +302,23 @@ const iconBody = (n) => icons.icons[n]
 				</p>
 			</div>
 			<div v-if="key.length" class="der">
-				<ul class="tipos" aria-label="Tipos de conexión">
-					<li v-for="t in used" :key="t">
-						<svg class="muestra" viewBox="0 0 30 8" aria-hidden="true">
-							<line x1="1" y1="4" :x2="t === 'B' ? 25 : 28" y2="4" :class="`ln ln-${t}`" :marker-end="t === 'B' ? undefined : `url(#${uid}-m-${t})`" />
-							<line v-if="t === 'B'" x1="26" y1="0" x2="26" y2="8" class="ln ln-B" />
-						</svg>
-						<strong>{{ typeName[t] }}</strong>
-					</li>
-				</ul>
 				<ol class="clave" :class="{ dos: key.length > 3 }" aria-label="Conexiones de esta escena">
 					<li v-for="k in key" :key="k.id">
-						<span :class="`cn-t cn-${k.cls}`">{{ k.n }}</span>
-						<span>{{ k.l.label }}</span>
+						<span :class="`cn-t cn-${k.cls}`" aria-hidden="true">{{ k.n }}</span>
+						<span class="kt">
+							<span class="kl"><span class="sr">Conexión {{ k.n }}. </span>{{ k.l.label }}:</span>{{ ' ' }}<span class="kr">
+								<template v-for="(r, i) in k.rutas" :key="i">
+									<span aria-hidden="true">{{ r.map(nameOf).join(k.l.both ? ' ↔ ' : ' → ') }}{{ i < k.rutas.length - 1 ? '; ' : '' }}</span>
+									<span class="sr">{{ spoken(r, k.l, nameOf) }}. </span>
+								</template>
+							</span>{{ ' ' }}<span class="kk">
+								<svg class="muestra" viewBox="0 0 30 8" aria-hidden="true">
+									<line x1="1" y1="4" :x2="k.cls === 'B' ? 25 : 28" y2="4" :class="`ln ln-${k.cls}`" :marker-end="k.cls === 'B' ? undefined : `url(#${uid}-m-${k.cls})`" />
+									<line v-if="k.cls === 'B'" x1="26" y1="0" x2="26" y2="8" class="ln ln-B" />
+								</svg>
+								{{ k.tipo }}
+							</span>
+						</span>
 					</li>
 				</ol>
 			</div>
@@ -301,6 +339,7 @@ const iconBody = (n) => icons.icons[n]
 
 <style scoped>
 .mapa {
+	position: relative;
 	margin: 0;
 	color: #111827;
 	font-family: inherit;
@@ -333,7 +372,7 @@ svg.plano {
 	font-weight: 700;
 	cursor: pointer;
 }
-.ctrl button:disabled {
+.ctrl button[aria-disabled='true'] {
 	border-color: #6b7280;
 	color: #4b5563;
 	cursor: default;
@@ -392,17 +431,19 @@ svg.plano {
 .chips, .leyenda-cve, .fichas, .clave { padding: 0; list-style: none; }
 .chips { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.3rem !important; }
 .chips li { margin: 0; line-height: 1.3; padding: 0.1rem 0.7rem; border: 2px solid #111827; border-radius: 999px; font-weight: 700; font-size: 0.9em; }
-.der { min-width: 0; font-size: 0.78em; line-height: 1.3; color: #1f2937; }
-.tipos { display: flex; flex-wrap: wrap; gap: 0.1rem 1rem; padding: 0; list-style: none; margin: 0 0 0.3rem; }
-.tipos li { display: flex; align-items: center; gap: 0.4rem; margin: 0; line-height: 1.25; }
+.der { min-width: 0; font-size: 0.7em; line-height: 1.3; color: #1f2937; }
 .clave { margin: 0; padding: 0; list-style: none; }
-.clave.dos { display: grid; grid-template-columns: 1fr 1fr; gap: 0.2rem 1rem; }
-.clave li { display: flex; align-items: center; gap: 0.4rem; margin: 0; line-height: 1.25; }
+.clave.dos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.25rem 0.8rem; }
+.clave li { display: flex; align-items: flex-start; gap: 0.4rem; margin: 0; line-height: 1.25; }
+.kt { min-width: 0; }
+.kl { font-weight: 700; }
+.kk { font-size: 0.85em; font-weight: 700; color: #374151; white-space: nowrap; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .cn-t { display: inline-flex; align-items: center; justify-content: center; flex: none; box-sizing: border-box; width: 1.5em; height: 1.5em; border: 2px solid #111827; border-radius: 50%; background: #fff; font-weight: 800; font-size: 0.95em; line-height: 1; }
 .cn-t.cn-B { border-color: #b91c1c; }
 .cn-t.cn-I { border-color: #0f766e; }
 .cn-t.cn-X { border-color: #9a3412; }
-.muestra { flex: none; width: 2.2em; height: 0.7em; overflow: visible; }
+.muestra { display: inline-block; vertical-align: middle; width: 2.2em; height: 0.7em; overflow: visible; }
 .leyenda-cve { display: grid; gap: 0.3rem; margin-top: 0.3rem !important; }
 .leyenda-cve li { margin: 0; padding: 0.3rem 0.8rem; border: 2px solid #111827; border-radius: 0.4rem; line-height: 1.3; }
 .fichas { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0.45rem; margin-top: 0.3rem !important; }
@@ -411,7 +452,8 @@ svg.plano {
 .fronteras { display: flex; flex-direction: column; margin-top: 0.15rem !important; font-size: 0.74em; line-height: 1.25; color: #374151; }
 
 @media (min-width: 761px) {
-	.compacto svg.plano { width: 88%; margin: 0 auto; }
+	.compacto svg.plano { width: 84%; margin: 0 auto; }
+	.larga .meta { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.3fr); }
 }
 @media (max-width: 760px) {
 	.mapa:not(.mini) svg.plano { min-width: 700px; }
