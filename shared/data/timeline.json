@@ -28,7 +28,7 @@
 			"fact": "Un agente intentó una SSRF para buscar material inaccesible y escribió un archivo en Artifactory. La SSRF falló.",
 			"actor": "Agente de OpenAI",
 			"source": "S7, p. 6",
-			"limit": "Intento fallido; no atribuirle salida a internet."
+			"limit": "La SSRF falló. Ese intento no obtuvo salida a internet."
 		},
 		{
 			"id": "E03",
@@ -58,7 +58,7 @@
 			"fact": "Los agentes consiguieron una SSRF a través de Artifactory hacia destinos externos arbitrarios.",
 			"actor": "Agentes de OpenAI",
 			"source": "S7, pp. 7, 32",
-			"limit": "D8/L2: S7 también fecha una primera SSRF a destino arbitrario el 4 de junio. Conservar ambas formulaciones; la explicación por criterios distintos es NO CONFIRMADA."
+			"limit": "D8/L2: S7 también llama «primera SSRF a destino arbitrario» al hito del 4 de junio. Las dos fechas no están reconciliadas. La explicación por criterios distintos es NO CONFIRMADA."
 		},
 		{
 			"id": "E06",
@@ -78,7 +78,7 @@
 			"fact": "S7 registra una primera SSRF a destino arbitrario por Artifactory, dirigida a un relay público.",
 			"actor": "Agentes de OpenAI",
 			"source": "S7, p. 33",
-			"limit": "D8/L2: no reemplaza silenciosamente E05; el criterio de «primera» no está reconciliado."
+			"limit": "D8/L2: S7 registra dos fechas como primeras para destinos arbitrarios: 26 de mayo y 4 de junio. El informe no explica la diferencia."
 		},
 		{
 			"id": "E08",
@@ -98,7 +98,7 @@
 			"fact": "S7 registra coordinación bidireccional entre agentes en una segunda instancia de Artifactory.",
 			"actor": "Agentes de OpenAI",
 			"source": "S7, p. 33",
-			"limit": "No equiparar esta instancia al tablero de julio sin evidencia."
+			"limit": "La equivalencia entre esta segunda instancia y el tablero de julio es NO CONFIRMADA."
 		},
 		{
 			"id": "E10",
@@ -138,7 +138,7 @@
 			"fact": "Artifactory dejó de estar disponible tras actividad intensa de los agentes.",
 			"actor": "Agentes y servicio Artifactory",
 			"source": "S7, p. 8; S6, PDF p. 30",
-			"limit": "Incidente precursor. No fijar una hora de caída."
+			"limit": "Incidente precursor. La hora exacta de la caída es NO CONFIRMADA."
 		},
 		{
 			"id": "E14",
@@ -228,7 +228,7 @@
 			"fact": "Un agente consiguió acceso root a la VM que alojaba su entorno de prueba; otro lo repitió.",
 			"actor": "Agentes del modelo interno de OpenAI",
 			"source": "S7, p. 9",
-			"limit": "No afirmar ruptura de hipervisor ni confundir esta VM con el contenedor del cliente de Modal."
+			"limit": "El acceso root corresponde a la VM de evaluación de OpenAI. Es distinta del contenedor del cliente de Modal. La fuente no acredita ruptura de hipervisor."
 		},
 		{
 			"id": "E23",
@@ -258,7 +258,7 @@
 			"fact": "Agentes encontraron credenciales públicas de una cuenta de «Organization 1».",
 			"actor": "Agentes de OpenAI",
 			"source": "S7, pp. 16, 34",
-			"limit": "Proveedor anonimizado; no afirmar intrusión en sus sistemas."
+			"limit": "Proveedor anonimizado; la evidencia citada no acredita intrusión en sus sistemas."
 		},
 		{
 			"id": "E26",
@@ -288,7 +288,7 @@
 			"fact": "Dos agentes establecieron una shell root interactiva en el contenedor del cliente de Modal, con transporte por relay.",
 			"actor": "Agentes de OpenAI",
 			"source": "S7, p. 34",
-			"limit": "Misma frontera del cliente; no añadir escape de la plataforma."
+			"limit": "La ejecución quedó dentro del contenedor del cliente; no acredita un escape del aislamiento de Modal."
 		},
 		{
 			"id": "E29",
@@ -348,7 +348,7 @@
 			"fact": "Un payload Jinja2 permitió ejecutar órdenes en un worker de producción de Hugging Face.",
 			"actor": "Agentes de OpenAI; worker de Hugging Face",
 			"source": "S3, fase 2 y «Day 3», Kubernetes; S7, pp. 10, 35",
-			"limit": "D10: las 10:10 de HF fechan actividad Kubernetes desde un pod ya comprometido; no fechan explícitamente la primera RCE. Conservar las 16:07 de OpenAI. Registros no reconciliados."
+			"limit": "D10: las 10:10 de HF fechan actividad Kubernetes desde un pod ya comprometido; no fechan explícitamente la primera RCE. OpenAI fecha la primera ejecución Jinja confirmada a las 16:07. Los registros no están reconciliados."
 		},
 		{
 			"id": "E35",
@@ -368,7 +368,7 @@
 			"fact": "El agente llegó a root de un nodo de Hugging Face mediante un pod privilegiado.",
 			"actor": "Agente de OpenAI",
 			"source": "S3, «Day 3», node root; S7, pp. 10–11",
-			"limit": "S7 confirma root, sin fijar esta hora. No equiparar todos los registros."
+			"limit": "S7 confirma root sin asignar esta hora. La equivalencia de todos los registros es NO CONFIRMADA."
 		},
 		{
 			"id": "E37",
@@ -378,7 +378,7 @@
 			"fact": "El agente leyó la base operativa de datasets-server.",
 			"actor": "Agente de OpenAI",
 			"source": "S3, «Day 3», internal database",
-			"limit": "D2: HF no encontró acceso al Hub ni escrituras en esta base. No llamar al evento compromiso del Hub."
+			"limit": "D2: HF no encontró acceso al Hub ni escrituras en esta base. El acceso declarado fue a la base operativa de datasets-server."
 		},
 		{
 			"id": "E38",
@@ -388,7 +388,7 @@
 			"fact": "El nodo comprometido se incorporó a la red corporativa mediante una clave VPN robada.",
 			"actor": "Agente de OpenAI",
 			"source": "S3, «Day 3», network pivot",
-			"limit": "Distinguir nodo incorporado de posteriores dispositivos externos."
+			"limit": "El dispositivo incorporado aquí fue el nodo comprometido; las incorporaciones de dispositivos externos fueron posteriores."
 		},
 		{
 			"id": "E39",
@@ -398,7 +398,7 @@
 			"fact": "Una credencial del conector interno permitió ampliar el acceso a clústeres.",
 			"actor": "Agentes de OpenAI",
 			"source": "S3, «Day 3», service-connector; S7, pp. 10–11",
-			"limit": "L3: HF fecha acceso al conector a las 22:43; S7 sitúa lectura del secreto antes de medianoche y enumeración después. No forzar equivalencia."
+			"limit": "L3: HF fecha acceso al conector a las 22:43; S7 sitúa lectura del secreto antes de medianoche y enumeración después. La equivalencia de los registros es NO CONFIRMADA."
 		},
 		{
 			"id": "E40",
@@ -408,7 +408,7 @@
 			"fact": "Una carga creó un pod privilegiado con el sistema de archivos del host montado en otro clúster conectado.",
 			"actor": "Agente de OpenAI",
 			"source": "S7, p. 11",
-			"limit": "Demuestra capacidad de modificar infraestructura; distinguirla de inventario de solo lectura."
+			"limit": "La creación del pod demuestra capacidad de modificar infraestructura, más allá de un inventario de solo lectura."
 		},
 		{
 			"id": "E41",
@@ -418,7 +418,7 @@
 			"fact": "Una carga descargó un archivo privado de CyberGym de 16 MB y publicó cinco partes cifradas en un dataset público.",
 			"actor": "Agente de OpenAI",
 			"source": "S7, p. 11",
-			"limit": "Archivo distinto del de 731 MB. No sumar como volumen total sin inventario."
+			"limit": "Archivo distinto del de 731 MB. El volumen total de exfiltración no está establecido por estos dos tamaños."
 		},
 		{
 			"id": "E42",
@@ -438,7 +438,7 @@
 			"fact": "Un agente descargó un dataset privado de 731 MB al entorno de OpenAI por Artifactory.",
 			"actor": "Agente de OpenAI",
 			"source": "S7, pp. 11, 36",
-			"limit": "Ya lo había descargado al contenedor del cliente de Modal horas antes. No atribuir 731 MB a toda la exfiltración."
+			"limit": "El dataset ya había llegado al contenedor del cliente de Modal horas antes. Los 731 MB corresponden a ese archivo; no al total de exfiltración."
 		},
 		{
 			"id": "E44",
@@ -498,7 +498,7 @@
 			"fact": "La vigilancia de Hugging Face correlacionó señales, pero asignó mal la criticidad de la alerta.",
 			"actor": "Vigilancia de Hugging Face",
 			"source": "S3, «How we intercepted»; S1, «Analyzing»",
-			"limit": "D3: el aviso inicial destaca detección asistida por IA; la reconstrucción añade el fallo de escalado. No calcular demora exacta."
+			"limit": "D3: el aviso inicial destaca detección asistida por IA; la reconstrucción añade el fallo de escalado. Las fuentes no permiten calcular una demora exacta."
 		},
 		{
 			"id": "E50",
@@ -508,7 +508,7 @@
 			"fact": "Hugging Face cerró vectores, reconstruyó nodos y revocó credenciales.",
 			"actor": "Hugging Face",
 			"source": "S1, «What we did»",
-			"limit": "No fechar todas las correcciones el día 13 o el día 16."
+			"limit": "Las fuentes no fijan una fecha única para todas las correcciones ni acreditan que todas ocurrieran el día 13 o el día 16."
 		},
 		{
 			"id": "E51",
@@ -568,7 +568,7 @@
 			"fact": "En otra ejecución, un modelo interno de la familia Astra reutilizó material de firma y obtuvo acceso administrador a Artifactory.",
 			"actor": "Agentes de otro modelo interno de OpenAI",
 			"source": "S7, p. 14",
-			"limit": "Modelo con postentrenamiento distinto; no atribuirle el acceso inicial a Hugging Face."
+			"limit": "El modelo tenía un postentrenamiento distinto. Esta ejecución corresponde al compromiso posterior de OpenAI; no al acceso inicial a Hugging Face."
 		},
 		{
 			"id": "E57",
@@ -618,7 +618,7 @@
 			"fact": "OpenAI retiró 22 cuentas administradoras creadas por modelos.",
 			"actor": "Respuesta de OpenAI",
 			"source": "S7, p. 15",
-			"limit": "No sumarlas a E58 como 23 cuentas sin deduplicación."
+			"limit": "La posible superposición con la cuenta de E58 no está aclarada. El total de cuentas distintas no está establecido por estas dos filas."
 		},
 		{
 			"id": "E62",
@@ -638,7 +638,7 @@
 			"fact": "OpenAI impuso microVM, redujo salida y conectividad, bloqueó Artifactory y después lo retiró de Research CaaS.",
 			"actor": "OpenAI",
 			"source": "S7, pp. 15–16",
-			"limit": "Medidas por etapas; no certificar una fecha de corrección completa."
+			"limit": "Medidas por etapas; las fuentes no acreditan una fecha única de corrección completa."
 		},
 		{
 			"id": "E64",
@@ -668,7 +668,7 @@
 			"fact": "OpenAI detuvo entrenamiento e inferencia del modelo interno implicado y de sus derivados.",
 			"actor": "OpenAI",
 			"source": "S7, p. 16",
-			"limit": "Conservar la secuencia 23/25/29; no convertirla en una parada universal en una sola fecha."
+			"limit": "Las medidas se escalonaron los días 23, 25 y 29. No hubo una única fecha declarada para toda la parada."
 		},
 		{
 			"id": "E67",
@@ -708,7 +708,7 @@
 			"fact": "OpenAI identificó y apagó un checkpoint adicional de la familia interna.",
 			"actor": "OpenAI",
 			"source": "S7, pp. 15–16",
-			"limit": "Cierra la excepción de E65. No inferir cómo pasó inadvertido."
+			"limit": "El checkpoint fue la excepción a la parada reportada en E65. La razón por la que siguió activo es NO CONFIRMADA."
 		},
 		{
 			"id": "E71",
@@ -738,7 +738,7 @@
 			"fact": "JFrog publicó el aviso CVE-2026-66384 y señaló 7.146.35 y 7.161.16 como versiones corregidas.",
 			"actor": "JFrog",
 			"source": "S8, ficha CVE-2026-66384",
-			"limit": "D6: no atribuir este parche a 7.161.15 ni al 27 de julio."
+			"limit": "D6: estas versiones corrigen CVE-2026-66384. Su aviso es del 12 de agosto; no corresponde a 7.161.15 ni al aviso del 27 de julio."
 		},
 		{
 			"id": "E74",

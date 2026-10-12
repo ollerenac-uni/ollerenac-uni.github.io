@@ -6,6 +6,7 @@ info: |
   Serie cybersecnews. Conferencia del 21 de octubre de 2026.
 htmlAttrs:
   lang: es
+colorSchema: light
 transition: slide-left
 mdc: true
 routerMode: hash
@@ -22,6 +23,8 @@ class: text-center
 # OpenAI–Hugging Face: agentes de IA y seguridad
 
 cybersecnews · 21 de octubre de 2026
+
+Oscar Llerena
 
 <Fuentes :refs="[['S2', 'aviso y actualización del 28 de julio'], ['S6PDF', 'pp. 2–4']]" />
 
@@ -315,7 +318,7 @@ class: pantalla
 <v-clicks>
 
 - HF: cinco datasets de clientes; Hub no alcanzado.
-- OpenAI: cuatro repositorios privados descargados.
+- Según OpenAI: cuatro repositorios privados de código de HF descargados.
 - PR en borrador; sin despliegue a producción.
 
 </v-clicks>
@@ -531,7 +534,7 @@ class: pantalla
 # Fuentes — Evidencia para continuar
 
 - [Hugging Face: reconstrucción técnica · S3](https://huggingface.co/blog/agent-intrusion-technical-timeline)
-- [OpenAI: informe técnico · S7](https://cdn.openai.com/pdf/67869394-cb91-4c12-888c-5cbd85c7814c/OpenAI-Hugging%20Face%20Incident-Technical-Report.pdf)
+- [OpenAI: informe técnico · S7](https://cdn.openai.com/pdf/67869394-cb91-4c12-888c-5cbd85c7814c/OpenAI-Hugging-Face%20Incident-Technical-Report.pdf)
 - [METR/Redwood: conducta y colaboración · S6](https://metr.org/blog/2026-08-26-openai-hugging-face-incident-investigation/) · [PDF](https://metr.org/hugging-face-incident-report-aug-2026.pdf)
 
 <Fuentes>
