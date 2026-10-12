@@ -9,6 +9,10 @@ htmlAttrs:
 transition: slide-left
 mdc: true
 routerMode: hash
+lang: es
+favicon: favicon.svg
+fonts:
+  provider: none
 ---
 
 # Incidente OpenAI–Hugging Face
