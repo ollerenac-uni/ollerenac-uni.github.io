@@ -11,5 +11,6 @@ const { date } = Astro.props;
 		year: 'numeric',
 		month: 'short',
 		day: 'numeric',
+		timeZone: 'UTC', // pubDate es medianoche UTC; sin esto, en zonas al oeste de UTC sale el día anterior
 	})}
 </time>
