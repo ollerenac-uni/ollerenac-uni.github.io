@@ -12,7 +12,7 @@ Requiere Node 22.12 o más nuevo.
 
 ```bash
 npm ci                              # sitio
-npm ci --prefix talks/openai-hf     # charla
+PLAYWRIGHT_BROWSERS_PATH=0 npm ci --prefix talks/openai-hf  # charla (Chromium dentro de node_modules)
 npm run dev                         # sitio en http://localhost:4321
 npm run dev --prefix talks/openai-hf  # charla en http://localhost:3030
 ```
@@ -24,4 +24,4 @@ npm run build:all   # genera dist/ con el sitio y la charla
 npm run preview     # sirve dist/ en http://localhost:4321
 ```
 
-El PDF de la charla y su exportación están en `talks/openai-hf/README.md`.
+Comandos de la charla (PDF de respaldo, prueba sin red, componentes compartidos): `talks/openai-hf/README.md`.
