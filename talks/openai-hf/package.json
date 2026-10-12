@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "slidev --open",
     "build": "slidev build --base /talks/openai-hf/",
-    "export": "PLAYWRIGHT_BROWSERS_PATH=0 slidev export --output openai-hf.pdf",
+    "export": "PLAYWRIGHT_BROWSERS_PATH=0 slidev export --output public/openai-hf.pdf",
     "check:offline": "PLAYWRIGHT_BROWSERS_PATH=0 node scripts/check-offline.mjs"
   },
   "devDependencies": {

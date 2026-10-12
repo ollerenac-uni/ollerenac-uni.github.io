@@ -22,6 +22,3 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
-
-# PDF de respaldo de la charla (npm run export); se publica en la etapa 9
-talks/openai-hf/*.pdf

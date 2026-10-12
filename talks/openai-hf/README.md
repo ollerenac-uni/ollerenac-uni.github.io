@@ -25,8 +25,9 @@ Los scripts usan la sintaxis `VAR=valor comando` de shells POSIX (Linux, macOS, 
 
 ## PDF de respaldo
 
-`npm run export` escribe `openai-hf.pdf` aquí: una página por diapositiva, sin pasos de clic.
-El PDF está en `.gitignore`. Se versiona y se publica en la etapa de publicación (OELL-23).
+`npm run export` escribe `public/openai-hf.pdf`: una página por diapositiva, en su estado final (sin pasos de clic).
+El PDF está versionado. `slidev build` lo copia a `dist/talks/openai-hf/openai-hf.pdf`, y `/talks/` y el post lo enlazan.
+Vuelve a ejecutarlo cada vez que cambie `slides.md` o un componente, y haz commit del PDF.
 
 ## Sin red
 
@@ -43,7 +44,15 @@ Si añades un recurso remoto (imagen, iframe, fuente), este comando lo detecta.
 ## Componentes Vue compartidos
 
 Los componentes que usan el post (Astro) y la charla (Slidev) van en `shared/components/`, en la raíz
-del repositorio. La carpeta se crea con el primer componente (la línea de tiempo, etapa 6).
+del repositorio. Hoy: `Timeline.vue`, la línea de tiempo del incidente.
+
+- Datos: `shared/data/timeline.json` (76 eventos, de `docs/timeline.md` del directorio de investigación) y
+  `shared/data/sources.json` (ID de fuente → enlace oficial). Para regenerar la línea de tiempo tras un cambio en
+  `docs/timeline.md`: `node scripts/timeline-md-to-json.mjs <ruta>/docs/timeline.md` (en la raíz del repositorio).
+- Post: sin `step`. Pestañas por fase; ← → Inicio Fin cambian de fase. Muestra hecho, actor, fuente y límite.
+- Charla: con `:step="$clicks"`, `compact` y `:groups="[…]"`. Revela un grupo por clic; cada evento ocupa una línea. Lleva `clicks: N` en el frontmatter de la diapositiva.
+
+Los componentes solo de la charla (`Fuentes.vue`, pie de cada diapositiva; `Flow.vue`, diagramas de flujo) viven en `components/` de esta carpeta.
 
 ```astro
 ---
@@ -60,7 +69,7 @@ import Timeline from '../../shared/components/Timeline.vue';
 import Timeline from '../../shared/components/Timeline.vue'
 </script>
 
-<Timeline />
+<Timeline compact :level="2" :step="$clicks" :groups="[{ label: '12 mayo: notas', ids: ['E03'] }]" />
 ```
 
 `vite.config.ts` agrega `shared/` a `server.fs.allow`: sin eso Slidev rechaza el import fuera de
@@ -70,8 +79,9 @@ en la página de Astro y en la charla construida (OELL-18).
 
 ## Estado
 
-Esqueleto sin hechos. Cada `[FUENTE: ...]` en `slides.md` marca un dato
-que falta. T1 (`docs/fuentes.md`) los provee; T3 los verifica.
+`slides.md` tiene las 22 diapositivas de `docs/guion.md` (directorio de investigación). Las notas del orador son las del guion,
+sin cambios, con la interacción y los minutos al final. Cada diapositiva con hechos lleva su pie de fuentes (`Fuentes.vue`).
+Pendiente de revisión (OELL-21) y de aprobación de Oscar (OELL-22).
 
 ## Publicación
 
