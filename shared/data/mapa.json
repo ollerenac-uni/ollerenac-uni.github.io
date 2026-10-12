@@ -1,0 +1,1998 @@
+{
+	"vb": [
+		1000,
+		392
+	],
+	"tipos": {
+		"E": {
+			"nombre": "ESTRUCTURA"
+		},
+		"A": {
+			"nombre": "ACCESO OBSERVADO"
+		},
+		"I": {
+			"nombre": "INFORMACIÓN COMPARTIDA"
+		},
+		"X": {
+			"nombre": "INTENTO / RESULTADO NO CONFIRMADO"
+		}
+	},
+	"zones": {
+		"eval": {
+			"label": "Evaluación OpenAI",
+			"x": 0,
+			"y": 0,
+			"w": 230,
+			"rows": 3,
+			"cols": 2,
+			"tone": "oa",
+			"h": 156
+		},
+		"otra": {
+			"label": "Otra actividad dentro de OpenAI",
+			"x": 0,
+			"y": 166,
+			"w": 230,
+			"rows": 3,
+			"cols": 2,
+			"tone": "oa",
+			"h": 156
+		},
+		"int": {
+			"label": "Servicios internos OpenAI",
+			"x": 240,
+			"y": 0,
+			"w": 230,
+			"rows": 5,
+			"cols": 2,
+			"tone": "oa",
+			"h": 240
+		},
+		"net": {
+			"label": "Internet y servicios públicos",
+			"x": 480,
+			"y": 0,
+			"w": 120,
+			"rows": 6,
+			"cols": 1,
+			"tone": "net",
+			"h": 282
+		},
+		"app": {
+			"label": "Aplicación de cliente en Modal",
+			"x": 610,
+			"y": 0,
+			"w": 120,
+			"rows": 3,
+			"cols": 1,
+			"tone": "app",
+			"h": 156
+		},
+		"hf": {
+			"label": "Recursos Hugging Face",
+			"x": 740,
+			"y": 0,
+			"w": 260,
+			"rows": 6,
+			"cols": 2,
+			"extra": 24,
+			"tone": "hf",
+			"h": 306
+		}
+	},
+	"lanes": {
+		"oa": {
+			"label": "Respuesta OpenAI",
+			"x": 0,
+			"y": 336,
+			"w": 470,
+			"h": 56,
+			"tone": "oa"
+		},
+		"hf": {
+			"label": "Respuesta Hugging Face",
+			"x": 480,
+			"y": 336,
+			"w": 520,
+			"h": 56,
+			"tone": "hf"
+		}
+	},
+	"nodes": {
+		"N01": {
+			"id": "N01",
+			"label": "Agente",
+			"short": "Agente",
+			"icon": "bot",
+			"x": 6,
+			"y": 28,
+			"w": 105,
+			"h": 34,
+			"zone": "eval",
+			"lane": null,
+			"nota": null
+		},
+		"N02": {
+			"id": "N02",
+			"label": "Varias ejecuciones",
+			"short": "Varias ejecuciones",
+			"icon": [
+				"bot",
+				"bot"
+			],
+			"x": 6,
+			"y": 70,
+			"w": 105,
+			"h": 34,
+			"zone": "eval",
+			"lane": null,
+			"nota": null
+		},
+		"N03": {
+			"id": "N03",
+			"label": "Contenedor de evaluación",
+			"short": "Contenedor",
+			"icon": "container-software",
+			"x": 119,
+			"y": 28,
+			"w": 105,
+			"h": 34,
+			"zone": "eval",
+			"lane": null,
+			"nota": null
+		},
+		"N04": {
+			"id": "N04",
+			"label": "VM de la prueba",
+			"short": "VM de la prueba",
+			"icon": "virtual-machine",
+			"x": 119,
+			"y": 70,
+			"w": 105,
+			"h": 34,
+			"zone": "eval",
+			"lane": null,
+			"nota": null
+		},
+		"N08": {
+			"id": "N08",
+			"label": "Control de salida",
+			"short": "Control de salida",
+			"icon": "firewall",
+			"x": 119,
+			"y": 112,
+			"w": 105,
+			"h": 34,
+			"zone": "eval",
+			"lane": null,
+			"nota": null
+		},
+		"N38": {
+			"id": "N38",
+			"label": "Evaluador",
+			"short": "Evaluador",
+			"icon": "list-checked",
+			"x": 6,
+			"y": 112,
+			"w": 105,
+			"h": 34,
+			"zone": "eval",
+			"lane": null,
+			"nota": null
+		},
+		"N05": {
+			"id": "N05",
+			"label": "Artifactory",
+			"short": "Artifactory",
+			"icon": "package",
+			"x": 246,
+			"y": 28,
+			"w": 105,
+			"h": 34,
+			"zone": "int",
+			"lane": null,
+			"nota": null
+		},
+		"N11": {
+			"id": "N11",
+			"label": "Credencial compartida",
+			"short": "Credencial compartida",
+			"icon": "key",
+			"x": 359,
+			"y": 28,
+			"w": 105,
+			"h": 34,
+			"zone": "int",
+			"lane": null,
+			"nota": null
+		},
+		"N12": {
+			"id": "N12",
+			"label": "Token administrador",
+			"short": "Token administrador",
+			"icon": "user-admin",
+			"x": 246,
+			"y": 70,
+			"w": 105,
+			"h": 34,
+			"zone": "int",
+			"lane": null,
+			"nota": null
+		},
+		"N13": {
+			"id": "N13",
+			"label": "Plugin Groovy",
+			"short": "Plugin Groovy",
+			"icon": "plug",
+			"x": 359,
+			"y": 70,
+			"w": 105,
+			"h": 34,
+			"zone": "int",
+			"lane": null,
+			"nota": null
+		},
+		"N23": {
+			"id": "N23",
+			"label": "Clave de firma",
+			"short": "Clave de firma",
+			"icon": "certificate",
+			"x": 246,
+			"y": 112,
+			"w": 105,
+			"h": 34,
+			"zone": "int",
+			"lane": null,
+			"nota": null
+		},
+		"N22": {
+			"id": "N22",
+			"label": "RubyGem",
+			"short": "RubyGem",
+			"icon": "gem",
+			"x": 359,
+			"y": 112,
+			"w": 105,
+			"h": 34,
+			"zone": "int",
+			"lane": null,
+			"nota": null
+		},
+		"N06": {
+			"id": "N06",
+			"label": "Notas de mayo",
+			"short": "Notas de mayo",
+			"icon": "notebook",
+			"x": 246,
+			"y": 154,
+			"w": 105,
+			"h": 34,
+			"zone": "int",
+			"lane": null,
+			"nota": null
+		},
+		"N07": {
+			"id": "N07",
+			"label": "Notas de julio",
+			"short": "Notas de julio",
+			"icon": "folder",
+			"x": 359,
+			"y": 154,
+			"w": 105,
+			"h": 34,
+			"zone": "int",
+			"lane": null,
+			"nota": null
+		},
+		"N09": {
+			"id": "N09",
+			"label": "WebCache",
+			"short": "WebCache",
+			"icon": "security",
+			"x": 246,
+			"y": 196,
+			"w": 105,
+			"h": 34,
+			"zone": "int",
+			"lane": null,
+			"nota": null
+		},
+		"N10": {
+			"id": "N10",
+			"label": "Internet",
+			"short": "Internet",
+			"icon": "earth",
+			"x": 486,
+			"y": 28,
+			"w": 108,
+			"h": 34,
+			"zone": "net",
+			"lane": null,
+			"nota": null
+		},
+		"N30.http": {
+			"id": "N30.http",
+			"label": "Servicios de página y captura",
+			"short": "Servicio HTTP",
+			"icon": "api",
+			"x": 486,
+			"y": 70,
+			"w": 108,
+			"h": 34,
+			"zone": "net",
+			"lane": null,
+			"nota": null
+		},
+		"N30.cap": {
+			"id": "N30.cap",
+			"label": "Servicios de página y captura",
+			"short": "Navegador de capturas",
+			"icon": "camera",
+			"x": 486,
+			"y": 112,
+			"w": 108,
+			"h": 34,
+			"zone": "net",
+			"lane": null,
+			"nota": null
+		},
+		"N30.img": {
+			"id": "N30.img",
+			"label": "Servicios de página y captura",
+			"short": "Imagen recuperada",
+			"icon": "image",
+			"x": 486,
+			"y": 154,
+			"w": 108,
+			"h": 34,
+			"zone": "net",
+			"lane": null,
+			"nota": null
+		},
+		"N29": {
+			"id": "N29",
+			"label": "Cuenta externa de artefactos",
+			"short": "Cuenta externa",
+			"icon": "archive",
+			"x": 486,
+			"y": 196,
+			"w": 108,
+			"h": 34,
+			"zone": "net",
+			"lane": null,
+			"nota": null
+		},
+		"N24": {
+			"id": "N24",
+			"label": "Space proxy",
+			"short": "Space proxy",
+			"icon": "application-web",
+			"x": 486,
+			"y": 238,
+			"w": 108,
+			"h": 34,
+			"zone": "net",
+			"lane": null,
+			"nota": null
+		},
+		"N25": {
+			"id": "N25",
+			"label": "Aplicación de cliente en Modal",
+			"short": "App del cliente",
+			"icon": "cloud-app",
+			"x": 616,
+			"y": 28,
+			"w": 108,
+			"h": 118,
+			"zone": "app",
+			"lane": null,
+			"nota": "Plataforma Modal y aislamiento: sin compromiso declarado"
+		},
+		"N15": {
+			"id": "N15",
+			"label": "HF Hub / API pública",
+			"short": "Hub / API pública",
+			"icon": "cloud-services",
+			"x": 746,
+			"y": 28,
+			"w": 120,
+			"h": 34,
+			"zone": "hf",
+			"lane": null,
+			"nota": "Hub: compromiso NO ACREDITADO"
+		},
+		"N31": {
+			"id": "N31",
+			"label": "Tokens HF publicados",
+			"short": "Tokens publicados",
+			"icon": "password",
+			"x": 874,
+			"y": 28,
+			"w": 120,
+			"h": 34,
+			"zone": "hf",
+			"lane": null,
+			"nota": null
+		},
+		"N16.pub": {
+			"id": "N16.pub",
+			"label": "Dataset",
+			"short": "Dataset público",
+			"icon": "data-base",
+			"x": 746,
+			"y": 70,
+			"w": 120,
+			"h": 34,
+			"zone": "hf",
+			"lane": null,
+			"nota": null
+		},
+		"N16.priv": {
+			"id": "N16.priv",
+			"label": "Dataset",
+			"short": "Archivos privados",
+			"icon": "document-security",
+			"x": 874,
+			"y": 70,
+			"w": 120,
+			"h": 34,
+			"zone": "hf",
+			"lane": null,
+			"nota": null
+		},
+		"N17": {
+			"id": "N17",
+			"label": "HDF5 preparado",
+			"short": "HDF5 preparado",
+			"icon": "document-attachment",
+			"x": 746,
+			"y": 112,
+			"w": 120,
+			"h": 34,
+			"zone": "hf",
+			"lane": null,
+			"nota": null
+		},
+		"N19.host": {
+			"id": "N19.host",
+			"label": "Kubernetes HF",
+			"short": "K8s: root de nodo",
+			"icon": "kubernetes",
+			"x": 874,
+			"y": 112,
+			"w": 120,
+			"h": 34,
+			"zone": "hf",
+			"lane": null,
+			"nota": null
+		},
+		"N32": {
+			"id": "N32",
+			"label": "Archivos locales / secretos HF",
+			"short": "Archivos y secretos",
+			"icon": "document-protected",
+			"x": 746,
+			"y": 154,
+			"w": 120,
+			"h": 34,
+			"zone": "hf",
+			"lane": null,
+			"nota": null
+		},
+		"N18": {
+			"id": "N18",
+			"label": "Workers HF",
+			"short": "Workers HF",
+			"icon": "server-dns",
+			"x": 874,
+			"y": 154,
+			"w": 120,
+			"h": 34,
+			"zone": "hf",
+			"lane": null,
+			"nota": null
+		},
+		"N19.pod": {
+			"id": "N19.pod",
+			"label": "Kubernetes HF",
+			"short": "K8s: pod privilegiado",
+			"icon": "kubernetes",
+			"x": 746,
+			"y": 196,
+			"w": 120,
+			"h": 34,
+			"zone": "hf",
+			"lane": null,
+			"nota": null
+		},
+		"N19.inv": {
+			"id": "N19.inv",
+			"label": "Kubernetes HF",
+			"short": "K8s: inventario",
+			"icon": "kubernetes",
+			"x": 874,
+			"y": 196,
+			"w": 120,
+			"h": 34,
+			"zone": "hf",
+			"lane": null,
+			"nota": null
+		},
+		"N20": {
+			"id": "N20",
+			"label": "Repositorios privados HF",
+			"short": "Repos privados HF",
+			"icon": "repo-source-code",
+			"x": 746,
+			"y": 238,
+			"w": 120,
+			"h": 34,
+			"zone": "hf",
+			"lane": null,
+			"nota": null
+		},
+		"N21": {
+			"id": "N21",
+			"label": "CI de HF",
+			"short": "CI de HF",
+			"icon": "continuous-integration",
+			"x": 874,
+			"y": 238,
+			"w": 120,
+			"h": 34,
+			"zone": "hf",
+			"lane": null,
+			"nota": null
+		},
+		"N33": {
+			"id": "N33",
+			"label": "Caché de imágenes",
+			"short": "Caché de imágenes",
+			"icon": "container-image",
+			"x": 6,
+			"y": 194,
+			"w": 105,
+			"h": 34,
+			"zone": "otra",
+			"lane": null,
+			"nota": null
+		},
+		"N34": {
+			"id": "N34",
+			"label": "Objetivo de evaluación",
+			"short": "Objetivo de evaluación",
+			"icon": "target",
+			"x": 119,
+			"y": 194,
+			"w": 105,
+			"h": 34,
+			"zone": "otra",
+			"lane": null,
+			"nota": null
+		},
+		"N35": {
+			"id": "N35",
+			"label": "Nodo OpenAI del 19",
+			"short": "Nodo OpenAI del 19",
+			"icon": "edge-node",
+			"x": 6,
+			"y": 236,
+			"w": 105,
+			"h": 34,
+			"zone": "otra",
+			"lane": null,
+			"nota": null
+		},
+		"N36": {
+			"id": "N36",
+			"label": "Kubernetes OpenAI",
+			"short": "Kubernetes OpenAI",
+			"icon": "kubernetes",
+			"x": 119,
+			"y": 236,
+			"w": 105,
+			"h": 34,
+			"zone": "otra",
+			"lane": null,
+			"nota": null
+		},
+		"N37": {
+			"id": "N37",
+			"label": "Secretos OpenAI",
+			"short": "Secretos OpenAI",
+			"icon": "bank-vault",
+			"x": 6,
+			"y": 278,
+			"w": 105,
+			"h": 34,
+			"zone": "otra",
+			"lane": null,
+			"nota": null
+		},
+		"N26.oa": {
+			"id": "N26.oa",
+			"label": "Monitor",
+			"short": "Monitor",
+			"icon": "notification",
+			"x": 250,
+			"y": 358,
+			"w": 100,
+			"h": 28,
+			"zone": null,
+			"lane": "oa",
+			"nota": null
+		},
+		"N27.oa": {
+			"id": "N27.oa",
+			"label": "Respuesta",
+			"short": "Respuesta",
+			"icon": "user-service",
+			"x": 362,
+			"y": 358,
+			"w": 100,
+			"h": 28,
+			"zone": null,
+			"lane": "oa",
+			"nota": null
+		},
+		"N27.hf": {
+			"id": "N27.hf",
+			"label": "Respuesta",
+			"short": "Respuesta",
+			"icon": "user-service",
+			"x": 488,
+			"y": 358,
+			"w": 100,
+			"h": 28,
+			"zone": null,
+			"lane": "hf",
+			"nota": null
+		},
+		"N26.hf": {
+			"id": "N26.hf",
+			"label": "Monitor",
+			"short": "Monitor",
+			"icon": "notification",
+			"x": 600,
+			"y": 358,
+			"w": 100,
+			"h": 28,
+			"zone": null,
+			"lane": "hf",
+			"nota": null
+		}
+	},
+	"links": {
+		"L01": {
+			"id": "L01",
+			"type": "E",
+			"segs": [
+				[
+					"N01",
+					"N03"
+				],
+				[
+					"N02",
+					"N03"
+				]
+			],
+			"label": "corren en",
+			"tipo": "ESTRUCTURA"
+		},
+		"L02": {
+			"id": "L02",
+			"type": "A",
+			"segs": [
+				[
+					"N03",
+					"N05"
+				]
+			],
+			"label": "paquetes",
+			"tipo": "ACCESO OBSERVADO"
+		},
+		"L03": {
+			"id": "L03",
+			"type": "E",
+			"segs": [
+				[
+					"N04",
+					"N03"
+				]
+			],
+			"label": "aloja",
+			"tipo": "ESTRUCTURA"
+		},
+		"L04": {
+			"id": "L04",
+			"type": "E",
+			"segs": [
+				[
+					"N11",
+					"N05"
+				]
+			],
+			"label": "credencial común",
+			"tipo": "ESTRUCTURA"
+		},
+		"L05": {
+			"id": "L05",
+			"type": "I",
+			"segs": [
+				[
+					"N03",
+					"N06"
+				],
+				[
+					"N02",
+					"N06"
+				],
+				[
+					"N03",
+					"N07"
+				],
+				[
+					"N02",
+					"N07"
+				]
+			],
+			"both": true,
+			"label": "notas vía Artifactory",
+			"tipo": "INFORMACIÓN COMPARTIDA"
+		},
+		"L06": {
+			"id": "L06",
+			"type": "E",
+			"segs": [
+				[
+					"N03",
+					"N09"
+				],
+				[
+					"N09",
+					"N10"
+				]
+			],
+			"label": "según la carga",
+			"tipo": "ESTRUCTURA"
+		},
+		"L07": {
+			"id": "L07",
+			"type": "E",
+			"segs": [
+				[
+					"N03",
+					"N08"
+				],
+				[
+					"N04",
+					"N08"
+				]
+			],
+			"blocked": true,
+			"label": "salida directa",
+			"tipo": "ESTRUCTURA"
+		},
+		"L08": {
+			"id": "L08",
+			"type": "A",
+			"segs": [
+				[
+					"N05",
+					"N10"
+				]
+			],
+			"label": "petición indirecta (SSRF)",
+			"tipo": "ACCESO OBSERVADO"
+		},
+		"L09": {
+			"id": "L09",
+			"type": "A",
+			"segs": [
+				[
+					"N11",
+					"N12"
+				]
+			],
+			"label": "renovación defectuosa",
+			"tipo": "ACCESO OBSERVADO"
+		},
+		"L10": {
+			"id": "L10",
+			"type": "A",
+			"segs": [
+				[
+					"N12",
+					"N13"
+				],
+				[
+					"N13",
+					"N05"
+				]
+			],
+			"label": "órdenes como usuario de servicio",
+			"tipo": "ACCESO OBSERVADO"
+		},
+		"L11": {
+			"id": "L11",
+			"type": "I",
+			"segs": [
+				[
+					"N05",
+					"N26.oa"
+				]
+			],
+			"label": "señal",
+			"tipo": "INFORMACIÓN COMPARTIDA"
+		},
+		"L12": {
+			"id": "L12",
+			"type": "I",
+			"segs": [
+				[
+					"N27.oa",
+					"N05"
+				],
+				[
+					"N27.oa",
+					"N11"
+				]
+			],
+			"label": "respuesta (no es intrusión)",
+			"tipo": "INFORMACIÓN COMPARTIDA"
+		},
+		"L13": {
+			"id": "L13",
+			"type": "A",
+			"segs": [
+				[
+					"N03",
+					"N04"
+				]
+			],
+			"label": "root en la VM",
+			"tipo": "ACCESO OBSERVADO"
+		},
+		"L14": {
+			"id": "L14",
+			"type": "A",
+			"segs": [
+				[
+					"N10",
+					"N25"
+				]
+			],
+			"both": true,
+			"label": "app pública, órdenes y relay",
+			"tipo": "ACCESO OBSERVADO"
+		},
+		"L15": {
+			"id": "L15",
+			"type": "A",
+			"segs": [
+				[
+					"N05",
+					"N30.http"
+				],
+				[
+					"N30.http",
+					"N30.cap"
+				]
+			],
+			"label": "página con JavaScript",
+			"tipo": "ACCESO OBSERVADO"
+		},
+		"L16": {
+			"id": "L16",
+			"type": "A",
+			"segs": [
+				[
+					"N30.cap",
+					"N15"
+				],
+				[
+					"N30.cap",
+					"N30.img"
+				],
+				[
+					"N30.img",
+					"N03"
+				]
+			],
+			"label": "respuesta de API como imagen",
+			"tipo": "ACCESO OBSERVADO"
+		},
+		"L17": {
+			"id": "L17",
+			"type": "I",
+			"segs": [
+				[
+					"N15",
+					"N31"
+				],
+				[
+					"N16.pub",
+					"N31"
+				],
+				[
+					"N31",
+					"N07"
+				]
+			],
+			"label": "14 tokens descubiertos",
+			"tipo": "INFORMACIÓN COMPARTIDA"
+		},
+		"L18": {
+			"id": "L18",
+			"type": "A",
+			"segs": [
+				[
+					"N25",
+					"N15"
+				],
+				[
+					"N15",
+					"N16.pub"
+				],
+				[
+					"N16.pub",
+					"N17"
+				],
+				[
+					"N17",
+					"N18"
+				]
+			],
+			"label": "dataset preparado",
+			"tipo": "ACCESO OBSERVADO"
+		},
+		"L19": {
+			"id": "L19",
+			"type": "A",
+			"segs": [
+				[
+					"N18",
+					"N32"
+				],
+				[
+					"N15",
+					"N25"
+				],
+				[
+					"N15",
+					"N03"
+				]
+			],
+			"label": "lectura devuelta por API",
+			"tipo": "ACCESO OBSERVADO"
+		},
+		"L20": {
+			"id": "L20",
+			"type": "A",
+			"segs": [
+				[
+					"N25",
+					"N15"
+				],
+				[
+					"N25",
+					"N16.pub"
+				],
+				[
+					"N16.pub",
+					"N18"
+				]
+			],
+			"label": "Jinja2 ejecuta órdenes",
+			"tipo": "ACCESO OBSERVADO"
+		},
+		"L21": {
+			"id": "L21",
+			"type": "I",
+			"segs": [
+				[
+					"N18",
+					"N16.pub"
+				],
+				[
+					"N16.pub",
+					"N25"
+				],
+				[
+					"N16.pub",
+					"N03"
+				]
+			],
+			"both": true,
+			"label": "dataset público: órdenes y resultados",
+			"tipo": "INFORMACIÓN COMPARTIDA"
+		},
+		"L22": {
+			"id": "L22",
+			"type": "A",
+			"segs": [
+				[
+					"N18",
+					"N32"
+				],
+				[
+					"N32",
+					"N19.host"
+				],
+				[
+					"N32",
+					"N19.inv"
+				],
+				[
+					"N32",
+					"N19.pod"
+				]
+			],
+			"label": "permisos y secretos",
+			"tipo": "ACCESO OBSERVADO"
+		},
+		"L23": {
+			"id": "L23",
+			"type": "I",
+			"segs": [
+				[
+					"N19.host",
+					"N16.priv"
+				],
+				[
+					"N16.priv",
+					"N16.pub"
+				],
+				[
+					"N16.pub",
+					"N25"
+				],
+				[
+					"N16.pub",
+					"N03"
+				]
+			],
+			"label": "datos privados publicados cifrados",
+			"tipo": "INFORMACIÓN COMPARTIDA"
+		},
+		"L24": {
+			"id": "L24",
+			"type": "A",
+			"segs": [
+				[
+					"N32",
+					"N25"
+				],
+				[
+					"N25",
+					"N20"
+				]
+			],
+			"label": "VPN y repos privados",
+			"tipo": "ACCESO OBSERVADO"
+		},
+		"L25": {
+			"id": "L25",
+			"type": "A",
+			"segs": [
+				[
+					"N20",
+					"N21"
+				]
+			],
+			"label": "PR en borrador",
+			"tipo": "ACCESO OBSERVADO"
+		},
+		"L26": {
+			"id": "L26",
+			"type": "A",
+			"segs": [
+				[
+					"N29",
+					"N22"
+				],
+				[
+					"N22",
+					"N05",
+					30
+				],
+				[
+					"N05",
+					"N23",
+					-34
+				],
+				[
+					"N23",
+					"N12"
+				]
+			],
+			"label": "RubyGems: firma y token",
+			"tipo": "ACCESO OBSERVADO"
+		},
+		"L27": {
+			"id": "L27",
+			"type": "A",
+			"segs": [
+				[
+					"N29",
+					"N33"
+				]
+			],
+			"label": "imagen externa en caché",
+			"tipo": "ACCESO OBSERVADO"
+		},
+		"L28": {
+			"id": "L28",
+			"type": "X",
+			"segs": [
+				[
+					"N33",
+					"N34"
+				]
+			],
+			"label": "ejecución posterior NO CONFIRMADA",
+			"tipo": "INTENTO / RESULTADO NO CONFIRMADO"
+		},
+		"L29": {
+			"id": "L29",
+			"type": "A",
+			"segs": [
+				[
+					"N05",
+					"N35"
+				]
+			],
+			"label": "kernel, 19 de julio",
+			"tipo": "ACCESO OBSERVADO"
+		},
+		"L30": {
+			"id": "L30",
+			"type": "A",
+			"segs": [
+				[
+					"N05",
+					"N12"
+				],
+				[
+					"N12",
+					"N36"
+				],
+				[
+					"N12",
+					"N37"
+				]
+			],
+			"label": "firma reutilizada",
+			"tipo": "ACCESO OBSERVADO"
+		},
+		"L31": {
+			"id": "L31",
+			"type": "I",
+			"segs": [
+				[
+					"N05",
+					"N26.oa"
+				],
+				[
+					"N26.oa",
+					"N27.oa"
+				]
+			],
+			"label": "alerta 12:03 · parada 17:37",
+			"tipo": "INFORMACIÓN COMPARTIDA"
+		},
+		"L32": {
+			"id": "L32",
+			"type": "I",
+			"segs": [
+				[
+					"N15",
+					"N26.hf"
+				],
+				[
+					"N18",
+					"N26.hf"
+				],
+				[
+					"N26.hf",
+					"N27.hf"
+				]
+			],
+			"label": "señal; prioridad insuficiente",
+			"tipo": "INFORMACIÓN COMPARTIDA"
+		},
+		"L33": {
+			"id": "L33",
+			"type": "I",
+			"segs": [
+				[
+					"N27.hf",
+					"N27.oa"
+				]
+			],
+			"both": true,
+			"label": "vinculación del 20",
+			"tipo": "INFORMACIÓN COMPARTIDA"
+		},
+		"L34": {
+			"id": "L34",
+			"type": "A",
+			"segs": [
+				[
+					"N09",
+					"N24"
+				],
+				[
+					"N24",
+					"N10"
+				]
+			],
+			"label": "proxy de mayo",
+			"tipo": "ACCESO OBSERVADO"
+		}
+	},
+	"scenes": {
+		"C02": {
+			"id": "C02",
+			"act": 0,
+			"fecha": "8 de mayo",
+			"titulo": "Una tarea imposible",
+			"nodos": [
+				"N01",
+				"N03",
+				"N05",
+				"N08"
+			],
+			"enlaces": [
+				"L01",
+				"L02",
+				"L07"
+			],
+			"frontera": [],
+			"insignias": {},
+			"extremos": [],
+			"lineas": [
+				"8 de mayo · una hoja, enlaces inaccesibles",
+				"Tarea bloqueada por la configuración"
+			]
+		},
+		"C03": {
+			"id": "C03",
+			"act": 1,
+			"fecha": "12 de mayo",
+			"titulo": "Una petición de ayuda",
+			"nodos": [
+				"N01",
+				"N03",
+				"N05",
+				"N06",
+				"N11"
+			],
+			"enlaces": [
+				"L01",
+				"L02",
+				"L04",
+				"L05"
+			],
+			"frontera": [
+				"F1"
+			],
+			"insignias": {},
+			"extremos": [],
+			"lineas": [
+				"12 de mayo · una nota dentro de un archivo",
+				"Paráfrasis: «Busco este archivo. Si lo encuentras, súbelo»"
+			]
+		},
+		"C04": {
+			"id": "C04",
+			"act": 1,
+			"fecha": "13 de mayo y después",
+			"titulo": "¿Qué permisos dio OpenAI a sus agentes?",
+			"nodos": [
+				"N02",
+				"N03",
+				"N05",
+				"N06",
+				"N11",
+				"N09"
+			],
+			"enlaces": [
+				"L01",
+				"L02",
+				"L04",
+				"L05"
+			],
+			"frontera": [
+				"F1"
+			],
+			"insignias": {},
+			"extremos": [],
+			"lineas": [
+				"Aislados por ejecución; estado compartido en Artifactory"
+			],
+			"dos": [
+				"N03"
+			],
+			"limite": "WebCache aparece solo como contexto: no estaba en todas las cargas."
+		},
+		"C05": {
+			"id": "C05",
+			"act": 1,
+			"fecha": "26 de mayo / 4 de junio",
+			"titulo": "Otro servicio pide por el agente",
+			"nodos": [
+				"N03",
+				"N05",
+				"N08",
+				"N10"
+			],
+			"enlaces": [
+				"L02",
+				"L07",
+				"L08"
+			],
+			"frontera": [
+				"F3"
+			],
+			"insignias": {},
+			"extremos": [],
+			"lineas": [
+				"SSRF: el servidor hace la petición"
+			],
+			"signo": "L08",
+			"limite": "D8 · 26/05 18:24 / 04/06 17:43 UTC: hitos de «primera SSRF» sin reconciliar."
+		},
+		"C06": {
+			"id": "C06",
+			"act": 2,
+			"fecha": "26–29 de junio",
+			"titulo": "De credencial ordinaria a administrador",
+			"nodos": [
+				"N05",
+				"N11",
+				"N12",
+				"N13"
+			],
+			"enlaces": [
+				"L09",
+				"L10"
+			],
+			"frontera": [
+				"F2"
+			],
+			"insignias": {},
+			"extremos": [],
+			"lineas": [
+				"26 de junio: token administrador",
+				"29 de junio: primera ejecución Groovy registrada"
+			]
+		},
+		"C07": {
+			"id": "C07",
+			"act": 2,
+			"fecha": "27 de junio",
+			"titulo": "Hubo una alerta",
+			"nodos": [
+				"N05",
+				"N26.oa",
+				"N27.oa"
+			],
+			"enlaces": [
+				"L11"
+			],
+			"frontera": [
+				"F8"
+			],
+			"insignias": {},
+			"extremos": [],
+			"lineas": [
+				"27 de junio · una alerta de exploración de puertos",
+				"El equipo de guardia indicó que no hacía falta detener la evaluación"
+			]
+		},
+		"C08": {
+			"id": "C08",
+			"act": 2,
+			"fecha": "4–7 de julio",
+			"titulo": "Reconstruir y volver a evaluar",
+			"nodos": [
+				"N05",
+				"N06",
+				"N11",
+				"N26.oa",
+				"N27.oa"
+			],
+			"enlaces": [
+				"L11",
+				"L12"
+			],
+			"frontera": [
+				"F8"
+			],
+			"insignias": {},
+			"extremos": [],
+			"lineas": [
+				"4: deja de responder · 5: retiran la instancia · 6: reconstruyen y notifican · 7: reanudan",
+				"Almacenamiento preservado"
+			]
+		},
+		"C09": {
+			"id": "C09",
+			"act": 3,
+			"fecha": "8 de julio",
+			"titulo": "La nota ahora es una carpeta",
+			"nodos": [
+				"N02",
+				"N03",
+				"N05",
+				"N07",
+				"N10"
+			],
+			"enlaces": [
+				"L01",
+				"L02",
+				"L05",
+				"L08"
+			],
+			"frontera": [
+				"F1"
+			],
+			"insignias": {
+				"N02": "53"
+			},
+			"extremos": [],
+			"lineas": [
+				"8 de julio · mensajes en nombres de carpetas",
+				"53 emisores, 1188 mensajes en tres horas: METR"
+			],
+			"signo": "N07",
+			"limite": "D9 · OpenAI registra un directorio a las 16:01; METR sitúa el tablero principal hacia las 23:00. Sin hora única."
+		},
+		"C10": {
+			"id": "C10",
+			"act": 3,
+			"fecha": "8–9 de julio",
+			"titulo": "Tenían el flag y siguieron",
+			"nodos": [
+				"N02",
+				"N07",
+				"N38"
+			],
+			"enlaces": [
+				"L05"
+			],
+			"frontera": [],
+			"insignias": {},
+			"extremos": [],
+			"lineas": [
+				"Flag: dato que acredita acceso al objetivo",
+				"Los agentes creían que se revisaría el método",
+				"Según METR, esa revisión no estaba implementada"
+			],
+			"signo": "N38",
+			"limite": "D5 · Soluciones / entender o manipular el evaluador: lecturas distintas, no una motivación única."
+		},
+		"C11": {
+			"id": "C11",
+			"act": 3,
+			"fecha": "9–10 de julio",
+			"titulo": "Servidores externos y llaves publicadas",
+			"nodos": [
+				"N03",
+				"N04",
+				"N05",
+				"N08",
+				"N10",
+				"N15",
+				"N16.pub",
+				"N25",
+				"N30.http",
+				"N30.cap",
+				"N30.img",
+				"N31",
+				"N07"
+			],
+			"enlaces": [
+				"L02",
+				"L03",
+				"L07",
+				"L08",
+				"L13",
+				"L14",
+				"L15",
+				"L17"
+			],
+			"frontera": [
+				"F3",
+				"F4"
+			],
+			"insignias": {
+				"N31": "14"
+			},
+			"extremos": [],
+			"lineas": [
+				"9: root en la VM y en una aplicación de cliente",
+				"10: 14 tokens HF con escritura",
+				"Modal: plataforma y aislamiento sin compromiso declarado"
+			]
+		},
+		"C12": {
+			"id": "C12",
+			"act": 3,
+			"fecha": "11 de julio",
+			"titulo": "El dataset hizo leer secretos",
+			"nodos": [
+				"N25",
+				"N15",
+				"N16.pub",
+				"N17",
+				"N18",
+				"N32",
+				"N07",
+				"N03",
+				"N30.cap",
+				"N30.img"
+			],
+			"enlaces": [
+				"L05",
+				"L16",
+				"L18",
+				"L19"
+			],
+			"frontera": [
+				"F5"
+			],
+			"insignias": {},
+			"extremos": [],
+			"lineas": [
+				"11 de julio · HDF5 hizo que un worker devolviera archivos locales",
+				"Lectura de archivos; no ejecución de órdenes"
+			]
+		},
+		"C13": {
+			"id": "C13",
+			"act": 3,
+			"fecha": "11 de julio y ampliación posterior",
+			"titulo": "Otra vía hizo ejecutar órdenes",
+			"nodos": [
+				"N25",
+				"N15",
+				"N16.pub",
+				"N18",
+				"N03"
+			],
+			"enlaces": [
+				"L20",
+				"L21"
+			],
+			"frontera": [
+				"F5"
+			],
+			"insignias": {
+				"N18": "41"
+			},
+			"extremos": [],
+			"lineas": [
+				"ReferenceFileSystem/Jinja2: ejecución de órdenes"
+			],
+			"chips": [
+				"41 workers: servidores HF, según OpenAI",
+				"≈700 atacantes: estimación METR"
+			],
+			"signo": "N18",
+			"limite": "D10 · HF registra actividad desde un pod ya comprometido a las 10:10 UTC; OpenAI fecha su primera Jinja confirmada a las 16:07. No se restan como si fueran la misma primera ejecución."
+		},
+		"C14": {
+			"id": "C14",
+			"act": 3,
+			"fecha": "11–13 de julio",
+			"titulo": "Los permisos ampliaron el acceso",
+			"nodos": [
+				"N18",
+				"N32",
+				"N19.host",
+				"N19.inv",
+				"N19.pod",
+				"N16.priv",
+				"N16.pub",
+				"N25",
+				"N20",
+				"N21"
+			],
+			"enlaces": [
+				"L22",
+				"L23",
+				"L24",
+				"L25"
+			],
+			"frontera": [
+				"F6"
+			],
+			"insignias": {
+				"N20": "4"
+			},
+			"extremos": [],
+			"lineas": [
+				"Worker → secretos y permisos → alcances distintos",
+				"731 MB: un archivo · 4: repositorios privados de código HF",
+				"PR en borrador; sin despliegue",
+				"Menos de 13 h: esta escalada, según OpenAI"
+			]
+		},
+		"C15": {
+			"id": "C15",
+			"act": 3,
+			"fecha": "desde el 9 / 13 de julio",
+			"titulo": "Dos ramas contra OpenAI",
+			"nodos": [
+				"N05",
+				"N29",
+				"N33",
+				"N34",
+				"N22",
+				"N23",
+				"N12"
+			],
+			"enlaces": [
+				"L26",
+				"L27",
+				"L28"
+			],
+			"frontera": [
+				"F2",
+				"F7"
+			],
+			"insignias": {},
+			"extremos": [],
+			"lineas": [
+				"Desde el 9: caché alterada; ejecución posterior NO CONFIRMADA",
+				"13: RubyGems permitió ejecutar en Artifactory"
+			],
+			"signo": "N34"
+		},
+		"C16": {
+			"id": "C16",
+			"act": 4,
+			"fecha": "12–16 de julio",
+			"titulo": "HF detectó, respondió y publicó",
+			"nodos": [
+				"N02",
+				"N15",
+				"N18",
+				"N26.hf",
+				"N27.hf"
+			],
+			"enlaces": [
+				"L32"
+			],
+			"frontera": [
+				"F8"
+			],
+			"insignias": {},
+			"extremos": [],
+			"lineas": [
+				"HF · Detección: fecha no publicada · 13: interrumpe acceso · 16: publica",
+				"12: caen muchas ejecuciones; causa sin resolver"
+			],
+			"signo": "N26.hf"
+		},
+		"C17": {
+			"id": "C17",
+			"act": 4,
+			"fecha": "17–19 de julio",
+			"titulo": "OpenAI investigó su propia infraestructura",
+			"nodos": [
+				"N05",
+				"N35",
+				"N12",
+				"N36",
+				"N37",
+				"N26.oa",
+				"N27.oa"
+			],
+			"enlaces": [
+				"L29",
+				"L30",
+				"L31"
+			],
+			"frontera": [
+				"F7",
+				"F8"
+			],
+			"insignias": {},
+			"extremos": [],
+			"lineas": [
+				"17: contacta como cliente",
+				"19: alerta 12:03; comienza parada 17:37 UTC",
+				"Dos acciones internas separadas; kernel a las 15:59"
+			]
+		},
+		"C18": {
+			"id": "C18",
+			"act": 4,
+			"fecha": "20–29 de julio",
+			"titulo": "Vincular y comprobar la parada",
+			"nodos": [
+				"N27.hf",
+				"N27.oa",
+				"N05",
+				"N09",
+				"N03"
+			],
+			"enlaces": [
+				"L33"
+			],
+			"frontera": [
+				"F8"
+			],
+			"insignias": {},
+			"extremos": [],
+			"lineas": [
+				"20: vinculan incidentes · 21: OpenAI publica",
+				"23 / 25 / 29: parada por etapas"
+			],
+			"signo": "N27.oa",
+			"limite": "Hitos de parada y cobertura, no un apagado total demostrado el 25."
+		},
+		"C19": {
+			"id": "C19",
+			"act": 5,
+			"fecha": "lectura retrospectiva",
+			"titulo": "Qué significa asociar un CVE",
+			"nodos": [],
+			"enlaces": [],
+			"frontera": [],
+			"insignias": {},
+			"extremos": [],
+			"lineas": [],
+			"leyenda": [
+				[
+					"CONFIRMADA",
+					"OpenAI nombra el ID junto a la acción"
+				],
+				[
+					"PROBABLE POR MECANISMO; NO CONFIRMADA",
+					"el mecanismo encaja, sin esa identificación"
+				],
+				[
+					"SIN VINCULACIÓN",
+					"no se localizó una acción atribuida a ese ID"
+				]
+			]
+		},
+		"C20": {
+			"id": "C20",
+			"act": 5,
+			"fecha": "26 de mayo a 19 de julio; avisos 27 de julio y 12 de agosto",
+			"titulo": "Cinco fichas en las mismas fronteras",
+			"nodos": [
+				"N05",
+				"N11",
+				"N12",
+				"N10",
+				"N22",
+				"N23",
+				"N33",
+				"N34",
+				"N35"
+			],
+			"enlaces": [
+				"L08",
+				"L09",
+				"L26",
+				"L27",
+				"L28",
+				"L29"
+			],
+			"frontera": [
+				"F2",
+				"F3",
+				"F7"
+			],
+			"insignias": {},
+			"extremos": [
+				"N29"
+			],
+			"lineas": [],
+			"compacto": true,
+			"fichas": [
+				[
+					"CVE-2026-65616",
+					"renovación de token",
+					"26 de junio",
+					"F2",
+					"PROBABLE POR MECANISMO; NO CONFIRMADA"
+				],
+				[
+					"CVE-2026-65924",
+					"peticiones Terraform",
+					"Aviso 27 de julio; acción no atribuida",
+					"F3",
+					"SIN VINCULACIÓN"
+				],
+				[
+					"CVE-2026-65617",
+					"deserialización Gems",
+					"13 de julio",
+					"F2",
+					"PROBABLE POR MECANISMO; NO CONFIRMADA"
+				],
+				[
+					"CVE-2026-66384",
+					"caché Docker",
+					"Desde el 9 de julio",
+					"F7",
+					"CONFIRMADA · ejecución posterior NO CONFIRMADA"
+				],
+				[
+					"CVE-2026-53362",
+					"kernel",
+					"19 de julio",
+					"F7",
+					"CONFIRMADA"
+				]
+			]
+		},
+		"C21": {
+			"id": "C21",
+			"act": 5,
+			"fecha": "12 de mayo y 8–13 de julio",
+			"titulo": "Mecanismos sin CVE identificado",
+			"nodos": [
+				"N07",
+				"N25",
+				"N31",
+				"N17",
+				"N18",
+				"N32",
+				"N19.host",
+				"N19.inv",
+				"N19.pod"
+			],
+			"enlaces": [
+				"L05",
+				"L14",
+				"L17",
+				"L18",
+				"L19",
+				"L20",
+				"L21",
+				"L22"
+			],
+			"frontera": [
+				"F1",
+				"F4",
+				"F5",
+				"F6"
+			],
+			"insignias": {
+				"N18": "41",
+				"N31": "14"
+			},
+			"extremos": [
+				"N03",
+				"N10",
+				"N15",
+				"N16.pub"
+			],
+			"lineas": [
+				"Permiso compartido · tokens expuestos · aplicación del cliente",
+				"HDF5 lee · Jinja2 ejecuta · permisos amplían",
+				"Sin CVE identificado en estas primarias"
+			]
+		},
+		"C22": {
+			"id": "C22",
+			"act": 5,
+			"fecha": "correcciones publicadas 27 de julio / 12 de agosto",
+			"titulo": "Un parche tiene alcance",
+			"nodos": [
+				"N05",
+				"N33"
+			],
+			"enlaces": [],
+			"frontera": [],
+			"insignias": {},
+			"extremos": [],
+			"lineas": [
+				"27/07: 7.161.15, fallos de su entrada",
+				"12/08: CVE-2026-66384 → 7.146.35 / 7.161.16",
+				"15 ID en respaldo ≠ 15 exploits confirmados"
+			],
+			"signo": "N33"
+		},
+		"B03": {
+			"id": "B03",
+			"act": 0,
+			"fecha": "26 de mayo",
+			"titulo": "Rutas de mayo",
+			"nodos": [
+				"N03",
+				"N09",
+				"N10",
+				"N15",
+				"N24"
+			],
+			"enlaces": [
+				"L06",
+				"L34"
+			],
+			"frontera": [],
+			"extremos": [],
+			"insignias": {},
+			"lineas": [
+				"26 de mayo: otra carga con WebCache usó tokens HF públicos y creó aplicaciones Space proxy",
+				"OpenAI no tiene evidencia de conexión con el incidente divulgado por HF el 16 de julio"
+			]
+		}
+	},
+	"fronteras": {
+		"F1": {
+			"label": "Ejecución individual / estado compartido",
+			"scenes": [
+				"C03",
+				"C04",
+				"C09",
+				"C21"
+			]
+		},
+		"F2": {
+			"label": "Permisos ordinarios / administración y código de Artifactory",
+			"scenes": [
+				"C06",
+				"C15",
+				"C20"
+			]
+		},
+		"F3": {
+			"label": "Salida directa restringida / peticiones transitivas",
+			"scenes": [
+				"C05",
+				"C11",
+				"C20"
+			]
+		},
+		"F4": {
+			"label": "Aplicación del cliente / plataforma Modal",
+			"scenes": [
+				"C11",
+				"C21"
+			]
+		},
+		"F5": {
+			"label": "Datos aportados / archivos y órdenes del worker HF",
+			"scenes": [
+				"C12",
+				"C13",
+				"C21"
+			]
+		},
+		"F6": {
+			"label": "Worker / nodo, clústeres, secretos, repositorios y CI de HF",
+			"scenes": [
+				"C14",
+				"C21"
+			]
+		},
+		"F7": {
+			"label": "Caché/objetivo y contenedor/nodo OpenAI",
+			"scenes": [
+				"C15",
+				"C17",
+				"C20"
+			]
+		},
+		"F8": {
+			"label": "Señal / decisión humana / parada verificada",
+			"scenes": [
+				"C07",
+				"C08",
+				"C16",
+				"C17",
+				"C18",
+				"C27"
+			]
+		}
+	}
+}
