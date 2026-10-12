@@ -1,47 +1,254 @@
 /* Fuentes locales (sin red): provider: none en slides.md. Solo subconjunto latin. */
 @import '@fontsource/nunito-sans/latin-400.css';
 @import '@fontsource/nunito-sans/latin-600.css';
+@import '@fontsource/nunito-sans/latin-700.css';
+@import '@fontsource/nunito-sans/latin-800.css';
 @import '@fontsource/fira-code/latin-400.css';
 
 /* El tema pone opacity .5 en `h1 + p`: 3.98:1 sobre blanco. Con .6 son 5.74:1 (WCAG AA pide 4.5:1). */
 .slidev-layout h1 + p {
-  opacity: 0.6;
+	opacity: 0.6;
 }
 
-/* Diapositivas de texto (frontmatter `class: pantalla`): máximo tres líneas grandes. */
-.slidev-layout.pantalla li {
-  margin-bottom: 0.6rem;
-  font-size: 1.8rem;
-  line-height: 1.35;
+/* ---- Diapositiva de contenido (layouts/pantalla.vue) ---- */
+.slidev-layout.pantalla {
+	display: flex;
+	flex-direction: column;
+	gap: 0.25rem;
+	padding: 0.55rem 1.4rem 3.4rem;
+	color: #111827;
+}
+.pantalla header {
+	display: flex;
+	align-items: baseline;
+	gap: 1rem;
+}
+.slidev-layout.pantalla h1 {
+	margin: 0;
+	font-size: 1.5rem;
+	font-weight: 800;
+	line-height: 1.15;
+	color: #111827;
+}
+.pantalla .acto {
+	margin: 0 0 0 auto;
+	flex: none;
+	font-size: 0.78rem;
+	font-weight: 700;
+	color: #374151;
+	opacity: 1 !important;
+}
+.pantalla .mapa {
+	font-size: 15px;
 }
 
-/* Pie con rótulo de evidencia y fuentes (components/Fuentes.vue). */
+/* El contenido de las diapositivas sin mapa se centra en vertical. */
+.pantalla .cuerpo {
+	display: flex;
+	flex-direction: column;
+}
+.pantalla.sin-mapa .cuerpo {
+	flex: 1;
+	justify-content: center;
+	padding-bottom: 1rem;
+}
+
+/* Tarjetas de los actos 6–8 */
+.pantalla .rotulo-interp {
+	align-self: flex-start;
+	margin-top: 0.4rem;
+	padding: 0.2rem 0.8rem;
+	border: 3px solid #4c1d95;
+	border-radius: 0.4rem;
+	font-size: 1.1rem;
+	font-weight: 800;
+	color: #4c1d95;
+}
+.pantalla .sin-prueba {
+	margin: 0.2rem 0 0.5rem;
+	font-size: 1rem;
+	color: #1f2937;
+	opacity: 1;
+}
+.pantalla .dos,
+.pantalla .tres {
+	display: grid;
+	gap: 0.9rem;
+	margin: 0.4rem 0;
+}
+.pantalla .dos {
+	grid-template-columns: 1fr 1fr;
+}
+.pantalla .tres {
+	grid-template-columns: repeat(3, 1fr);
+}
+.pantalla .tarjeta {
+	padding: 0.7rem 1rem;
+	border: 2.5px solid #111827;
+	border-radius: 0.6rem;
+	background: #fff;
+}
+.pantalla .tarjeta.lectura {
+	border-color: #4c1d95;
+	border-style: dashed;
+	background: #f5f3ff;
+}
+.pantalla .tarjeta h2 {
+	margin: 0 0 0.3rem;
+	font-size: 0.82rem;
+	font-weight: 800;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	color: #374151;
+}
+.pantalla .tarjeta p {
+	margin: 0;
+	font-size: 1.5rem;
+	font-weight: 700;
+	line-height: 1.3;
+}
+.pantalla .tarjeta svg {
+	width: 3.6rem;
+	height: 3.6rem;
+	margin-bottom: 0.3rem;
+}
+.pantalla .tarjeta .resultado {
+	display: inline-block;
+	margin-top: 0.4rem;
+	padding: 0.1rem 0.6rem;
+	border: 2px solid #111827;
+	border-radius: 999px;
+	font-size: 1rem;
+	font-weight: 800;
+}
+.pantalla .etiqueta {
+	align-self: flex-start;
+	margin: 0.8rem 0 0.4rem;
+	padding: 0.25rem 0.9rem;
+	border: 3px solid #111827;
+	border-radius: 0.4rem;
+	font-size: 1.4rem;
+	font-weight: 800;
+}
+.pantalla .lineas {
+	margin: 0.3rem 0;
+	padding: 0;
+	list-style: none;
+}
+.pantalla .lineas li {
+	margin: 0 0 0.7rem;
+	font-size: 2.2rem;
+	font-weight: 700;
+	line-height: 1.3;
+}
+.pantalla .miniatura {
+	width: 44%;
+	margin: 0.2rem auto 0;
+}
+.pantalla .cadena {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem 1.6rem;
+	margin: 0.8rem 0;
+	padding: 0;
+	list-style: none;
+	counter-reset: paso;
+}
+.pantalla .cadena li {
+	position: relative;
+	padding: 0.4rem 0.8rem;
+	border: 2.5px solid #111827;
+	border-radius: 0.5rem;
+	font-size: 1.1rem;
+	font-weight: 700;
+}
+.pantalla .cadena li + li::before {
+	content: '→';
+	position: absolute;
+	left: -1.35rem;
+	top: 0.4rem;
+	font-weight: 800;
+}
+.pantalla .cierre {
+	margin-top: 2rem;
+	font-size: 2.4rem;
+	font-weight: 800;
+	line-height: 1.35;
+}
+.pantalla .cierre-sub {
+	font-size: 1.8rem;
+	font-weight: 700;
+}
+.pantalla a {
+	color: #1d4ed8;
+}
+
+/* Respaldos: tablas con texto no menor de 14 px en el lienzo */
+.pantalla table.respaldo {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 0.88rem;
+	line-height: 1.3;
+}
+.pantalla table.respaldo th,
+.pantalla table.respaldo td {
+	padding: 0.28rem 0.5rem;
+	border: 1.5px solid #6b7280;
+	vertical-align: top;
+	text-align: left;
+}
+.pantalla table.respaldo th {
+	background: #e5e7eb;
+	font-weight: 800;
+	color: #111827;
+}
+.pantalla .respaldo-nota {
+	margin: 0.4rem 0;
+	font-size: 0.9rem;
+	line-height: 1.35;
+	color: #1f2937;
+	opacity: 1;
+}
+
+/* Pie de fuentes y límites (components/Fuentes.vue) */
 .fuentes {
-  position: absolute;
-  left: 3.5rem;
-  right: 3.5rem;
-  bottom: 0.9rem;
-  font-size: 0.72rem;
-  line-height: 1.35;
-  color: #374151;
+	position: absolute;
+	left: 1.4rem;
+	right: 1.4rem;
+	bottom: 0.6rem;
+	font-size: 0.7rem;
+	line-height: 1.3;
+	color: #374151;
+}
+.fuentes .rotulo {
+	display: inline-block;
+	margin-right: 0.4rem;
+	padding: 0 0.4rem;
+	border: 1.5px solid #374151;
+	border-radius: 0.25rem;
+	font-weight: 700;
+}
+.fuentes strong {
+	font-weight: 800;
+	color: #111827;
 }
 .fuentes a {
-  color: #1d4ed8;
-}
-.fuentes .tag {
-  display: inline-block;
-  margin-right: 0.5rem;
-  padding: 0 0.4rem;
-  border: 1.5px solid #374151;
-  border-radius: 0.25rem;
-  font-weight: 700;
-  letter-spacing: 0.02em;
+	color: #1d4ed8;
 }
 
 /* Límite que se queda fijo junto a un diagrama o una lista. */
 .limite {
-  margin-top: 1.2rem;
-  padding: 0.4rem 0.9rem;
-  border-left: 4px solid #7a2e0e;
-  font-size: 1.3rem;
+	margin-top: 1.2rem;
+	padding: 0.4rem 0.9rem;
+	border-left: 4px solid #7a2e0e;
+	font-size: 1.3rem;
+}
+
+/* Movimiento reducido: las diapositivas cambian sin transición. */
+@media (prefers-reduced-motion: reduce) {
+	[class*='-enter-active'],
+	[class*='-leave-active'] {
+		transition-duration: 0s !important;
+		animation-duration: 0s !important;
+	}
 }

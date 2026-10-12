@@ -1,6 +1,6 @@
-# Presentación: Incidente OpenAI–Hugging Face
+# Presentación: El incidente OpenAI–Hugging Face
 
-Deck en [Slidev](https://sli.dev). Todo el contenido vive en `slides.md`.
+Charla en [Slidev](https://sli.dev): 32 escenas orales (actos 0–8, 40 minutos más 10 de preguntas) y 12 diapositivas de respaldo (B01–B06).
 
 ## Comandos
 
@@ -9,79 +9,72 @@ cd talks/openai-hf
 PLAYWRIGHT_BROWSERS_PATH=0 npm ci   # una vez; Chromium queda en node_modules/
 npm run dev                         # http://localhost:3030, recarga en vivo
 npm run build                       # genera dist/ con base /talks/openai-hf/
-npm run export                      # genera openai-hf.pdf (respaldo offline)
-npm run check:offline               # prueba la charla sin red (necesita `npm run build:all` en la raíz)
+npm run export                      # genera public/openai-hf.pdf (respaldo offline)
+npm run check:offline               # carga charla y post sin red (necesita `npm run build:all` en la raíz)
+npm run check:contrast              # mide el contraste de todo el texto (necesita `npm run build:all`)
 ```
 
 `PLAYWRIGHT_BROWSERS_PATH=0` hace que Playwright guarde Chromium dentro de `node_modules/` y no
-en `~/.cache/ms-playwright`. Los scripts `export` y `check:offline` ya lo fijan. Sin esa variable,
-`npm ci` descarga Chromium fuera del proyecto. Si Chromium falta, instálalo con:
-
-```bash
-PLAYWRIGHT_BROWSERS_PATH=0 npx playwright-chromium install chromium
-```
-
+en `~/.cache/ms-playwright`. Los scripts `export`, `check:offline` y `check:contrast` ya lo fijan.
 Los scripts usan la sintaxis `VAR=valor comando` de shells POSIX (Linux, macOS, WSL).
+
+## De dónde sale cada cosa
+
+El contenido viene del directorio de investigación (`docs/`, privado). Tres generadores lo convierten; ejecútalos
+cuando cambie la fuente. Todos se corren desde la raíz del repositorio:
+
+| Fuente | Comando | Resultado |
+|---|---|---|
+| `docs/mapa.md` + títulos de `docs/guion.md` | `node scripts/mapa-md-to-json.mjs <docs>/mapa.md <docs>/guion.md` | `shared/data/mapa.json` (38 nodos, 34 conexiones, escenas) |
+| `docs/guion.md` + `talks/openai-hf/slides.src.md` | `node scripts/guion-to-slides.mjs <docs>/guion.md` | `talks/openai-hf/slides.md` |
+| `docs/post.md` | `node scripts/post-md-to-mdx.mjs <docs>/post.md` | `src/content/posts/openai-hf.mdx` |
+| `docs/timeline.md` | `node scripts/timeline-md-to-json.mjs <docs>/timeline.md` | `shared/data/timeline.json` (la v2 ya no lo usa) |
+
+- **`slides.md` es generado: edita `slides.src.md`.** El esqueleto lleva el texto en pantalla de cada diapositiva. El generador
+  añade, sin cambiar una palabra, título, acto, notas del orador (más su tiempo de presupuesto) y pie de fuentes del guion.
+  Las tablas de respaldo B01–B06 también salen del guion.
+- La disposición del mapa (casillas, iconos, trazado de cada conexión, texto en pantalla de cada escena) está en
+  `scripts/mapa-layout.mjs`. Lo que dicen los nodos, las listas de cada escena y las fronteras salen de `docs/mapa.md`;
+  el generador falla si una escena nombra un nodo o conexión que no puede dibujar.
+- Si cambia `slides.md`, regenera el PDF: `PLAYWRIGHT_BROWSERS_PATH=0 npm run export`, y haz commit de `public/openai-hf.pdf`.
+
+## Mapa del incidente
+
+`shared/components/MapaIncidente.vue` lo usan el post (Astro) y la charla (Slidev). Recibe una escena y dibuja una instantánea completa:
+
+- Charla: `layouts/pantalla.vue` lee `scene: C05` del frontmatter. Un clic cambia de diapositiva y de escena a la vez. No hay clics internos.
+- Post: `<MapaIncidente client:load scenes={["C03","C04","C05"]} />` añade «Anterior» y «Siguiente» (también ← → Inicio Fin), y anuncia la escena nueva.
+- Zonas y casillas fijas: lo que no está activo se atenúa y pierde su rótulo. Cada conexión lleva un número; su texto y su tipo
+  (ESTRUCTURA, ACCESO OBSERVADO, INFORMACIÓN COMPARTIDA, INTENTO / RESULTADO NO CONFIRMADO, BLOQUEADA) van en la clave bajo el mapa, además del estilo de línea.
+- Los carriles de respuesta solo aparecen en las escenas que los usan.
+- Iconos: set [Carbon](https://carbondesignsystem.com/elements/icons/library/) (Apache 2.0), copiados a `shared/data/icons.json` con
+  `node scripts/extract-icons.mjs`. Sin red. Las diapositivas usan el mismo set con `<carbon-key />` (Iconify de Slidev).
+- Con movimiento reducido no hay transiciones.
+
+Otros componentes: `shared/components/Icono.vue` (un icono Carbon), `shared/components/Timeline.vue` (línea de tiempo; sin uso en la v2),
+`components/Fuentes.vue` (pie de fuentes de cada diapositiva).
+
+`vite.config.ts` agrega `shared/` a `server.fs.allow`: sin eso Slidev rechaza el import fuera de `talks/openai-hf/`.
 
 ## PDF de respaldo
 
-`npm run export` escribe `public/openai-hf.pdf`: una página por diapositiva, en su estado final (sin pasos de clic).
-El PDF está versionado. `slidev build` lo copia a `dist/talks/openai-hf/openai-hf.pdf`, y `/talks/` y el post lo enlazan.
-Vuelve a ejecutarlo cada vez que cambie `slides.md` o un componente, y haz commit del PDF.
+`npm run export` escribe `public/openai-hf.pdf`: una página por escena oral (C01–C32, cada una con sus fuentes y límites) y los respaldos B01–B06
+en páginas aparte, fuera de los 40 minutos. El PDF está versionado. `slidev build` lo copia a `dist/talks/openai-hf/openai-hf.pdf`, y `/talks/` y el post lo enlazan.
 
 ## Sin red
 
-La charla no pide nada a otros dominios:
+La charla y el post no piden nada a otros dominios:
 
 - Fuentes: `style.css` importa `@fontsource/nunito-sans` y `@fontsource/fira-code` (subconjunto `latin`).
   `slides.md` fija `fonts.provider: none`, así Slidev no pide `fonts.googleapis.com`.
-- Favicon: `public/favicon.svg`, declarado con `favicon:` en `slides.md`.
+- Favicon: `public/favicon.svg`. Logo INICTEL-UNI: `public/inictel_peru_logo.jpeg`.
 
-`npm run check:offline` abre `dist/` en Chromium, bloquea todo lo que no sea local, navega por las
-diapositivas y falla si hay una petición externa, una respuesta 4xx/5xx o si no carga la tipografía.
-Si añades un recurso remoto (imagen, iframe, fuente), este comando lo detecta.
+`npm run check:offline` abre `dist/` en Chromium, bloquea todo lo que no sea local, recorre las 44 diapositivas y las escenas de los mapas del post,
+y falla si hay una petición externa, una respuesta 4xx/5xx o si no carga la tipografía.
 
-## Componentes Vue compartidos
+## Contraste
 
-Los componentes que usan el post (Astro) y la charla (Slidev) van en `shared/components/`, en la raíz
-del repositorio. Hoy: `Timeline.vue`, la línea de tiempo del incidente.
-
-- Datos: `shared/data/timeline.json` (76 eventos, de `docs/timeline.md` del directorio de investigación) y
-  `shared/data/sources.json` (ID de fuente → enlace oficial). Para regenerar la línea de tiempo tras un cambio en
-  `docs/timeline.md`: `node scripts/timeline-md-to-json.mjs <ruta>/docs/timeline.md` (en la raíz del repositorio).
-- Post: sin `step`. Pestañas por fase; ← → Inicio Fin cambian de fase. Muestra hecho, actor, fuente y límite.
-- Charla: con `:step="$clicks"`, `compact` y `:groups="[…]"`. Revela un grupo por clic; cada evento ocupa una línea. Lleva `clicks: N` en el frontmatter de la diapositiva.
-
-Los componentes solo de la charla (`Fuentes.vue`, pie de cada diapositiva; `Flow.vue`, diagramas de flujo) viven en `components/` de esta carpeta.
-
-```astro
----
-// Ruta relativa al archivo: desde src/pages/x.astro es ../../shared/…,
-// desde src/content/posts/x.mdx o src/pages/talks/x.astro es ../../../shared/…
-import Timeline from '../../shared/components/Timeline.vue';
----
-<Timeline client:load />
-```
-
-```md
-<!-- slides.md -->
-<script setup>
-import Timeline from '../../shared/components/Timeline.vue'
-</script>
-
-<Timeline compact :level="2" :step="$clicks" :groups="[{ label: '12 mayo: notas', ids: ['E03'] }]" />
-```
-
-`vite.config.ts` agrega `shared/` a `server.fs.allow`: sin eso Slidev rechaza el import fuera de
-`talks/openai-hf/`. Slidev ya resuelve `vue` una sola vez (`dedupe`), así que `ref` y `onMounted`
-del componente funcionan en la charla. Un componente de prueba con `ref` y `onMounted` se montó
-en la página de Astro y en la charla construida (OELL-18).
-
-## Estado
-
-`slides.md` tiene las 22 diapositivas de `docs/guion.md` (directorio de investigación). Las notas del orador son las del guion,
-sin cambios, con la interacción y los minutos al final. Cada diapositiva con hechos lleva su pie de fuentes (`Fuentes.vue`).
-Pendiente de revisión (OELL-21) y de aprobación de Oscar (OELL-22).
+`npm run check:contrast` mide el texto visible de cada diapositiva y de cada escena de cada mapa del post. Falla bajo 4.5:1.
 
 ## Publicación
 

@@ -6,11 +6,13 @@
     "dev": "slidev --open",
     "build": "slidev build --base /talks/openai-hf/",
     "export": "PLAYWRIGHT_BROWSERS_PATH=0 slidev export --output public/openai-hf.pdf",
-    "check:offline": "PLAYWRIGHT_BROWSERS_PATH=0 node scripts/check-offline.mjs"
+    "check:offline": "PLAYWRIGHT_BROWSERS_PATH=0 node scripts/check-offline.mjs",
+    "check:contrast": "PLAYWRIGHT_BROWSERS_PATH=0 node scripts/check-contrast.mjs"
   },
   "devDependencies": {
     "@fontsource/fira-code": "^5.3.0",
     "@fontsource/nunito-sans": "^5.3.0",
+    "@iconify-json/carbon": "1.2.28",
     "@slidev/cli": "^52.0.0",
     "@slidev/theme-default": "^0.25.0",
     "playwright-chromium": "^1.50.0",

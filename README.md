@@ -4,6 +4,8 @@ Serie de seguridad informática. Sitio: https://ollerenac-uni.github.io/
 
 - `src/` — sitio [Astro](https://astro.build) (Vue activado). Posts en `src/content/posts/`.
 - `talks/openai-hf/` — charla [Slidev](https://sli.dev). Se publica en `/talks/openai-hf/`.
+- `shared/` — componentes Vue y datos que usan el post y la charla (`MapaIncidente.vue`, `mapa.json`, iconos Carbon).
+- `scripts/` — generadores desde el directorio de investigación (mapa, diapositivas, post, línea de tiempo, iconos). Ver `talks/openai-hf/README.md`.
 - `.github/workflows/deploy.yml` — construye todo y publica en GitHub Pages al hacer push a `main`.
 
 ## Correr en local
