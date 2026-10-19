@@ -1,0 +1,6 @@
+@import url("../shared/recorrido.css");
+/* Stable cards keep role and document changes from moving the network diagram. */
+#module-one .preparation-row .node { height:86px; min-height:86px; }
+#module-one .diagram { padding-bottom:24px; }
+#module-one .asset-group { gap:12px; }
+#module-one .asset-group .node { height:66px; min-height:66px; }

@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <link rel="icon" href="data:,">
+  <title>Módulo 04 · Recorrido visual Blue Team</title>
+  <link rel="stylesheet" href="modulo-04.css">
+  <script src="modulo-04.js" defer></script>
+  <script src="../shared/recorrido.js" defer></script>
+</head>
+<body>
+<svg class="icon-definitions" aria-hidden="true" width="0" height="0"><defs>
+  <symbol id="icon-network" viewBox="0 0 32 32"><rect x="11" y="3" width="10" height="7" rx="1.5"/><path d="M16 10v8M6 23v-5h20v5"/><rect x="2" y="23" width="8" height="6" rx="1.5"/><rect x="12" y="23" width="8" height="6" rx="1.5"/><rect x="22" y="23" width="8" height="6" rx="1.5"/></symbol>
+  <symbol id="icon-console" viewBox="0 0 32 32"><rect x="3" y="5" width="26" height="22" rx="3"/><path d="M3 11h26M8 16l4 4-4 4M16 24h7"/><circle cx="7" cy="8" r=".5"/><circle cx="10" cy="8" r=".5"/></symbol>
+  <symbol id="icon-person" viewBox="0 0 32 32"><circle cx="16" cy="9" r="5"/><path d="M5 29v-4a11 11 0 0 1 22 0v4M11 27h10"/></symbol>
+  <symbol id="icon-agent" viewBox="0 0 32 32"><rect x="8" y="8" width="16" height="16" rx="4"/><path d="M12 3v5M20 3v5M12 24v5M20 24v5M3 12h5M3 20h5M24 12h5M24 20h5M12 16h8M16 12v8"/></symbol>
+  <symbol id="icon-monitor" viewBox="0 0 32 32"><rect x="3" y="4" width="26" height="19" rx="2"/><path d="M11 29h10M16 23v6M7 19h18"/></symbol>
+  <symbol id="icon-activity" viewBox="0 0 32 32"><path d="M3 17h6l4-10 6 20 4-10h6"/><circle cx="13" cy="7" r="1.5"/><circle cx="19" cy="27" r="1.5"/></symbol>
+  <symbol id="icon-logs" viewBox="0 0 32 32"><path d="M8 6V3h14l5 5v19H8M22 3v6h5"/><rect x="3" y="8" width="19" height="21" rx="2"/><path d="M7 14h11M7 19h11M7 24h7"/></symbol>
+  <symbol id="icon-send" viewBox="0 0 32 32"><path d="M3 15 29 3 18 29l-4-11-11-3Z M14 18 29 3"/></symbol>
+  <symbol id="icon-database" viewBox="0 0 32 32"><ellipse cx="16" cy="7" rx="11" ry="4"/><path d="M5 7v18c0 5 22 5 22 0V7M5 16c0 5 22 5 22 0"/></symbol>
+  <symbol id="icon-search" viewBox="0 0 32 32"><circle cx="13" cy="13" r="9"/><path d="m20 20 9 9M9 13h8M13 9v8"/></symbol>
+  <symbol id="icon-settings" viewBox="0 0 32 32"><path d="M4 7h24M4 16h24M4 25h24"/><rect x="8" y="3" width="6" height="8" rx="1.5"/><rect x="19" y="12" width="6" height="8" rx="1.5"/><rect x="10" y="21" width="6" height="8" rx="1.5"/></symbol>
+  <symbol id="icon-archive" viewBox="0 0 32 32"><rect x="3" y="3" width="26" height="7" rx="1.5"/><path d="M5 10v19h22V10M12 16h8M16 16v6M12 22h8"/></symbol>
+  <symbol id="icon-shield" viewBox="0 0 32 32"><path d="M16 3 28 8v9c0 5-6 10-12 13C10 27 4 22 4 17V8L16 3Z M10 16l4 4 8-9"/></symbol>
+  <symbol id="icon-service" viewBox="0 0 32 32"><rect x="4" y="3" width="24" height="26" rx="3"/><path d="M4 12h24M4 21h24M9 7h.01M9 16h.01M9 25h.01M19 7h5M19 16h5M19 25h5"/></symbol>
+  <symbol id="icon-check" viewBox="0 0 32 32"><circle cx="16" cy="16" r="12"/><path d="m9 16 5 5 10-11"/></symbol>
+  <symbol id="icon-block" viewBox="0 0 32 32"><circle cx="16" cy="16" r="12"/><path d="m7.5 7.5 17 17"/></symbol>
+  <symbol id="icon-scene-back" viewBox="0 0 32 32"><path d="M7 6v20M25 6 11 16l14 10V6Z"/></symbol>
+  <symbol id="icon-play" viewBox="0 0 32 32"><path d="M10 5v22l17-11L10 5Z"/></symbol>
+  <symbol id="icon-pause" viewBox="0 0 32 32"><path d="M10 6v20M22 6v20"/></symbol>
+  <symbol id="icon-scene-next" viewBox="0 0 32 32"><path d="M25 6v20M7 6l14 10L7 26V6Z"/></symbol>
+</defs></svg>
+<main id="module-four" class="course-module">
+  <header class="module-heading">
+    <details class="module-switcher">
+      <summary aria-label="Módulo 04 de 12. Ver módulos">Módulo 04 <span aria-hidden="true">⌄</span></summary>
+      <div class="module-menu"><p>Recorrido de 12 módulos</p><ol><li><a href="../modulo-01/#escena-1">01 · Operaciones Blue Team y preparación para incidentes<small>3 horas · Ver recorrido</small></a></li><li><a href="../modulo-02/#escena-1">02 · Gestión de vulnerabilidades y exposición<small>4 horas · Ver recorrido</small></a></li><li><a href="../modulo-03/#escena-1">03 · Telemetría y protección de equipos<small>6 horas · Ver recorrido</small></a></li><li aria-current="page">04 · Ingeniería de detección<small>Vista actual</small></li><li><a href="../modulo-05/#escena-1">05 · Investigación de correo, phishing y acceso inicial<small>4 horas · Ver recorrido</small></a></li><li><a href="../modulo-06/#escena-1">06 · Monitoreo y análisis de comunicaciones de red<small>4 horas · Ver recorrido</small></a></li><li><a href="../modulo-07/#escena-1">07 · Defensa de identidades en Active Directory<small>5 horas · Ver recorrido</small></a></li><li><a href="../modulo-08/#escena-1">08 · Investigación de identidades en la nube<small>5 horas · Ver recorrido</small></a></li><li><a href="../modulo-09/#escena-1">09 · Investigación y respuesta a incidentes<small>8 horas · Ver recorrido</small></a></li><li><a href="../modulo-10/#escena-1">10 · Búsqueda de amenazas e inteligencia aplicada<small>5 horas · Ver recorrido</small></a></li><li><a href="../modulo-11/#escena-1">11 · Recuperación, hardening y validación de controles<small>4 horas · Ver recorrido</small></a></li><li><a href="../modulo-12/#escena-1">12 · Ejercicio final integrado de defensa<small>6 horas · Ver recorrido</small></a></li></ol></div>
+    </details>
+    <h1>Ingeniería de detección</h1><p class="duration">6 horas</p>
+  </header>
+  <div class="scene-toolbar">
+  <nav class="scene-navigation" aria-label="Escenas del módulo">
+    <button type="button" data-scene="overview" aria-pressed="false">Vista general</button>
+    <button type="button" data-scene="0" aria-pressed="true"><span>1</span>Hipótesis</button>
+    <button type="button" data-scene="1" aria-pressed="false"><span>2</span>Campos y período</button>
+    <button type="button" data-scene="2" aria-pressed="false"><span>3</span>Consulta y regla</button>
+    <button type="button" data-scene="3" aria-pressed="false"><span>4</span>Pruebas</button>
+    <button type="button" data-scene="4" aria-pressed="false"><span>5</span>Ajuste</button>
+    <button type="button" data-scene="5" aria-pressed="false"><span>6</span>Documentación</button>
+  </nav>
+  <select class="scene-select" aria-label="Elegir escena">
+    <option value="overview">Vista general</option><option value="0" selected>1 · Hipótesis</option><option value="1">2 · Campos y período</option><option value="2">3 · Consulta y regla</option><option value="3">4 · Pruebas</option><option value="4">5 · Ajuste</option><option value="5">6 · Documentación</option>
+  </select>
+  <p class="scene-position sr-only" role="status" aria-live="polite">Vista general · recorrido de seis escenas</p>
+  </div>
+  <div class="workspace">
+    <section class="map-panel" aria-labelledby="map-title">
+      <div class="panel-heading"><h2 id="map-title">Red adversaria ↔ red objetivo → red de Elastic</h2><span class="topology-label" hidden>Topología lógica propuesta</span>
+        <div class="motion-controls" role="group" aria-label="Navegación por módulos, escenas y reproducción"><button type="button" class="module-hop module-previous" aria-label="Módulo anterior" title="Módulo anterior: 03 · Telemetría y protección de equipos" data-module-href="../modulo-03/#escena-1"><svg class="icon" viewBox="0 0 32 32" aria-hidden="true"><path d="m15 7-9 9 9 9m11-18-9 9 9 9"/></svg></button><button type="button" class="motion-previous" aria-label="Escena anterior" title="Escena anterior"><svg class="icon" aria-hidden="true"><use href="#icon-scene-back"/></svg></button>
+          <button type="button" class="motion-toggle" aria-label="Reproducir recorrido" title="Reproducir. Flechas izquierda y derecha: pasos internos" aria-keyshortcuts="ArrowLeft ArrowRight"><svg class="icon" aria-hidden="true"><use href="#icon-play"/></svg><span class="sr-only">Reproducir recorrido</span></button>
+          <button type="button" class="motion-next" aria-label="Escena siguiente" title="Escena siguiente"><svg class="icon" aria-hidden="true"><use href="#icon-scene-next"/></svg></button><button type="button" class="module-hop module-next" aria-label="Módulo siguiente" title="Módulo siguiente: 05 · Investigación de correo, phishing y acceso inicial" data-module-href="../modulo-05/#escena-1"><svg class="icon" viewBox="0 0 32 32" aria-hidden="true"><path d="m6 7 9 9-9 9m11-18 9 9-9 9"/></svg></button></div>
+      </div>
+      <div class="map-viewport"><div class="map-content">
+      <div class="diagram" role="group" aria-label="Redes y objetos lógicos de la detección en el módulo 04">
+        <svg class="connections" aria-hidden="true"><defs>
+          <marker id="arrow-control" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="m2 2 6 3-6 3"/></marker>
+          <marker id="arrow-data" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="m2 2 6 3-6 3"/></marker>
+          <marker id="arrow-query" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="m2 2 6 3-6 3"/></marker>
+          <marker id="arrow-management" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="m2 2 6 3-6 3"/></marker>
+        </defs><g class="edge-layer"></g><g class="motion-layer"><g class="motion-packet"><circle r="8"/><path d="m-3 -3 3 3-3 3M2 3h2"/></g></g></svg>
+        <div class="network-grid">
+          <section class="network adversary-network">
+            <h3><svg class="icon" aria-hidden="true"><use href="#icon-network"/></svg>Red adversaria</h3>
+            <p class="network-purpose">Emulación controlada</p>
+            <button type="button" class="node" data-node="caldera"><svg class="node-icon" aria-hidden="true"><use href="#icon-console"/></svg><span>Servidor Caldera<small>Orquesta la emulación</small></span></button>
+            <p class="channel-note">Tareas y resultados<br><span>Canal del agente</span></p>
+            <button type="button" class="node instructor-node" data-node="instructor"><svg class="node-icon" aria-hidden="true"><use href="#icon-person"/></svg><span>Instructor<small>Prepara y verifica el caso</small></span></button>
+            <p class="network-footnote">La captura se prepara antes del análisis del alumno.</p>
+          </section>
+          <section class="network target-network">
+            <h3><svg class="icon" aria-hidden="true"><use href="#icon-network"/></svg>Red objetivo</h3>
+            <p class="network-purpose">Sistema que produce evidencia</p>
+            <section class="windows-host" aria-labelledby="windows-title">
+              <h4 id="windows-title"><svg class="icon" aria-hidden="true"><use href="#icon-monitor"/></svg>Equipo Windows</h4>
+              <button type="button" class="node" data-node="adversary-agent"><svg class="node-icon" aria-hidden="true"><use href="#icon-agent"/></svg><span>Agente Caldera<small>Ejecuta la actividad emulada</small></span></button>
+              <button type="button" class="node" data-node="activity"><svg class="node-icon" aria-hidden="true"><use href="#icon-activity"/></svg><span>Cambio de Run<small>Inicio automático</small></span></button>
+              <button type="button" class="node" data-node="sensor"><svg class="node-icon" aria-hidden="true"><use href="#icon-logs"/></svg><span>Sysmon y registros<small>Seguridad y PowerShell</small></span></button>
+              <button type="button" class="node" data-node="collector"><svg class="node-icon" aria-hidden="true"><use href="#icon-send"/></svg><span>Elastic Agent<small>Recolecta y envía eventos</small></span></button>
+            </section>
+          </section>
+          <section class="network elastic-network">
+            <h3><svg class="icon" aria-hidden="true"><use href="#icon-network"/></svg>Red de Elastic</h3>
+            <p class="network-purpose">Datos y objetos lógicos de detección</p>
+            <button type="button" class="node" data-node="elasticsearch"><svg class="node-icon" aria-hidden="true"><use href="#icon-database"/></svg><span>Elasticsearch<small>Documentos del caso compartido</small></span></button>
+            <section class="personal-space" aria-labelledby="space-title">
+              <h4 id="space-title">Espacio personal en Kibana</h4>
+              <button type="button" class="node" data-node="kibana"><svg class="node-icon" aria-hidden="true"><use href="#icon-search"/></svg><span>Kibana<small>Consulta y previsualización</small></span></button>
+              <button type="button" class="node" data-node="rule"><svg class="node-icon" aria-hidden="true"><use href="#icon-settings"/></svg><span>Consulta / regla<small>Objeto personal de Kibana</small></span></button>
+            </section>
+          </section>
+        </div>
+        <div class="investigation-row preparation-row" aria-label="Documentos y trabajo del analista; no son servidores">
+          <button type="button" class="node archive-node" data-node="tests"><svg class="node-icon" aria-hidden="true"><use href="#icon-logs"/></svg><span>Banco de pruebas<small>Casos y originales conservados</small></span></button>
+          <button type="button" class="node archive-node" data-node="report"><svg class="node-icon" aria-hidden="true"><use href="#icon-archive"/></svg><span>Ficha de detección<small>Versiones, resultados y límites</small></span></button>
+          <button type="button" class="node learner-node" data-node="learner"><svg class="node-icon" aria-hidden="true"><use href="#icon-person"/></svg><span>Alumno / analista<small>Construye, prueba y ajusta</small></span></button>
+        </div>
+      </div>
+      </div></div>
+      <div class="map-key"><div class="legend" aria-label="Significado de las conexiones">
+        <span><b class="line control-line"></b>Emulación</span><span><b class="line data-line"></b>Registros</span><span><b class="line query-line"></b>Investigación</span><span><b class="line management-line"></b>Preparación</span>
+      </div><p class="diagram-caption">Hipótesis, campos, consulta y regla, pruebas, ajuste y documentación.</p></div>
+    </section>
+    <aside class="side-panels" aria-label="Explicación de la escena">
+      <div class="detail-tabs" role="tablist" aria-label="Contenido de la escena">
+        <button type="button" role="tab" id="tab-description" data-tab="description" aria-controls="panel-description" aria-selected="true"><b>1</b><span>Descripción</span></button>
+        <button type="button" role="tab" id="tab-learner" data-tab="learner" aria-controls="panel-learner" aria-selected="false" tabindex="-1"><b>2</b><span>Qué hace el alumno</span></button>
+        <button type="button" role="tab" id="tab-evidence" data-tab="evidence" aria-controls="panel-evidence" aria-selected="false" tabindex="-1"><b>3</b><span>Qué ocurre y qué evidencia deja</span></button>
+      </div>
+      <section class="description-panel detail-panel" role="tabpanel" id="panel-description" aria-labelledby="tab-description" tabindex="0">
+        <p class="narrative-context">Vista general del módulo</p>
+        <div class="narrative-live" aria-live="polite" aria-atomic="true">
+          <h2 class="narrative-title">Del comportamiento a una detección validada</h2>
+          <div class="narrative-body"></div>
+        </div>
+        <details class="module-objective"><summary>Objetivo del módulo · 6 horas</summary><p>Construir y validar una detección de comportamiento, midiendo aciertos, falsos positivos y omisiones frente a actividad legítima y variantes controladas.</p></details>
+      </section>
+      <section class="learner-panel detail-panel" role="tabpanel" id="panel-learner" aria-labelledby="tab-learner" tabindex="0" hidden>
+        <div class="panel-heading"><h2>Qué hace el alumno</h2><svg class="icon" aria-hidden="true"><use href="#icon-person"/></svg></div>
+        <p class="learner-action"></p>
+        <ul class="learner-questions" hidden></ul>
+        <div class="deliverable"><h3>Resultado esperado</h3><p class="learner-result"></p></div>
+      </section>
+      <section class="event-panel detail-panel" role="tabpanel" id="panel-evidence" aria-labelledby="tab-evidence" tabindex="0" hidden>
+        <div class="panel-heading"><h2 id="event-heading">Qué ocurre y qué evidencia deja</h2><svg class="icon" aria-hidden="true"><use href="#icon-logs"/></svg></div>
+        <p class="scene-context">Vista general del módulo</p>
+        <h3 class="event-title">Del comportamiento a una detección validada</h3>
+        <p class="event-description">Se construye una detección y se contrasta su comportamiento con casos legítimos y adversarios de periodos definidos.</p>
+        <div class="evidence-block"><p class="small-label">Evidencia que se examina</p><p class="event-evidence">Hipótesis, regla, campos, periodos, matriz de pruebas, versiones y ficha de cobertura.</p><dl class="evidence-records" hidden></dl></div>
+        <p class="event-boundary">Topología lógica para revisar la propuesta; no representa una instalación ya desplegada.</p>
+        <button type="button" class="return-to-scene" hidden>Volver a la vista seleccionada</button>
+      </section>
+    </aside>
+  </div>
+</main>
+</body>
+</html>
