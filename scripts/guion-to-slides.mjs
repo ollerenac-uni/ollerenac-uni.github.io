@@ -17,7 +17,7 @@ const urls = Object.fromEntries([...guion.matchAll(/^\[(S\d+)\]: (\S+)$/gm)].map
 const names = {
 	S1: 'Aviso HF', S2: 'Aviso OpenAI', S3: 'Reconstrucción HF', S6: 'Informe METR', S7: 'Informe OpenAI', S8: 'Avisos JFrog', S9: 'Versiones JFrog',
 	S11: 'Modal', S15: 'Pausa OpenAI', S27: 'Método METR', S35: 'Incidentes Anthropic', S36: 'System card Mythos Preview',
-	S37: 'Agentic misalignment', S38: 'Summer 2026', S39: 'Campaña Anthropic', S40: 'Agentes OpenAI', S41: 'Repositorios JFrog',
+	S37: 'Agentic misalignment', S38: 'Summer 2026', S39: 'Campaña Anthropic', S40: 'Agentes OpenAI', S41: 'Repositorios JFrog', S42: 'Archivos JFrog',
 };
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 function inline(md) {
