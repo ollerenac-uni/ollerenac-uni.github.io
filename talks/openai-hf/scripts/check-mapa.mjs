@@ -56,7 +56,7 @@ const inspectSlide = (n) => {
 
 // Casos concretos que pidió la revisión (H2, H3): texto de la clave y de la descripción.
 const casos = {
-	C11: { clave: ['Contenedor → Control de salida', 'VM de la prueba → Control de salida', 'BLOQUEADA'], desc: ['salida directa, bloqueada: de Contenedor de evaluación (Evaluación OpenAI) a Control de salida (Evaluación OpenAI)'] },
+	C11: { clave: ['Contenedor → Control de salida', 'VM de la prueba → Control de salida', 'BLOQUEADA'], desc: ['salida directa, bloqueada: de Contenedor de evaluación (Entrenamiento y evaluación OpenAI) a Control de salida (Entrenamiento y evaluación OpenAI)'] },
 	C18: { clave: ['Respuesta de HF ↔ Respuesta de OpenAI'], desc: ['entre Respuesta (Respuesta Hugging Face) y Respuesta (Respuesta OpenAI)', 'Marca de interrogación: sin confirmar, sobre Respuesta (Respuesta OpenAI)'] },
 	C20: { clave: ['Artifactory → Internet', 'Cuenta externa → Caché de imágenes', 'Artifactory → Nodo OpenAI del 19', 'INTENTO / RESULTADO NO CONFIRMADO'], desc: ['de Artifactory (Servicios internos OpenAI) a Nodo OpenAI del 19 (Otra actividad dentro de OpenAI)'] },
 };

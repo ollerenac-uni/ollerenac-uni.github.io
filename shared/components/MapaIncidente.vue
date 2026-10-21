@@ -302,6 +302,7 @@ function stop(s) {
 				</p>
 			</div>
 			<div v-if="key.length" class="der">
+				<p class="titulo-clave">Conexiones del mapa</p>
 				<ol class="clave" :class="{ dos: key.length > 3 }" aria-label="Conexiones de esta escena">
 					<li v-for="k in key" :key="k.id">
 						<span :class="`cn-t cn-${k.cls}`" aria-hidden="true">{{ k.n }}</span>
@@ -432,6 +433,7 @@ svg.plano {
 .chips { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.3rem !important; }
 .chips li { margin: 0; line-height: 1.3; padding: 0.1rem 0.7rem; border: 2px solid #111827; border-radius: 999px; font-weight: 700; font-size: 0.9em; }
 .der { min-width: 0; font-size: 0.7em; line-height: 1.3; color: #1f2937; }
+.titulo-clave { margin: 0 !important; font-size: inherit; line-height: 1.2; font-weight: 700; }
 .clave { margin: 0; padding: 0; list-style: none; }
 .clave.dos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.25rem 0.8rem; }
 .clave li { display: flex; align-items: flex-start; gap: 0.4rem; margin: 0; line-height: 1.25; }
@@ -452,7 +454,7 @@ svg.plano {
 .fronteras { display: flex; flex-direction: column; margin-top: 0.15rem !important; font-size: 0.74em; line-height: 1.25; color: #374151; }
 
 @media (min-width: 761px) {
-	.compacto svg.plano { width: 84%; margin: 0 auto; }
+	.compacto svg.plano { width: 79%; margin: 0 auto; }
 	.larga .meta { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.3fr); }
 }
 @media (max-width: 760px) {

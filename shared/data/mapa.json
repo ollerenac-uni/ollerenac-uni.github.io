@@ -19,7 +19,7 @@
 	},
 	"zones": {
 		"eval": {
-			"label": "Evaluación OpenAI",
+			"label": "Entrenamiento y evaluación OpenAI",
 			"x": 0,
 			"y": 0,
 			"w": 230,
@@ -678,7 +678,7 @@
 					"N03"
 				]
 			],
-			"label": "corren en",
+			"label": "usa el entorno",
 			"tipo": "ESTRUCTURA"
 		},
 		"L02": {

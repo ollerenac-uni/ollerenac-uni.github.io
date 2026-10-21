@@ -9,7 +9,7 @@ const HEAD = 28; // alto del rótulo de zona
 
 // rows = filas de casillas; cols = columnas (1 o 2); extra = alto añadido bajo las casillas (notas fijas)
 export const zones = {
-	eval: { label: 'Evaluación OpenAI', x: 0, y: 0, w: 230, rows: 3, cols: 2, tone: 'oa' },
+	eval: { label: 'Entrenamiento y evaluación OpenAI', x: 0, y: 0, w: 230, rows: 3, cols: 2, tone: 'oa' },
 	otra: { label: 'Otra actividad dentro de OpenAI', x: 0, y: 166, w: 230, rows: 3, cols: 2, tone: 'oa' },
 	int: { label: 'Servicios internos OpenAI', x: 240, y: 0, w: 230, rows: 5, cols: 2, tone: 'oa' },
 	net: { label: 'Internet y servicios públicos', x: 480, y: 0, w: 120, rows: 6, cols: 1, tone: 'net' },
@@ -93,7 +93,7 @@ export const tipos = {
 // type; segs = pares [origen, destino] (solo se dibuja un par si sus dos extremos están activos en la escena; el trazado rodea los demás nodos activos);
 // both = flechas en los dos extremos; blocked = termina en un muro; label = rótulo corto; lo = desplazamiento del rótulo.
 export const links = {
-	L01: { type: 'E', segs: [['N01', 'N03'], ['N02', 'N03']], label: 'corren en' },
+	L01: { type: 'E', segs: [['N01', 'N03'], ['N02', 'N03']], label: 'usa el entorno' },
 	L02: { type: 'A', segs: [['N03', 'N05']], label: 'paquetes' },
 	L03: { type: 'E', segs: [['N04', 'N03']], label: 'aloja' },
 	L04: { type: 'E', segs: [['N11', 'N05']], label: 'credencial común' },

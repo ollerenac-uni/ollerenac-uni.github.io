@@ -17,7 +17,7 @@ const urls = Object.fromEntries([...guion.matchAll(/^\[(S\d+)\]: (\S+)$/gm)].map
 const names = {
 	S1: 'Aviso HF', S2: 'Aviso OpenAI', S3: 'Reconstrucción HF', S6: 'Informe METR', S7: 'Informe OpenAI', S8: 'Avisos JFrog', S9: 'Versiones JFrog',
 	S11: 'Modal', S15: 'Pausa OpenAI', S27: 'Método METR', S35: 'Incidentes Anthropic', S36: 'System card Mythos Preview',
-	S37: 'Agentic misalignment', S38: 'Summer 2026', S39: 'Campaña Anthropic',
+	S37: 'Agentic misalignment', S38: 'Summer 2026', S39: 'Campaña Anthropic', S40: 'Agentes OpenAI', S41: 'Repositorios JFrog',
 };
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 function inline(md) {
@@ -93,8 +93,8 @@ const respaldo = {
 		return [0, 5, 10].map((i, k, a) => page(id, ` (${k + 1}/${a.length})`, `${k === 0 ? '<span id="respaldo"></span>\n\n' + paras(prose[0]) + '\n\n' : ''}${table(rows.slice(i, i + 5), head)}\n\n${k === a.length - 1 ? paras(prose.slice(1).join('\n\n')) : ''}`));
 	},
 	B02(id) {
-		const { head, rows } = split(backup[id].body);
-		return [0, 5, 10].map((i, k, a) => page(id, ` (${k + 1}/${a.length})`, table(rows.slice(i, i + 5), head)));
+		const { head, rows, prose } = split(backup[id].body);
+		return [0, 5, 10].map((i, k, a) => page(id, ` (${k + 1}/${a.length})`, `${table(rows.slice(i, i + 5), head)}${k === a.length - 1 && prose.length ? '\n\n' + paras(prose.join('\n\n')) : ''}`));
 	},
 	B03: (id) => [page(id, '', paras(backup[id].body))],
 	B04: (id) => [page(id, '', paras(backup[id].body))],
