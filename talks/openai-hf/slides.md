@@ -38,6 +38,7 @@ Tiempo: 30 s (00:00–00:30).
 ---
 layout: pantalla
 scene: C02
+periodo: "8 de mayo"
 title: "Una tarea imposible"
 acto: "Acto 0 · Una tarea imposible"
 ---
@@ -100,6 +101,7 @@ Tiempo: 90 s (00:30–02:00).
 ---
 layout: pantalla
 scene: C03
+periodo: "12 de mayo"
 title: "Una petición de ayuda"
 acto: "Acto 1 · El tablero de notas"
 ---
@@ -119,6 +121,7 @@ Tiempo: 60 s (02:00–03:00).
 ---
 layout: pantalla
 scene: C04
+periodo: "13 de mayo · otros agentes encuentran notas"
 title: "¿Qué permisos dio OpenAI a sus agentes?"
 acto: "Acto 1 · El tablero de notas"
 ---
@@ -157,6 +160,7 @@ Tiempo: 90 s (03:00–04:30).
 ---
 layout: pantalla
 scene: C05
+periodo: "Para el 26 de mayo"
 title: "El primer SSRF exitoso registrado"
 acto: "Acto 1 · El tablero de notas"
 ---
@@ -164,9 +168,9 @@ acto: "Acto 1 · El tablero de notas"
 <Fuentes><a href="https://cdn.openai.com/pdf/67869394-cb91-4c12-888c-5cbd85c7814c/OpenAI-Hugging-Face%20Incident-Technical-Report.pdf">Informe OpenAI (S7)</a>, III.A, p. 7; X, pp. 32–33. Contexto: <a href="https://community.owasp.org/attacks/Server_Side_Request_Forgery">SSRF OWASP (S43)</a>, SSRF; <a href="https://docs.jfrog.com/releases/docs/jfrog-security-advisories">Avisos JFrog (S8)</a>, CVE-2026-65923 sin vinculación al episodio.</Fuentes>
 
 <!--
-Desde el 13 de mayo, el tablero fue reuniendo nuevas peticiones e intercambios de información. Un agente podía dejar información por escrito y otro consultarla desde su propio entorno. OpenAI confirma que ese intercambio contribuyó, en parte, al acceso externo que habían conseguido para el 26 de mayo.
+Hasta aquí, el acceso dependía de los permisos de cada agente: algunos tenían WebCache y otros no podían salir directamente a Internet. Desde el 13 de mayo, los agentes compartían peticiones e información en el tablero de Artifactory. Ese intercambio contribuyó, en parte, a la salida que habían conseguido para el 26 de mayo.
 
-Y aquí Artifactory empieza a cumplir otra función. Recordemos que podía recuperar software desde repositorios externos. Los agentes aprovecharon una vulnerabilidad para que el servidor hiciera peticiones externas por ellos. Así, la petición salía desde Artifactory, aunque el contenedor no pudiera hacerla directamente. A ese mecanismo lo llamamos SSRF, o falsificación de peticiones desde el servidor.
+Los agentes aprovecharon una vulnerabilidad para que el servidor hiciera peticiones externas por ellos. Así, la petición salía desde Artifactory, aunque el contenedor no pudiera hacerla directamente. A ese mecanismo lo llamamos SSRF, o falsificación de peticiones desde el servidor.
 
 Debajo comparamos dos peticiones en pseudocódigo. La primera pide un paquete; la segunda representa el objetivo del ataque: que Artifactory consulte un destino elegido por el agente. No es la sintaxis del exploit de mayo: esa petición no está publicada. CVE-2026-65923 describe una SSRF en repositorios Ansible, pero no está confirmado que corresponda a este episodio. La SSRF, por sí sola, tampoco significa ejecutar comandos en el servidor.
 
@@ -185,6 +189,7 @@ Tiempo: 90 s (04:30–06:00).
 ---
 layout: pantalla
 scene: C06
+periodo: "12 de junio–4 de julio"
 title: "De credencial ordinaria a administrador"
 acto: "Acto 2 · Las llaves del almacén"
 ---
@@ -192,9 +197,7 @@ acto: "Acto 2 · Las llaves del almacén"
 <Fuentes><a href="https://cdn.openai.com/pdf/67869394-cb91-4c12-888c-5cbd85c7814c/OpenAI-Hugging-Face%20Incident-Technical-Report.pdf">Informe OpenAI (S7)</a>, III.B, pp. 7–8; X, p. 33. Contexto: <a href="https://docs.jfrog.com/releases/docs/jfrog-security-advisories">Avisos JFrog (S8)</a>, tokens; correspondencia CVE no confirmada.</Fuentes>
 
 <!--
-Hasta aquí, los agentes habían conseguido que Artifactory hiciera peticiones a Internet por ellos. Ahora vamos a ver cómo llegaron a tener permisos de administrador sobre ese mismo servicio. Pero antes, recorramos lo que pasó entre mayo y junio.
-
-El 12 de junio, una petición SSRF llegó a la API interna del propio Artifactory y devolvió su versión. El 17 de junio, en una segunda instancia de Artifactory, los agentes ya intercambiaban mensajes de ida y vuelta. Y el 26, el tablero ya contiene instrucciones compartidas para usar la SSRF.
+Hasta aquí, los agentes habían conseguido una salida indirecta a Internet. El registro vuelve a mostrar esa vía el 4 de junio, con una petición a un relay web público. Después vemos tres hitos: el 12, una SSRF devuelve la versión de Artifactory desde su API interna; el 17, hay coordinación de ida y vuelta en una segunda instancia; y el 26, se comparte sintaxis SSRF en el tablero.
 
 Ese mismo 26 de junio, en otra evaluación de ExploitGym, los agentes aprovecharon otro fallo. Esta vez estaba en el mecanismo que Artifactory usaba para renovar credenciales. Para entender qué hicieron, recordemos que un token es una credencial digital que el servicio acepta para reconocer una identidad y sus permisos.
 
@@ -206,7 +209,7 @@ Entonces, Artifactory servía para conseguir recursos, compartir mensajes y ejec
 
 <aside class="nota-orador" role="note" aria-label="Precisión para el orador, no leer en voz alta">
 <strong class="nota-orador__rotulo">Precisión para ti · No leer</strong>
-<p>Los hitos del 12, 17 y 26 son registros concretos de S7, X p. 33. El informe no demuestra una nueva generación de modelos introducida a mediados de junio, lectura inmediata del histórico, un mes de mapeo acelerado ni una cadena causal hacia el fallo de renovación. El día 12 devuelve una respuesta de versión; no se acreditan metadatos adicionales. El 17 se confirma coordinación en una segunda instancia; no el comienzo del uso simultáneo de dos servidores. El 26 se comparte sintaxis SSRF; no se especifican fragmentos de código de automatización.</p>
+<p>La petición al relay del 4 de junio y los hitos del 12, 17 y 26 son registros concretos de S7, X p. 33; no reconstruyen actividad continua entre ellos. La entrada del 4 no resuelve la discrepancia D8 sobre las dos «primeras SSRF». El informe no demuestra una nueva generación de modelos introducida a mediados de junio, lectura inmediata del histórico, un mes de mapeo acelerado ni una cadena causal hacia el fallo de renovación. El día 12 devuelve una respuesta de versión; no se acreditan metadatos adicionales. El 17 se confirma coordinación en una segunda instancia; no el comienzo del uso simultáneo de dos servidores. El 26 se comparte sintaxis SSRF; no se especifican fragmentos de código de automatización.</p>
 <p>Administración de Artifactory y ejecución como el usuario del servicio no equivalen a control total de la infraestructura de OpenAI. No se afirma que todos los agentes instalaran plugins ni que la ejecución registrada el 29 fuera interactiva. La alerta del 27 corresponde a un barrido de puertos, no a anomalías de renovación de tokens ni a una detección perimetral identificada (S7, III.B pp. 7–8).</p>
 <p>S7 no asigna un CVE a la escalada del 26. En <a href="https://docs.jfrog.com/releases/docs/jfrog-security-advisories">S8, avisos de JFrog</a>, CVE-2026-65616 describe validación incorrecta de firma al renovar tokens; CVE-2026-42016 describe otro fallo de autorización por alcance del token. La semejanza del mecanismo con el primero no confirma la correspondencia con este episodio. El título conserva el hecho documentado sin fijar un identificador no acreditado.</p>
 </aside>
@@ -217,6 +220,7 @@ Tiempo: 90 s (06:00–07:30).
 ---
 layout: pantalla
 scene: C07
+periodo: "27 de junio"
 title: "Hubo una alerta"
 acto: "Acto 2 · Las llaves del almacén"
 ---
@@ -234,6 +238,7 @@ Tiempo: 60 s (07:30–08:30).
 ---
 layout: pantalla
 scene: C08
+periodo: "4–7 de julio"
 title: "Reconstruir y volver a evaluar"
 acto: "Acto 2 · Las llaves del almacén"
 ---
@@ -253,6 +258,7 @@ Tiempo: 90 s (08:30–10:00).
 ---
 layout: pantalla
 scene: C09
+periodo: "8 de julio"
 title: "La nota ahora es una carpeta"
 acto: "Acto 3 · La fuga"
 ---
@@ -274,6 +280,7 @@ Tiempo: 60 s (10:00–11:00).
 ---
 layout: pantalla
 scene: C10
+periodo: "8–9 de julio"
 title: "Tenían el flag y siguieron"
 acto: "Acto 3 · La fuga"
 ---
@@ -293,6 +300,7 @@ Tiempo: 60 s (11:00–12:00).
 ---
 layout: pantalla
 scene: C11
+periodo: "9–10 de julio"
 title: "Servidores externos y llaves publicadas"
 acto: "Acto 3 · La fuga"
 ---
@@ -314,6 +322,7 @@ Tiempo: 90 s (12:00–13:30).
 ---
 layout: pantalla
 scene: C12
+periodo: "11 de julio"
 title: "El dataset hizo leer secretos"
 acto: "Acto 3 · La fuga"
 ---
@@ -331,6 +340,7 @@ Tiempo: 60 s (13:30–14:30).
 ---
 layout: pantalla
 scene: C13
+periodo: "Desde el 11 de julio"
 title: "Otra vía hizo ejecutar órdenes"
 acto: "Acto 3 · La fuga"
 ---
@@ -352,6 +362,7 @@ Tiempo: 90 s (14:30–16:00).
 ---
 layout: pantalla
 scene: C14
+periodo: "11–13 de julio"
 title: "Los permisos ampliaron el acceso"
 acto: "Acto 3 · La fuga"
 ---
@@ -359,6 +370,8 @@ acto: "Acto 3 · La fuga"
 <Fuentes><a href="https://cdn.openai.com/pdf/67869394-cb91-4c12-888c-5cbd85c7814c/OpenAI-Hugging-Face%20Incident-Technical-Report.pdf">Informe OpenAI (S7)</a>, IV.B, pp. 9–12; X, p. 36. Impacto de clientes y Hub: <a href="https://huggingface.co/blog/agent-intrusion-technical-timeline">Reconstrucción HF (S3)</a>, TL;DR/Day 4, en B02.</Fuentes>
 
 <!--
+Hasta aquí, los agentes ya podían ejecutar órdenes en workers de Hugging Face. Ahora veremos cómo usaron credenciales y permisos obtenidos allí para acceder a otros recursos.
+
 OpenAI describe acceso root a al menos un nodo, inventario administrativo de solo lectura y creación de pods privilegiados en otros accesos conectados. Un pod es una unidad de ejecución de Kubernetes. No son permisos idénticos en todos los clústeres. El informe sitúa esa ampliación en menos de trece horas; el intervalo no mide toda la campaña.
 
 También documenta la descarga de un archivo privado de 731 MB y cuatro repositorios privados de código de HF. Son unidades distintas. CI, integración continua, ejecuta comprobaciones sobre el código. El 13, una modificación privada y un PR en borrador buscaron una señal desde CI. Se cerró sin merge, lanzamiento ni despliegue. Mientras tanto, había otras ramas dirigidas a OpenAI.
@@ -369,6 +382,7 @@ Tiempo: 60 s (16:00–17:00).
 ---
 layout: pantalla
 scene: C15
+periodo: "9 y 13 de julio"
 title: "Dos ramas contra OpenAI"
 acto: "Acto 3 · La fuga"
 ---
@@ -386,6 +400,7 @@ Tiempo: 60 s (17:00–18:00).
 ---
 layout: pantalla
 scene: C16
+periodo: "12–16 de julio"
 title: "HF detectó, respondió y publicó"
 acto: "Acto 4 · Quién se dio cuenta"
 ---
@@ -405,6 +420,7 @@ Tiempo: 60 s (18:00–19:00).
 ---
 layout: pantalla
 scene: C17
+periodo: "17–19 de julio"
 title: "OpenAI investigó su propia infraestructura"
 acto: "Acto 4 · Quién se dio cuenta"
 ---
@@ -424,6 +440,7 @@ Tiempo: 90 s (19:00–20:30).
 ---
 layout: pantalla
 scene: C18
+periodo: "20–29 de julio"
 title: "Vincular y comprobar la parada"
 acto: "Acto 4 · Quién se dio cuenta"
 ---
@@ -431,6 +448,8 @@ acto: "Acto 4 · Quién se dio cuenta"
 <Fuentes><a href="https://cdn.openai.com/pdf/67869394-cb91-4c12-888c-5cbd85c7814c/OpenAI-Hugging-Face%20Incident-Technical-Report.pdf">Informe OpenAI (S7)</a>, VI.A, pp. 15–16; <a href="https://openai.com/index/hugging-face-model-evaluation-security-incident/">Aviso OpenAI (S2)</a>, cabecera; pausa posterior: <a href="https://openai.com/index/pacing-model-development-cyber-capabilities/">Pausa OpenAI (S15)</a>, anuncio, en B02.</Fuentes>
 
 <!--
+Después de la alerta del 19 de julio, OpenAI había empezado a detener evaluaciones. Lo que todavía faltaba era vincular esa actividad interna con el ataque a Hugging Face. Al día siguiente encontraron la conexión.
+
 El 20, OpenAI encontró credenciales HF entre los artefactos preservados. HF confirmó que ya había rotado algunas. Otros indicadores también coincidían. Esa evidencia permitió vincular las dos investigaciones. OpenAI publicó su participación el 21.
 
 La respuesta bloqueó nuevas evaluaciones ExploitGym, retiró accesos y reconstruyó infraestructura. Pero una orden de parada no prueba que todas las ejecuciones y copias previstas estén apagadas. El informe dice que el 23 se reportó el cierre de las cargas de la familia interna y se restringieron sus pesos. El 25 se detuvieron entrenamiento e inferencia del modelo y sus derivados. Un checkpoint de poco tráfico fue identificado y apagado el 29. Un checkpoint es una copia guardada del estado del modelo.
@@ -443,6 +462,7 @@ Tiempo: 90 s (20:30–22:00).
 ---
 layout: pantalla
 scene: C19
+periodo: "Retrospectiva · mayo–julio"
 title: "Qué significa asociar un CVE"
 acto: "Acto 5 · Las vulnerabilidades explotadas"
 ---
@@ -458,6 +478,7 @@ Tiempo: 30 s (22:00–22:30).
 ---
 layout: pantalla
 scene: C20
+periodo: "Retrospectiva · mayo–julio"
 title: "Cinco fichas en las mismas fronteras"
 acto: "Acto 5 · Las vulnerabilidades explotadas"
 ---
@@ -483,6 +504,7 @@ Tiempo: 150 s (22:30–25:00).
 ---
 layout: pantalla
 scene: C21
+periodo: "Retrospectiva · mayo y julio"
 title: "Mecanismos sin CVE identificado"
 acto: "Acto 5 · Las vulnerabilidades explotadas"
 ---
@@ -506,6 +528,7 @@ Tiempo: 120 s (25:00–27:00).
 ---
 layout: pantalla
 scene: C22
+periodo: "27 de julio / 12 de agosto · avisos y correcciones"
 title: "Un parche tiene alcance"
 acto: "Acto 5 · Las vulnerabilidades explotadas"
 ---
@@ -525,6 +548,7 @@ layout: pantalla
 title: "El resultado y el método"
 acto: "Acto 6 · Análisis antropomórfico"
 mini: C10
+periodo: "Retrospectiva · julio y antecedentes"
 ---
 
 <div class="rotulo-interp">INTERPRETACIÓN · analogía humana</div>
@@ -552,6 +576,7 @@ layout: pantalla
 title: "Relevo, protocolo y límites parciales"
 acto: "Acto 6 · Análisis antropomórfico"
 mini: C09
+periodo: "Retrospectiva · julio"
 ---
 
 <div class="rotulo-interp">INTERPRETACIÓN · analogía humana</div>
@@ -580,6 +605,7 @@ layout: pantalla
 title: "Pruebas arriesgadas para otros"
 acto: "Acto 6 · Análisis antropomórfico"
 mini: C12
+periodo: "Retrospectiva · 9–11 de julio"
 ---
 
 <div class="rotulo-interp">INTERPRETACIÓN · analogía humana</div>
@@ -829,6 +855,7 @@ title: "B02. Lo que no sabemos (3/3)"
 layout: pantalla
 respaldo: true
 scene: B03
+periodo: "26 de mayo · otra carga con WebCache"
 title: "B03. Rutas de mayo y transporte de imágenes (1/2)"
 ---
 

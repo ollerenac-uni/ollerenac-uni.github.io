@@ -48,6 +48,20 @@ del guion y el generador conserva ese HTML. `style.css` limita su recuadro azul 
 El rótulo permite distinguirlo sin depender solo del color. Los límites que cambian la interpretación de los
 hechos siguen dentro de la narración. Por ahora estos recuadros se usan en las diapositivas 2, 4, 5 y 6.
 
+## Fechas en la charla
+
+Las 25 apariciones del mapa muestran un rótulo temporal bajo el diagrama, también en miniaturas y respaldo.
+`Periodo visible` en el guion genera el campo `periodo` del frontmatter. `pantalla.vue` lo pasa al mapa;
+las miniaturas llevan el periodo del análisis, que puede abarcar más que su escena de fondo.
+«Retrospectiva» identifica el regreso a hechos anteriores, y los avisos/correcciones conservan su categoría.
+El post no pasa esta opción y conserva su presentación. La fecha del episodio central puede ir precedida
+en las notas por un repaso de antecedentes. En C05 se muestra solo este rótulo temporal, sin restaurar
+la franja oculta ni retirar la comparación de peticiones.
+
+Las entradas orales de 5, 6, 14 y 18 recuerdan solo lo necesario para entender el cambio de capacidad
+o de fase. La entrada de la 6 cita los registros del 4, 12, 17 y 26 de junio; no presupone actividad
+continua entre esas fechas ni una relación causal demostrada con el fallo administrativo.
+
 La escena C05 añade `components/FlujoSsrf.vue` en el slot `detalle` del mapa, debajo de sus bloques.
 Compara una petición legítima y el objetivo de una SSRF mediante pseudocódigo ilustrativo.
 Las líneas expresan la intención, no una API ni un payload del incidente. El rótulo de CVE-2026-65923

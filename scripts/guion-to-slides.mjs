@@ -4,6 +4,7 @@
 // los títulos, las notas del orador y los pies de fuentes del guion. Marcadores del esqueleto:
 //   @@ESCENA nn Cnn@@  diapositiva de mapa completa (título, acto, escena, pie y notas)
 //   @@TITULO nn@@  @@ACTO nn@@  @@PIE nn@@  @@NOTAS nn@@   piezas sueltas de la diapositiva nn
+//   @@PERIODO nn@@ / @@PERIODO Bnn@@  rótulo temporal desde «Periodo visible» del guion
 //   @@RESPALDO Bnn@@  respaldos B01–B06 (una o varias diapositivas, con la tabla paginada)
 //   @@REF Sn@@  enlace a una fuente de guion.md, con su nombre corto
 import { readFileSync, writeFileSync } from 'node:fs';
@@ -50,7 +51,8 @@ for (const block of cut.split(/^(?=## Acto|### \d\d\. )/m)) {
 	const notas = block.match(/\*\*Notas del orador:\*\*\s*\n\n([\s\S]*?)\n\n\*\*Pie/);
 	const pie = block.match(/\*\*Pie(?: de hechos)?:\*\* ([\s\S]*?) \*\*Transición:\*\*/);
 	if (!notas || !pie) throw new Error(`Diapositiva ${nn}: faltan notas o pie en guion.md`);
-	slides[nn] = { title, act, notas: notas[1].trim(), pie: pie[1].trim() };
+	const periodo = block.match(/^\*\*Periodo visible:\*\* (.+)$/m)?.[1];
+	slides[nn] = { title, act, periodo, notas: notas[1].trim(), pie: pie[1].trim() };
 }
 if (Object.keys(slides).length !== 32) throw new Error(`Se esperaban 32 diapositivas y hay ${Object.keys(slides).length}`);
 const times = Object.fromEntries([...guion.matchAll(/^\| (\d\d) \| \d \| .+? \| (\d+) \| (\S+) \|$/gm)].map(([, nn, s, span]) => [nn, `${s} s (${span})`]));
@@ -69,8 +71,17 @@ const acto = (nn) => JSON.stringify(slide(nn).act);
 const backup = {};
 for (const block of guion.slice(guion.indexOf('## Respaldo para preguntas')).split(/^(?=### B\d\d\. )/m)) {
 	const h = block.match(/^### (B\d\d)\. (.+)$/m);
-	if (h) backup[h[1]] = { title: h[2], body: block.slice(block.indexOf('\n') + 1).split('\n## ')[0].trim() };
+	if (h) backup[h[1]] = {
+		title: h[2],
+		periodo: block.match(/^\*\*Periodo visible:\*\* (.+)$/m)?.[1],
+		body: block.slice(block.indexOf('\n') + 1).split('\n## ')[0].replace(/^\*\*Periodo visible:\*\* .+\n\n/m, '').trim(),
+	};
 }
+const periodo = (nn) => {
+	const value = nn.startsWith('B') ? backup[nn]?.periodo : slide(nn).periodo;
+	if (!value) throw new Error(`Diapositiva ${nn}: falta Periodo visible en guion.md`);
+	return JSON.stringify(value);
+};
 const cells = (line) => line.replace(/^\||\|\s*$/g, '').split(' | ').map((c) => c.trim());
 function table(lines, head, withHead = true) {
 	const [h, ...rows] = [head, ...lines].map(cells);
@@ -114,8 +125,9 @@ const respaldoPages = (id) => respaldo[id](id).join('\n');
 // --- Esqueleto ---
 let md = readFileSync(skeleton, 'utf8');
 md = md.replace(/@@ESCENA (\d\d) (C\d\d|B\d\d)@@/g, (_, nn, scene) =>
-	[`---`, `layout: pantalla`, `scene: ${scene}`, `title: ${title(nn)}`, `acto: ${acto(nn)}`, `---`, ``, `<Fuentes>${pie(nn)}</Fuentes>`, ``, `<!--\n${notas(nn)}\n-->`, ``].join('\n'),
+	[`---`, `layout: pantalla`, `scene: ${scene}`, `periodo: ${periodo(nn)}`, `title: ${title(nn)}`, `acto: ${acto(nn)}`, `---`, ``, `<Fuentes>${pie(nn)}</Fuentes>`, ``, `<!--\n${notas(nn)}\n-->`, ``].join('\n'),
 );
+md = md.replace(/@@PERIODO (\d\d|B\d\d)@@/g, (_, nn) => periodo(nn));
 md = md.replace(/@@TITULO (\d\d)@@/g, (_, nn) => title(nn));
 md = md.replace(/@@ACTO (\d\d)@@/g, (_, nn) => acto(nn));
 md = md.replace(/@@PIE (\d\d)@@/g, (_, nn) => pie(nn));

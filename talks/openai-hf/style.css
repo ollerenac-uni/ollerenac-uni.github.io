@@ -71,6 +71,21 @@
 .pantalla .mapa {
 	font-size: 15px;
 }
+/* Reserva una línea temporal sin acercar el contenido al pie. Solo afecta a la charla. */
+.pantalla .mapa .periodo {
+	margin: 0;
+	line-height: 1.1;
+}
+.pantalla .mapa .meta {
+	margin-top: 0;
+}
+.pantalla .mapa:not(.mini) svg.plano {
+	width: 96%;
+	margin: 0 auto;
+}
+.pantalla .mapa.compacto:not(.mini) svg.plano {
+	width: 75%;
+}
 /* Destino del salto interno del PDF (EnlaceRespaldo.vue): al borde superior de la diapositiva, no bajo el título. */
 .slidev-layout.pantalla {
 	position: relative;
@@ -183,7 +198,7 @@
 	line-height: 1.3;
 }
 .pantalla .miniatura {
-	width: 44%;
+	width: 39%;
 	margin: 0.2rem auto 0;
 }
 .pantalla .cadena {

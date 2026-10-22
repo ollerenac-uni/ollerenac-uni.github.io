@@ -13,7 +13,7 @@ import HitosJunio from '../components/HitosJunio.vue'
 			<p v-if="$frontmatter.acto" class="acto">{{ $frontmatter.acto }}</p>
 			<p v-else-if="$frontmatter.respaldo" class="acto">Respaldo para preguntas · fuera de los 40 minutos</p>
 		</header>
-		<MapaIncidente v-if="$frontmatter.scene" :scene="$frontmatter.scene" :resumen-oculto="$frontmatter.scene === 'C05'">
+		<MapaIncidente v-if="$frontmatter.scene" :scene="$frontmatter.scene" :periodo="$frontmatter.periodo" :resumen-oculto="$frontmatter.scene === 'C05'">
 			<template v-if="$frontmatter.scene === 'C05'" #detalle>
 				<FlujoSsrf />
 			</template>
@@ -21,7 +21,7 @@ import HitosJunio from '../components/HitosJunio.vue'
 		<HitosJunio v-if="$frontmatter.scene === 'C06'" />
 		<div class="cuerpo"><slot /></div>
 		<div v-if="$frontmatter.mini" class="miniatura">
-			<MapaIncidente :scene="$frontmatter.mini" mini />
+			<MapaIncidente :scene="$frontmatter.mini" :periodo="$frontmatter.periodo" mini />
 		</div>
 	</div>
 </template>

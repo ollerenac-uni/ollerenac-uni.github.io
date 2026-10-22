@@ -14,6 +14,7 @@ const props = defineProps({
 	scenes: Array,
 	mini: Boolean, // miniatura: solo nodos activos como iconos, sin texto
 	resumenOculto: Boolean, // conserva el resumen accesible sin mostrar la franja bajo el mapa
+	periodo: String, // rótulo temporal opcional; la charla puede fechar su análisis, además de la escena
 })
 
 const uid = useId()
@@ -23,6 +24,10 @@ const cur = computed(() => {
 	const id = seq.value ? props.scenes[idx.value] : props.scene
 	if (!mapa.scenes[id]) throw new Error(`MapaIncidente: la escena ${id} no existe en mapa.json`)
 	return mapa.scenes[id]
+})
+const lineas = computed(() => {
+	const prefix = `${props.periodo} · `
+	return cur.value.lineas.map(line => props.periodo && line.startsWith(prefix) ? line.slice(prefix.length) : line)
 })
 const [W, HFULL] = mapa.vb
 
@@ -178,7 +183,7 @@ const alt = computed(() => {
 	const nodes = [...active.value].map(full)
 	const conns = key.value.map((k) => `Conexión ${k.n}, ${k.l.label}, ${k.tipo.toLowerCase()}: ${k.rutas.map((r) => spoken(r, k.l, full)).join('; ')}`)
 	const unsure = cur.value.signo ? ` Marca de interrogación: sin confirmar, sobre ${cur.value.signo.startsWith('L') ? `la conexión ${key.value.find((k) => k.id === cur.value.signo)?.n}` : full(cur.value.signo)}.` : ''
-	return `${cur.value.titulo}. ${cur.value.fecha}. Nodos activos: ${nodes.join('; ') || 'ninguno'}. Conexiones: ${conns.join('. ') || 'ninguna'}.${unsure}`
+	return `${cur.value.titulo}. ${props.periodo || cur.value.fecha}. Nodos activos: ${nodes.join('; ') || 'ninguno'}. Conexiones: ${conns.join('. ') || 'ninguna'}.${unsure}`
 })
 // Texto de la clave: con mucho texto, la clave gana ancho (columnas) y el mapa se reduce un poco (compacto).
 const chars = computed(() => key.value.reduce((n, k) => n + k.l.label.length + k.tipo.length + k.rutas.flat().reduce((m, r) => m + nameOf(r).length + 4, 0), 0))
@@ -291,11 +296,13 @@ function stop(s) {
 			</g>
 		</svg>
 
+		<p v-if="periodo" class="periodo">{{ periodo }}</p>
+
 		<slot name="detalle" />
 
 		<div v-if="!mini" class="meta" :class="{ sr: resumenOculto }">
 			<div class="col">
-				<p v-for="t in cur.lineas" :key="t" class="linea">{{ t }}</p>
+				<p v-for="t in lineas" :key="t" class="linea">{{ t }}</p>
 				<ul v-if="cur.chips" class="chips">
 					<li v-for="c in cur.chips" :key="c">{{ c }}</li>
 				</ul>
@@ -427,6 +434,7 @@ svg.plano {
 .signo text { fill: #451a03; font-size: 13px; font-weight: 800; }
 
 /* Texto bajo el mapa: a la izquierda las líneas de pantalla; a la derecha, la clave de conexiones. */
+.periodo { margin: 0.15rem 0 0; color: #172554; font-size: 15px; line-height: 1.2; font-weight: 800; }
 .meta { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 0.3rem 1.2rem; margin-top: 0.4rem; }
 .meta p, .meta ul, .meta ol { margin: 0; }
 .leyenda-cve, .fichas { grid-column: 1 / -1; }

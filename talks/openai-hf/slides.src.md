@@ -59,6 +59,7 @@ layout: pantalla
 title: @@TITULO 23@@
 acto: @@ACTO 23@@
 mini: C10
+periodo: @@PERIODO 23@@
 ---
 
 <div class="rotulo-interp">INTERPRETACIÓN · analogía humana</div>
@@ -80,6 +81,7 @@ layout: pantalla
 title: @@TITULO 24@@
 acto: @@ACTO 24@@
 mini: C09
+periodo: @@PERIODO 24@@
 ---
 
 <div class="rotulo-interp">INTERPRETACIÓN · analogía humana</div>
@@ -100,6 +102,7 @@ layout: pantalla
 title: @@TITULO 25@@
 acto: @@ACTO 25@@
 mini: C12
+periodo: @@PERIODO 25@@
 ---
 
 <div class="rotulo-interp">INTERPRETACIÓN · analogía humana</div>
@@ -251,6 +254,7 @@ acto: @@ACTO 32@@
 layout: pantalla
 respaldo: true
 scene: B03
+periodo: @@PERIODO B03@@
 title: "B03. Rutas de mayo y transporte de imágenes (1/2)"
 ---
 
