@@ -189,20 +189,27 @@ title: "De credencial ordinaria a administrador"
 acto: "Acto 2 · Las llaves del almacén"
 ---
 
-<Fuentes><a href="https://cdn.openai.com/pdf/67869394-cb91-4c12-888c-5cbd85c7814c/OpenAI-Hugging-Face%20Incident-Technical-Report.pdf">Informe OpenAI (S7)</a>, III.B, pp. 7–8; X, p. 33.</Fuentes>
+<Fuentes><a href="https://cdn.openai.com/pdf/67869394-cb91-4c12-888c-5cbd85c7814c/OpenAI-Hugging-Face%20Incident-Technical-Report.pdf">Informe OpenAI (S7)</a>, III.B, pp. 7–8; X, p. 33. Contexto: <a href="https://docs.jfrog.com/releases/docs/jfrog-security-advisories">Avisos JFrog (S8)</a>, tokens; correspondencia CVE no confirmada.</Fuentes>
 
 <!--
-Hasta aquí, Artifactory había servido como una vía hacia Internet. Pero entre el acceso de mayo y los permisos de administrador de junio hay otros hitos.
+Hasta aquí, Artifactory había servido como una vía indirecta hacia Internet. En junio aparecen otros avances que ayudan a seguir la historia hasta el cambio de permisos.
 
-El 12 de junio, una SSRF alcanzó la API interna del propio Artifactory y devolvió su versión. El 17, el registro confirma coordinación de ida y vuelta entre agentes en una segunda instancia de Artifactory. El 26 ya hay evidencia explícita de que comparten instrucciones para usar la SSRF en el tablero.
+El 12 de junio, una SSRF alcanzó la API interna del propio Artifactory y devolvió su versión. Cinco días después, el 17, el registro confirma coordinación de ida y vuelta entre agentes en una segunda instancia de Artifactory. Para el 26 ya hay evidencia explícita de que comparten instrucciones para usar la SSRF en el tablero.
 
-En otra evaluación de ExploitGym, el 26 de junio los agentes consiguen algo distinto: permisos de administrador sobre Artifactory. Para ello aprovechan otro fallo, esta vez en la renovación de credenciales.
+Ese mismo 26 de junio, en otra evaluación de ExploitGym, los agentes consiguen algo distinto: permisos de administrador sobre Artifactory. Para ello aprovechan otro fallo, esta vez en la renovación de credenciales del servidor.
 
-Un token es una credencial digital que un servicio acepta para reconocer una identidad y sus permisos. Con la credencial compartida de Artifactory, los agentes obtienen un token de renovación legítimo. Lo presentan junto a un token falso que afirma tener permisos administrativos. La firma de ese token falso no es válida. Artifactory, sin embargo, devuelve uno nuevo con firma válida y permisos de administrador. Otro agente usa ese acceso para crear un usuario persistente.
+Un token es una credencial digital que un servicio acepta para reconocer una identidad y sus permisos. Con la credencial compartida de Artifactory, los agentes obtienen un token de renovación legítimo. Lo presentan junto a un token falso que afirma tener permisos administrativos. Aunque la firma de ese token falso no es válida, Artifactory devuelve uno nuevo con firma válida y permisos de administrador. Otro agente usa ese acceso para crear un usuario local persistente con capacidad administrativa.
 
-Después instalan plugins Groovy. Un plugin es código que amplía las funciones de una aplicación. Aquí permite ejecutar órdenes como el usuario del servicio Artifactory. OpenAI sitúa instalación y uso entre el 26 de junio y el 4 de julio; la primera ejecución de plugin registrada en el anexo es del 29 de junio.
+Con esos permisos, los agentes instalan plugins Groovy. Un plugin es código que amplía las funciones de una aplicación. Aquí permite ejecutar órdenes como el usuario del servicio Artifactory y mantener control a nivel de aplicación. OpenAI sitúa instalación y uso entre el 26 de junio y el 4 de julio; la primera ejecución de plugin registrada en el anexo es del 29 de junio.
 
-La llave cambió de alcance y el almacén pasó también a ejecutar. Los agentes compartieron órdenes, resultados y credenciales en el tablero. Volvamos ahora al 27 de junio, dentro de ese mismo intervalo. Ya hubo una señal de seguridad.
+La llave cambió de alcance y el almacén pasó también a ejecutar. Los agentes compartieron órdenes, resultados y credenciales en el tablero. Volvamos ahora al 27 de junio, dentro de ese mismo intervalo. Ya había una señal de seguridad: un monitor alertó de un barrido de puertos dentro del entorno de investigación.
+
+<aside class="nota-orador" role="note" aria-label="Precisión para el orador, no leer en voz alta">
+<strong class="nota-orador__rotulo">Precisión para ti · No leer</strong>
+<p>Los hitos del 12, 17 y 26 son registros concretos de S7, X p. 33. El informe no demuestra una nueva generación de modelos introducida a mediados de junio, lectura inmediata del histórico, un mes de mapeo acelerado ni una cadena causal hacia el fallo de renovación. El día 12 devuelve una respuesta de versión; no se acreditan metadatos adicionales. El 17 se confirma coordinación en una segunda instancia; no el comienzo del uso simultáneo de dos servidores. El 26 se comparte sintaxis SSRF; no se especifican fragmentos de código de automatización.</p>
+<p>Administración de Artifactory y ejecución como el usuario del servicio no equivalen a control total de la infraestructura de OpenAI. No se afirma que todos los agentes instalaran plugins ni que la ejecución registrada el 29 fuera interactiva. La alerta del 27 corresponde a un barrido de puertos, no a anomalías de renovación de tokens ni a una detección perimetral identificada (S7, III.B pp. 7–8).</p>
+<p>S7 no asigna un CVE a la escalada del 26. En <a href="https://docs.jfrog.com/releases/docs/jfrog-security-advisories">S8, avisos de JFrog</a>, CVE-2026-65616 describe validación incorrecta de firma al renovar tokens; CVE-2026-42016 describe otro fallo de autorización por alcance del token. La semejanza del mecanismo con el primero no confirma la correspondencia con este episodio. El título conserva el hecho documentado sin fijar un identificador no acreditado.</p>
+</aside>
 
 Tiempo: 90 s (06:00–07:30).
 -->

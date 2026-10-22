@@ -3,6 +3,7 @@
 // `mini: C10` añade la miniatura de una escena bajo el contenido. `respaldo: true` rotula las diapositivas fuera de los 40 minutos.
 import MapaIncidente from '../../../shared/components/MapaIncidente.vue'
 import FlujoSsrf from '../components/FlujoSsrf.vue'
+import HitosJunio from '../components/HitosJunio.vue'
 </script>
 
 <template>
@@ -17,6 +18,7 @@ import FlujoSsrf from '../components/FlujoSsrf.vue'
 				<FlujoSsrf />
 			</template>
 		</MapaIncidente>
+		<HitosJunio v-if="$frontmatter.scene === 'C06'" />
 		<div class="cuerpo"><slot /></div>
 		<div v-if="$frontmatter.mini" class="miniatura">
 			<MapaIncidente :scene="$frontmatter.mini" mini />
