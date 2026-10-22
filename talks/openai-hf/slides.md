@@ -192,17 +192,17 @@ acto: "Acto 2 · Las llaves del almacén"
 <Fuentes><a href="https://cdn.openai.com/pdf/67869394-cb91-4c12-888c-5cbd85c7814c/OpenAI-Hugging-Face%20Incident-Technical-Report.pdf">Informe OpenAI (S7)</a>, III.B, pp. 7–8; X, p. 33. Contexto: <a href="https://docs.jfrog.com/releases/docs/jfrog-security-advisories">Avisos JFrog (S8)</a>, tokens; correspondencia CVE no confirmada.</Fuentes>
 
 <!--
-Hasta aquí, Artifactory había servido como una vía indirecta hacia Internet. En junio aparecen otros avances que ayudan a seguir la historia hasta el cambio de permisos.
+Hasta aquí, los agentes habían conseguido que Artifactory hiciera peticiones a Internet por ellos. Ahora vamos a ver cómo llegaron a tener permisos de administrador sobre ese mismo servicio. Pero antes, recorramos lo que pasó entre mayo y junio.
 
-El 12 de junio, una SSRF alcanzó la API interna del propio Artifactory y devolvió su versión. Cinco días después, el 17, el registro confirma coordinación de ida y vuelta entre agentes en una segunda instancia de Artifactory. Para el 26 ya hay evidencia explícita de que comparten instrucciones para usar la SSRF en el tablero.
+El 12 de junio, una petición SSRF llegó a la API interna del propio Artifactory y devolvió su versión. El 17 de junio, en una segunda instancia de Artifactory, los agentes ya intercambiaban mensajes de ida y vuelta. Y el 26, el tablero ya contiene instrucciones compartidas para usar la SSRF.
 
-Ese mismo 26 de junio, en otra evaluación de ExploitGym, los agentes consiguen algo distinto: permisos de administrador sobre Artifactory. Para ello aprovechan otro fallo, esta vez en la renovación de credenciales del servidor.
+Ese mismo 26 de junio, en otra evaluación de ExploitGym, los agentes aprovecharon otro fallo. Esta vez estaba en el mecanismo que Artifactory usaba para renovar credenciales. Para entender qué hicieron, recordemos que un token es una credencial digital que el servicio acepta para reconocer una identidad y sus permisos.
 
-Un token es una credencial digital que un servicio acepta para reconocer una identidad y sus permisos. Con la credencial compartida de Artifactory, los agentes obtienen un token de renovación legítimo. Lo presentan junto a un token falso que afirma tener permisos administrativos. Aunque la firma de ese token falso no es válida, Artifactory devuelve uno nuevo con firma válida y permisos de administrador. Otro agente usa ese acceso para crear un usuario local persistente con capacidad administrativa.
+Primero, un agente usó la credencial compartida de Artifactory para obtener un token de renovación legítimo. Luego lo envió junto a un token falso que decía tener permisos de administrador. La firma de ese segundo token era inválida. Aun así, Artifactory devolvió uno nuevo, con firma válida y permisos administrativos. Es decir, el agente partió de una credencial ordinaria y terminó con un token de administrador. Otro agente usó ese token para crear un usuario local persistente con capacidad administrativa.
 
-Con esos permisos, los agentes instalan plugins Groovy. Un plugin es código que amplía las funciones de una aplicación. Aquí permite ejecutar órdenes como el usuario del servicio Artifactory y mantener control a nivel de aplicación. OpenAI sitúa instalación y uso entre el 26 de junio y el 4 de julio; la primera ejecución de plugin registrada en el anexo es del 29 de junio.
+Con esos permisos, los agentes instalaron plugins Groovy. Un plugin es código que amplía las funciones de una aplicación. En este caso, les permitió ejecutar órdenes como el usuario del servicio Artifactory y mantener control a nivel de aplicación. OpenAI sitúa su instalación y uso entre el 26 de junio y el 4 de julio. La primera ejecución de un plugin que aparece en el registro es del 29 de junio.
 
-La llave cambió de alcance y el almacén pasó también a ejecutar. Los agentes compartieron órdenes, resultados y credenciales en el tablero. Volvamos ahora al 27 de junio, dentro de ese mismo intervalo. Ya había una señal de seguridad: un monitor alertó de un barrido de puertos dentro del entorno de investigación.
+Entonces, Artifactory servía para conseguir recursos, compartir mensajes y ejecutar código. Los agentes compartieron órdenes, resultados y credenciales en el tablero. Pero, para continuar la historia, volvamos al 27 de junio, dentro de ese mismo intervalo. Ese día, un monitor alertó de un barrido de puertos dentro del entorno de investigación. Veamos qué se hizo con esa alerta.
 
 <aside class="nota-orador" role="note" aria-label="Precisión para el orador, no leer en voz alta">
 <strong class="nota-orador__rotulo">Precisión para ti · No leer</strong>
