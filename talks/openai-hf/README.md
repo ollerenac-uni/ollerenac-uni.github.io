@@ -48,6 +48,10 @@ del guion y el generador conserva ese HTML. `style.css` limita su recuadro azul 
 El rótulo permite distinguirlo sin depender solo del color. Los límites que cambian la interpretación de los
 hechos siguen dentro de la narración. Por ahora estos recuadros se usan en las diapositivas 2, 4 y 5.
 
+La escena C05 añade `components/FlujoSsrf.vue` en el slot `detalle` del mapa, debajo de sus bloques.
+El recorrido ilustra qué servicio hace la petición; no reproduce un payload ni vincula un CVE con mayo.
+El guion fija el contenido y sus límites. El slot está vacío en las demás escenas y en el post.
+
 ## Mapa del incidente
 
 `shared/components/MapaIncidente.vue` lo usan el post (Astro) y la charla (Slidev). Recibe una escena y dibuja una instantánea completa:

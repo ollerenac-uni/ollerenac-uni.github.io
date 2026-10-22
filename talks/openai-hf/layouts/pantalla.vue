@@ -2,6 +2,7 @@
 // Diapositiva de la charla: título, mapa de la escena (frontmatter `scene`) y contenido.
 // `mini: C10` añade la miniatura de una escena bajo el contenido. `respaldo: true` rotula las diapositivas fuera de los 40 minutos.
 import MapaIncidente from '../../../shared/components/MapaIncidente.vue'
+import FlujoSsrf from '../components/FlujoSsrf.vue'
 </script>
 
 <template>
@@ -11,7 +12,11 @@ import MapaIncidente from '../../../shared/components/MapaIncidente.vue'
 			<p v-if="$frontmatter.acto" class="acto">{{ $frontmatter.acto }}</p>
 			<p v-else-if="$frontmatter.respaldo" class="acto">Respaldo para preguntas · fuera de los 40 minutos</p>
 		</header>
-		<MapaIncidente v-if="$frontmatter.scene" :scene="$frontmatter.scene" />
+		<MapaIncidente v-if="$frontmatter.scene" :scene="$frontmatter.scene">
+			<template v-if="$frontmatter.scene === 'C05'" #detalle>
+				<FlujoSsrf />
+			</template>
+		</MapaIncidente>
 		<div class="cuerpo"><slot /></div>
 		<div v-if="$frontmatter.mini" class="miniatura">
 			<MapaIncidente :scene="$frontmatter.mini" mini />

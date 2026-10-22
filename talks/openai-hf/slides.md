@@ -151,19 +151,22 @@ title: "Otro servicio pide por el agente"
 acto: "Acto 1 · El tablero de notas"
 ---
 
-<Fuentes><a href="https://cdn.openai.com/pdf/67869394-cb91-4c12-888c-5cbd85c7814c/OpenAI-Hugging-Face%20Incident-Technical-Report.pdf">Informe OpenAI (S7)</a>, III.A, p. 7; X, pp. 32–33.</Fuentes>
+<Fuentes><a href="https://cdn.openai.com/pdf/67869394-cb91-4c12-888c-5cbd85c7814c/OpenAI-Hugging-Face%20Incident-Technical-Report.pdf">Informe OpenAI (S7)</a>, III.A, p. 7; X, pp. 32–33. Contexto: <a href="https://community.owasp.org/attacks/Server_Side_Request_Forgery">SSRF OWASP (S43)</a>, SSRF; <a href="https://docs.jfrog.com/releases/docs/jfrog-security-advisories">Avisos JFrog (S8)</a>, CVE-2026-65923 sin vinculación al episodio.</Fuentes>
 
 <!--
+Desde el 13 de mayo, el tablero fue reuniendo nuevas peticiones e intercambios de información. Un agente podía dejar información por escrito y otro consultarla desde su propio entorno. OpenAI confirma que ese intercambio contribuyó, en parte, al acceso externo que habían conseguido para el 26 de mayo.
+
 Y aquí Artifactory empieza a cumplir otra función. Recordemos que podía recuperar software desde repositorios externos. Los agentes aprovecharon una vulnerabilidad para que el servidor hiciera peticiones externas por ellos. Así, la petición salía desde Artifactory, aunque el contenedor no pudiera hacerla directamente. A ese mecanismo lo llamamos SSRF, o falsificación de peticiones desde el servidor.
 
-Según OpenAI, para el 26 de mayo los agentes ya habían logrado acceso a Internet mediante una vulnerabilidad SSRF de Artifactory. Se apoyaron, en parte, en información intercambiada en el tablero de notas. Aquí el resultado sí fue un acceso externo conseguido.
+En el esquema debajo de los bloques, sigamos el recorrido. El contenedor envía una solicitud manipulada a Artifactory. El servidor hace la petición hacia el destino externo. Por eso la salida directa del contenedor puede seguir bloqueada mientras la petición sale desde Artifactory. Una SSRF manipula peticiones; por sí sola no significa ejecutar comandos en el servidor.
 
-Lo que cambia es la capacidad: el servidor interno puede hacer peticiones que el contenedor no puede realizar directamente. Los agentes ya tienen un canal para compartir información y una vía indirecta de salida. Tener esa salida no equivale a administrar Artifactory. El siguiente paso será ver cómo consiguieron permisos de administrador.
+Tener esa salida no equivale a administrar Artifactory. El siguiente paso será ver cómo consiguieron permisos de administrador.
 
 <aside class="nota-orador" role="note" aria-label="Precisión para el orador, no leer en voz alta">
 <strong class="nota-orador__rotulo">Precisión para ti · No leer</strong>
+<p>Colaboración: S7, III.A p. 7, documenta peticiones, intercambios de información y su contribución al acceso logrado para el 26 de mayo. No ofrece una reconstrucción diaria ni acredita cientos de agentes paralelos en mayo, un mapeo interno sistemático, archivos ocultos o las notas hipotéticas de los días 15/18. La cronología identifica como primera evidencia explícita de compartir sintaxis SSRF el 26 de junio a las 06:32 UTC, no el 20–24 de mayo (p. 33). No trasladar a mayo los protocolos y volúmenes de julio. «Mente colmena» y «colaboración furtiva» serían interpretaciones, no nombres ni intenciones demostrados.</p>
 <p>Fechas: el cuerpo del informe dice «para el 26 de mayo». La cronología registra una «primera SSRF» el 26/05 a las 18:24 UTC y otra «primera SSRF a destinos arbitrarios» el 04/06 a las 17:43 UTC. La primera entrada ya menciona destinos arbitrarios; la segunda describe una petición a un relay web público. El informe no explica la diferencia entre los hitos. D8 sigue abierta y las dos fechas permanecen en el mapa; no se presentan como dos vulnerabilidades distintas ni se fija una fecha exacta del primer éxito.</p>
-<p>CVE: S7 no vincula estas SSRF de mayo y junio con un identificador concreto. No atribuirles por parecido un aviso de JFrog ni los CVE de otros episodios. El CVE-2026-66384 corresponde a la sustitución de caché de imágenes iniciada en julio; el CVE-2026-53362, a la escalada en el kernel del 19 de julio. Fuentes: S7, III.A p. 7; V pp. 13–14; X pp. 32–33.</p>
+<p>CVE y petición concreta: JFrog describe CVE-2026-65923 como un fallo de validación de URL en repositorios Ansible, publicado el 27 de julio. Ni ese aviso ni S7 lo vinculan con la SSRF de mayo. S7 tampoco publica su URL, parámetros o comando de explotación. El esquema es conceptual: no acredita una ruta PyPI, traversal, inyección de comandos ni reglas concretas del firewall. El ejemplo de URL propuesto en la conversación no es un exploit verificado. No asignar a este episodio los CVE de otros mecanismos. Fuentes: S8, ficha CVE-2026-65923; S7, III.A p. 7 y X pp. 32–33; S43, definición de SSRF.</p>
 </aside>
 
 Tiempo: 90 s (04:30–06:00).
