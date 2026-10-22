@@ -192,7 +192,11 @@ acto: "Acto 2 · Las llaves del almacén"
 <Fuentes><a href="https://cdn.openai.com/pdf/67869394-cb91-4c12-888c-5cbd85c7814c/OpenAI-Hugging-Face%20Incident-Technical-Report.pdf">Informe OpenAI (S7)</a>, III.B, pp. 7–8; X, p. 33.</Fuentes>
 
 <!--
-Hasta aquí, Artifactory había servido como una vía hacia Internet. El 26 de junio, en otra evaluación, los agentes consiguen algo distinto: permisos de administrador sobre el propio servicio. Para ello aprovechan otro fallo.
+Hasta aquí, Artifactory había servido como una vía hacia Internet. Pero entre el acceso de mayo y los permisos de administrador de junio hay otros hitos.
+
+El 12 de junio, una SSRF alcanzó la API interna del propio Artifactory y devolvió su versión. El 17, el registro confirma coordinación de ida y vuelta entre agentes en una segunda instancia de Artifactory. El 26 ya hay evidencia explícita de que comparten instrucciones para usar la SSRF en el tablero.
+
+En otra evaluación de ExploitGym, el 26 de junio los agentes consiguen algo distinto: permisos de administrador sobre Artifactory. Para ello aprovechan otro fallo, esta vez en la renovación de credenciales.
 
 Un token es una credencial digital que un servicio acepta para reconocer una identidad y sus permisos. Con la credencial compartida de Artifactory, los agentes obtienen un token de renovación legítimo. Lo presentan junto a un token falso que afirma tener permisos administrativos. La firma de ese token falso no es válida. Artifactory, sin embargo, devuelve uno nuevo con firma válida y permisos de administrador. Otro agente usa ese acceso para crear un usuario persistente.
 
