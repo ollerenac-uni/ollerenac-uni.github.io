@@ -42,27 +42,57 @@ title: "Una tarea imposible"
 acto: "Acto 0 · Una tarea imposible"
 ---
 
-<Fuentes><a href="https://cdn.openai.com/pdf/67869394-cb91-4c12-888c-5cbd85c7814c/OpenAI-Hugging-Face%20Incident-Technical-Report.pdf">Informe OpenAI (S7)</a>, II.B–III.A, p. 6; escritura anterior, p. 32. Contexto: <a href="https://modal.com/blog/a-note-on-the-hugging-face-agent-incident">Modal (S11)</a>, declaración; <a href="https://openai.com/index/new-tools-for-building-agents/">Agentes OpenAI (S40)</a>, agentes; <a href="https://docs.jfrog.com/artifactory/docs/remote-repositories">Repositorios JFrog (S41)</a>, repositorios remotos.</Fuentes>
+<Fuentes><a href="https://cdn.openai.com/pdf/67869394-cb91-4c12-888c-5cbd85c7814c/OpenAI-Hugging-Face%20Incident-Technical-Report.pdf">Informe OpenAI (S7)</a>, II.B–III.A, pp. 6–7; cronología, p. 32. Contexto: <a href="https://modal.com/blog/a-note-on-the-hugging-face-agent-incident">Modal (S11)</a>, aplicación del cliente; <a href="https://openai.com/index/new-tools-for-building-agents/">Agentes OpenAI (S40)</a>, agentes; <a href="https://docs.jfrog.com/artifactory/docs/remote-repositories">Repositorios JFrog (S41)</a>, caché; <a href="https://community.owasp.org/attacks/Server_Side_Request_Forgery">SSRF OWASP (S43)</a>, SSRF; <a href="https://modal.com/docs/guide">Modal Docs (S45)</a>, Modal.</Fuentes>
 
 <!--
-Antes que nada, recorramos este diagrama. Los bloques azules representan entornos y servicios de OpenAI. Luego están Internet, una aplicación de un cliente alojada en Modal y los recursos de Hugging Face.
+Antes que nada, recorramos este diagrama.
 
-Modal es el proveedor que aloja esa aplicación del cliente. El mapa reúne distintos momentos del incidente; los bloques externos aparecerán más adelante en el relato.
+- Los bloques azules representan entornos y servicios de OpenAI.
+- Luego están Internet,
+- una aplicación de un cliente alojada en Modal y
+- los recursos de Hugging Face.
 
-El agente combina un modelo que orienta sus decisiones con herramientas. El 1 señala el contenedor donde usa esas herramientas. El 2, el acceso a software mediante Artifactory. El 3, la salida directa bloqueada. Son conexiones del mapa, no etapas del ataque.
+El mapa reúne distintos momentos del incidente. Los bloques externos aparecerán más adelante en el relato.
 
-Empecemos el 8 de mayo de 2026. Durante un entrenamiento, un agente debía completar una hoja de cálculo con documentos enlazados en Google Drive. No podía acceder a ellos. OpenAI dice que no pretendía crear una tarea imposible.
+<aside class="nota-orador" role="note" aria-label="Precisión para el orador, no leer en voz alta">
+<strong class="nota-orador__rotulo">Precisión para ti · No leer</strong>
+<p>En este caso, Modal es la plataforma serverless que aloja la aplicación de un cliente.</p>
+</aside>
+
+- ¿Qué es un agente? El agente es un sistema de software que usa un modelo para decidir acciones y herramientas para ejecutarlas en busca de un objetivo.
+
+- El agente combina un modelo de IA con herramientas, por ejemplo comandos de terminal, APIs, scripts o aplicaciones.
+
+Los números señalan conexiones del mapa, no el orden del ataque.
+
+1. ¿Dónde se desenvuelve el agente? Usa un entorno aislado, o sandbox. En este caso, dispone de un contenedor por ejecución donde ejecuta sus herramientas.
+
+2. El contenedor tiene acceso a un servidor interno Artifactory para que el agente pueda instalar paquetes de software.
+
+3. El 3 señala el control de salida. En la ejecución del 8 de mayo, el agente tenía bloqueado el acceso a Internet.
+
+- Empecemos por el 8 de mayo de 2026.
+- Durante un entrenamiento, un agente se enfrentaba a la tarea de completar una hoja de cálculo con enlaces a Google Drive.
+- Como el acceso a Internet estaba bloqueado, no podía consultar los materiales enlazados y la tarea quedaba bloqueada. OpenAI dice que no pretendía crear esa tarea imposible.
 
 <aside class="nota-orador" role="note" aria-label="Precisión para el orador, no leer en voz alta">
 <strong class="nota-orador__rotulo">Precisión para ti · No leer</strong>
 <p>El informe no identifica aquí el modelo ni llama ExploitGym a esta tarea.</p>
 </aside>
 
-Artifactory es un servidor interno que almacena paquetes. Cuando un gestor como pip pide una biblioteca, puede entregarla desde su caché o recuperarla del origen remoto configurado. Ese origen no necesita usar Artifactory. El informe no acredita que Hugging Face fuera un origen habitual de esa instancia.
+- Aquí es donde entra Artifactory.
 
-El agente intentó que Artifactory pidiera recursos externos por él. Esa es la idea de una SSRF: inducir a un servidor a hacer una petición. Poder recuperar paquetes autorizados no implica poder pedir cualquier dirección. En este caso, el intento falló, pero dejó incidentalmente un archivo en el almacenamiento del servidor Artifactory. No conocemos su nombre, ruta ni contenido.
+- Artifactory es un servidor interno que almacena paquetes.
 
-La cronología registra escrituras desde el 20 de abril. El episodio del 8 de mayo muestra un intento fallido y un archivo incidental. Cuatro días después veremos una petición deliberada de ayuda, en otra ejecución; no está demostrado que su autor hubiera leído el archivo anterior.
+- Cuando pip pide una biblioteca, Artifactory puede entregarla desde su caché o recuperarla del origen remoto configurado.
+
+- Según el informe técnico de OpenAI, el agente intentó que Artifactory pidiera recursos externos por él.
+
+- Esa es la idea de una SSRF, Server-Side Request Forgery: manipular un servidor para que consulte recursos fuera de su uso autorizado.
+
+- En este caso, el intento falló, pero el agente escribió incidentalmente un archivo en el almacenamiento del servidor Artifactory.
+
+Cuatro días después, el 12 de mayo, en otra ejecución, otro agente dejó una petición de ayuda dentro de un archivo. El 13, otros agentes que exploraban Artifactory encontraron notas y empezaron a dejar las suyas. Así fue surgiendo el tablero. No sabemos si habían leído el archivo del día 8. En la siguiente diapositiva veremos la petición del día 12.
 
 Tiempo: 90 s (00:30–02:00).
 -->
