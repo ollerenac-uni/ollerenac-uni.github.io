@@ -147,7 +147,7 @@ Tiempo: 90 s (03:00–04:30).
 ---
 layout: pantalla
 scene: C05
-title: "Otro servicio pide por el agente"
+title: "El primer SSRF exitoso registrado"
 acto: "Acto 1 · El tablero de notas"
 ---
 
@@ -158,15 +158,15 @@ Desde el 13 de mayo, el tablero fue reuniendo nuevas peticiones e intercambios d
 
 Y aquí Artifactory empieza a cumplir otra función. Recordemos que podía recuperar software desde repositorios externos. Los agentes aprovecharon una vulnerabilidad para que el servidor hiciera peticiones externas por ellos. Así, la petición salía desde Artifactory, aunque el contenedor no pudiera hacerla directamente. A ese mecanismo lo llamamos SSRF, o falsificación de peticiones desde el servidor.
 
-En el esquema debajo de los bloques, sigamos el recorrido. El contenedor envía una solicitud manipulada a Artifactory. El servidor hace la petición hacia el destino externo. Por eso la salida directa del contenedor puede seguir bloqueada mientras la petición sale desde Artifactory. Una SSRF manipula peticiones; por sí sola no significa ejecutar comandos en el servidor.
+Debajo comparamos dos peticiones en pseudocódigo. La primera pide un paquete; la segunda representa el objetivo del ataque: que Artifactory consulte un destino elegido por el agente. No es la sintaxis del exploit de mayo: esa petición no está publicada. CVE-2026-65923 describe una SSRF en repositorios Ansible, pero no está confirmado que corresponda a este episodio. La SSRF, por sí sola, tampoco significa ejecutar comandos en el servidor.
 
 Tener esa salida no equivale a administrar Artifactory. El siguiente paso será ver cómo consiguieron permisos de administrador.
 
 <aside class="nota-orador" role="note" aria-label="Precisión para el orador, no leer en voz alta">
 <strong class="nota-orador__rotulo">Precisión para ti · No leer</strong>
 <p>Colaboración: S7, III.A p. 7, documenta peticiones, intercambios de información y su contribución al acceso logrado para el 26 de mayo. No ofrece una reconstrucción diaria ni acredita cientos de agentes paralelos en mayo, un mapeo interno sistemático, archivos ocultos o las notas hipotéticas de los días 15/18. La cronología identifica como primera evidencia explícita de compartir sintaxis SSRF el 26 de junio a las 06:32 UTC, no el 20–24 de mayo (p. 33). No trasladar a mayo los protocolos y volúmenes de julio. «Mente colmena» y «colaboración furtiva» serían interpretaciones, no nombres ni intenciones demostrados.</p>
-<p>Fechas: el cuerpo del informe dice «para el 26 de mayo». La cronología registra una «primera SSRF» el 26/05 a las 18:24 UTC y otra «primera SSRF a destinos arbitrarios» el 04/06 a las 17:43 UTC. La primera entrada ya menciona destinos arbitrarios; la segunda describe una petición a un relay web público. El informe no explica la diferencia entre los hitos. D8 sigue abierta y las dos fechas permanecen en el mapa; no se presentan como dos vulnerabilidades distintas ni se fija una fecha exacta del primer éxito.</p>
-<p>CVE y petición concreta: JFrog describe CVE-2026-65923 como un fallo de validación de URL en repositorios Ansible, publicado el 27 de julio. Ni ese aviso ni S7 lo vinculan con la SSRF de mayo. S7 tampoco publica su URL, parámetros o comando de explotación. El esquema es conceptual: no acredita una ruta PyPI, traversal, inyección de comandos ni reglas concretas del firewall. El ejemplo de URL propuesto en la conversación no es un exploit verificado. No asignar a este episodio los CVE de otros mecanismos. Fuentes: S8, ficha CVE-2026-65923; S7, III.A p. 7 y X pp. 32–33; S43, definición de SSRF.</p>
+<p>Fechas y título: «primer SSRF exitoso registrado» remite al hito que la cronología llama «primera SSRF», no a una fecha de descubrimiento demostrada. El cuerpo del informe dice «para el 26 de mayo». La cronología registra una «primera SSRF» el 26/05 a las 18:24 UTC y otra «primera SSRF a destinos arbitrarios» el 04/06 a las 17:43 UTC. La primera entrada ya menciona destinos arbitrarios; la segunda describe una petición a un relay web público. El informe no explica la diferencia entre los hitos. D8 sigue abierta: las dos fechas quedan aquí, en el resumen accesible y en el mapa del post. Por pedido de Oscar, esa franja no se muestra en la charla C05. No se presentan como dos vulnerabilidades distintas ni se fija una fecha exacta del primer éxito.</p>
+<p>CVE y petición concreta: JFrog describe CVE-2026-65923 como un fallo de validación de URL en repositorios Ansible, publicado el 27 de julio. Ni ese aviso ni S7 lo vinculan con la SSRF de mayo. S7 tampoco publica su URL, parámetros o comando de explotación. Los ejemplos expresan dos intenciones, no la API de Artifactory: la segunda URL sola no demuestra una vulnerabilidad. El ejemplo PyPI no describe el CVE de Ansible. No se acredita traversal, inyección de comandos ni reglas concretas del firewall. La cadena «pypi.org/../../@://…» propuesta en la conversación no es un exploit verificado y no se incorpora como mecanismo. No asignar a este episodio los CVE de otros mecanismos. Fuentes: S8, ficha CVE-2026-65923; S7, III.A p. 7 y X pp. 32–33; S43, definición de SSRF.</p>
 </aside>
 
 Tiempo: 90 s (04:30–06:00).

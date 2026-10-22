@@ -1320,7 +1320,7 @@
 			"id": "C05",
 			"act": 1,
 			"fecha": "26 de mayo / 4 de junio",
-			"titulo": "Otro servicio pide por el agente",
+			"titulo": "El primer SSRF exitoso registrado",
 			"nodos": [
 				"N03",
 				"N05",

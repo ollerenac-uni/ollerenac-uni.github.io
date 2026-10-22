@@ -49,8 +49,13 @@ El rótulo permite distinguirlo sin depender solo del color. Los límites que ca
 hechos siguen dentro de la narración. Por ahora estos recuadros se usan en las diapositivas 2, 4 y 5.
 
 La escena C05 añade `components/FlujoSsrf.vue` en el slot `detalle` del mapa, debajo de sus bloques.
-El recorrido ilustra qué servicio hace la petición; no reproduce un payload ni vincula un CVE con mayo.
+Compara una petición legítima y el objetivo de una SSRF mediante pseudocódigo ilustrativo.
+Las líneas expresan la intención, no una API ni un payload del incidente. El rótulo de CVE-2026-65923
+identifica su alcance Ansible y declara que su vínculo con mayo no está confirmado.
 El guion fija el contenido y sus límites. El slot está vacío en las demás escenas y en el post.
+Solo en la charla C05, `resumen-oculto` oculta visualmente la franja de resumen y clave
+sin quitar su texto accesible. El SVG conserva el mismo ancho del mapa de las otras escenas.
+La discrepancia D8 permanece en las notas y en los datos compartidos del post.
 
 ## Mapa del incidente
 

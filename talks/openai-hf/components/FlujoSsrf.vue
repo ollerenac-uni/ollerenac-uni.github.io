@@ -1,14 +1,23 @@
 <template>
-	<section class="ssrf-flujo" aria-label="Recorrido conceptual de la petición SSRF">
+	<section class="ssrf-flujo" aria-label="Comparación conceptual de una petición legítima y una SSRF">
 		<div class="ssrf-cabecera">
-			<strong>SSRF · esquema conceptual</strong>
-			<span>URL y parámetros del exploit de mayo: no publicados</span>
+			<strong>Petición legítima frente a SSRF</strong>
+			<span>Pseudocódigo ilustrativo · no es el exploit de mayo</span>
 		</div>
-		<ol class="ssrf-pasos">
-			<li><strong>Contenedor del agente</strong><span>Envía una solicitud manipulada</span></li>
-			<li><strong>Artifactory</strong><span>Hace la petición externa</span></li>
-			<li><strong>Destino externo</strong><span>Recibe la petición de Artifactory</span></li>
-		</ol>
+		<div class="ssrf-comparacion">
+			<div class="ssrf-peticion">
+				<strong>Petición legítima · ejemplo</strong>
+				<code>DAME: pypi.org/project/numpy</code>
+				<span>Obtener software desde el repositorio previsto.</span>
+			</div>
+			<div class="ssrf-peticion ssrf-manipulada">
+				<strong>Objetivo de la petición manipulada</strong>
+				<code>DAME: https://destino-externo.example/recurso</code>
+				<span>Inducir a Artifactory a consultar otro destino.</span>
+			</div>
+		</div>
+		<p class="ssrf-limite">Las líneas expresan la intención; la sintaxis real de mayo no está publicada.</p>
+		<p class="ssrf-cve"><strong>CVE-2026-65923:</strong> SSRF en repositorios Ansible. <strong>Vínculo con mayo: no confirmado.</strong></p>
 	</section>
 </template>
 
@@ -30,32 +39,34 @@
 	margin-bottom: 0.25rem;
 }
 .ssrf-cabecera strong { font-weight: 800; }
-.ssrf-pasos {
+.ssrf-comparacion {
 	display: grid;
-	grid-template-columns: repeat(3, minmax(0, 1fr));
-	gap: 1.6rem;
-	list-style: none;
-	padding: 0;
-	margin: 0;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 0.6rem;
 }
-.ssrf-pasos li {
-	position: relative;
+.ssrf-peticion {
 	display: flex;
 	flex-direction: column;
-	gap: 0.1rem;
+	gap: 0.2rem;
 	padding: 0.25rem 0.45rem;
 	border: 1px solid #1e3a8a;
 	border-radius: 0.25rem;
 	background: #fff;
 }
-.ssrf-pasos li + li::before {
-	content: '→';
-	position: absolute;
-	right: calc(100% + 0.35rem);
-	top: 50%;
-	transform: translateY(-50%);
-	font-size: 1.25rem;
-	font-weight: 800;
+.ssrf-manipulada {
+	border-color: #9a3412;
+	background: #fff7ed;
+	color: #7c2d12;
 }
-.ssrf-pasos strong { font-weight: 800; }
+.ssrf-peticion strong { font-weight: 800; }
+.ssrf-peticion code {
+	font-size: 0.7rem;
+	white-space: normal;
+	overflow-wrap: anywhere;
+}
+.ssrf-flujo p {
+	margin: 0.25rem 0 0;
+	font-size: inherit;
+	line-height: inherit;
+}
 </style>

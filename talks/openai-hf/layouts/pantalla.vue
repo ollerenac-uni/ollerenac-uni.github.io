@@ -12,7 +12,7 @@ import FlujoSsrf from '../components/FlujoSsrf.vue'
 			<p v-if="$frontmatter.acto" class="acto">{{ $frontmatter.acto }}</p>
 			<p v-else-if="$frontmatter.respaldo" class="acto">Respaldo para preguntas · fuera de los 40 minutos</p>
 		</header>
-		<MapaIncidente v-if="$frontmatter.scene" :scene="$frontmatter.scene">
+		<MapaIncidente v-if="$frontmatter.scene" :scene="$frontmatter.scene" :resumen-oculto="$frontmatter.scene === 'C05'">
 			<template v-if="$frontmatter.scene === 'C05'" #detalle>
 				<FlujoSsrf />
 			</template>

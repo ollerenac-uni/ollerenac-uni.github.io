@@ -13,6 +13,7 @@ const props = defineProps({
 	scene: String,
 	scenes: Array,
 	mini: Boolean, // miniatura: solo nodos activos como iconos, sin texto
+	resumenOculto: Boolean, // conserva el resumen accesible sin mostrar la franja bajo el mapa
 })
 
 const uid = useId()
@@ -206,7 +207,7 @@ function stop(s) {
 </script>
 
 <template>
-	<figure class="mapa" :class="{ mini, compacto: cur.compacto || chars > 700, larga: chars > 350, 'con-detalle': !!$slots.detalle }" :data-escena="cur.id" @keydown="onKey">
+	<figure class="mapa" :class="{ mini, compacto: cur.compacto || chars > 700, larga: chars > 350 }" :data-escena="cur.id" @keydown="onKey">
 		<div v-if="seq" class="ctrl">
 			<button type="button" :aria-disabled="idx === 0" @click="go(-1)">← Anterior</button>
 			<p aria-live="polite">
@@ -292,7 +293,7 @@ function stop(s) {
 
 		<slot name="detalle" />
 
-		<div v-if="!mini" class="meta">
+		<div v-if="!mini" class="meta" :class="{ sr: resumenOculto }">
 			<div class="col">
 				<p v-for="t in cur.lineas" :key="t" class="linea">{{ t }}</p>
 				<ul v-if="cur.chips" class="chips">
@@ -352,10 +353,6 @@ svg.plano {
 	width: 100%;
 	height: auto;
 	overflow: visible;
-}
-.con-detalle svg.plano {
-	width: 82%;
-	margin: 0 auto;
 }
 .ctrl {
 	display: flex;
