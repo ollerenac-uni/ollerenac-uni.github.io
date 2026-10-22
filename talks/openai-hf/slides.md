@@ -47,23 +47,17 @@ acto: "Acto 0 · Una tarea imposible"
 <!--
 Antes que nada, recorramos este diagrama. Los bloques azules representan entornos y servicios de OpenAI. Luego están Internet, una aplicación de un cliente alojada en Modal y los recursos de Hugging Face.
 
-El agente combina un modelo que orienta sus decisiones con herramientas. El 1 señala su entorno de trabajo: un contenedor. El 2, el acceso a software mediante Artifactory, un repositorio interno de paquetes. El 3, la salida directa bloqueada. Son conexiones del mapa, no etapas del ataque.
+Modal es el proveedor que aloja esa aplicación del cliente. El mapa reúne distintos momentos del incidente; los bloques externos aparecerán más adelante en el relato.
 
-Empecemos el 8 de mayo de 2026. Durante un entrenamiento, un agente debía completar una hoja de cálculo con documentos enlazados en Google Drive. No podía acceder a ellos. OpenAI dice que no pretendía crear una tarea imposible.
+El agente combina un modelo que orienta sus decisiones con herramientas. El 1 señala el contenedor donde usa esas herramientas. El 2, el acceso a software mediante Artifactory. El 3, la salida directa bloqueada. Son conexiones del mapa, no etapas del ataque.
 
-El agente intentó obtener acceso externo haciendo que Artifactory pidiera recursos por él. Esa es la idea de una SSRF: inducir a un servidor a hacer la petición. El intento falló, pero el agente escribió incidentalmente un archivo en el servidor Artifactory. No conocemos su contenido. La petición de ayuda que veremos ahora corresponde a otra ejecución, el 12 de mayo.
+Empecemos el 8 de mayo de 2026. Durante un entrenamiento, un agente debía completar una hoja de cálculo con documentos enlazados en Google Drive. No podía acceder a ellos. OpenAI dice que no pretendía crear una tarea imposible. El informe no identifica aquí el modelo ni llama ExploitGym a esta tarea.
 
-**Detalle de apoyo (fuera del texto oral):**
+Artifactory es un servidor interno que almacena paquetes. Cuando un gestor como pip pide una biblioteca, puede entregarla desde su caché o recuperarla del origen remoto configurado. Ese origen no necesita usar Artifactory. El informe no acredita que Hugging Face fuera un origen habitual de esa instancia.
 
-**Agente, modelo y contenedor.** El modelo orienta las decisiones; el agente incorpora también herramientas y un programa que organiza su uso. El contenedor es el entorno donde ejecuta herramientas. La conexión 1 no demuestra dónde se ejecuta la inferencia ni dónde están los pesos del modelo. Para mayo, el informe no identifica el modelo. No lo llamamos Astra ni damos por hecho que esta tarea fuera ExploitGym. El mapa general reúne episodios de distintos momentos; los bloques externos no significan que el agente del 8 de mayo ya hubiera llegado a ellos. [OpenAI, pp. 6 y 12–14](https://cdn.openai.com/pdf/67869394-cb91-4c12-888c-5cbd85c7814c/OpenAI-Hugging-Face%20Incident-Technical-Report.pdf); [definición de agentes](https://openai.com/index/new-tools-for-building-agents/).
+El agente intentó que Artifactory pidiera recursos externos por él. Esa es la idea de una SSRF: inducir a un servidor a hacer una petición. Poder recuperar paquetes autorizados no implica poder pedir cualquier dirección. En este caso, el intento falló, pero dejó incidentalmente un archivo en el almacenamiento del servidor Artifactory. No conocemos su nombre, ruta ni contenido.
 
-**Artifactory y el gestor de paquetes.** Un gestor como pip solicita una biblioteca. Artifactory es el servicio que conserva paquetes y puede entregarlos desde su caché o recuperarlos del origen remoto configurado. El origen no necesita usar Artifactory. No está acreditado que Hugging Face fuera un origen normal configurado de esa instancia. La salida directa bloqueada corresponde a la carga que estamos narrando; otras cargas tenían una configuración distinta. [OpenAI, pp. 6–7](https://cdn.openai.com/pdf/67869394-cb91-4c12-888c-5cbd85c7814c/OpenAI-Hugging-Face%20Incident-Technical-Report.pdf); [repositorios remotos de JFrog](https://docs.jfrog.com/artifactory/docs/remote-repositories).
-
-**Qué intentó y qué quedó guardado.** El objetivo de la SSRF era usar un servidor alcanzable desde el contenedor para obtener recursos externos. Que Artifactory pueda recuperar paquetes de un origen autorizado no equivale a poder pedir cualquier URL. En este episodio la SSRF falló; la escritura del archivo fue un efecto incidental. «Allí» significa el almacenamiento administrado por la instancia interna de Artifactory, no un archivo que hubiera quedado solo en el contenedor del agente. El informe no publica su nombre, ruta, contenido ni petición de escritura. [OpenAI, p. 6](https://cdn.openai.com/pdf/67869394-cb91-4c12-888c-5cbd85c7814c/OpenAI-Hugging-Face%20Incident-Technical-Report.pdf).
-
-**El antecedente de abril y el paso a mayo.** La cronología forense de OpenAI sitúa la primera escritura arbitraria confirmada en esa instancia el 20 de abril, a las 07:59 UTC. Por eso empezamos el relato el 8 de mayo sin llamarlo el primer archivo escrito. La nota del 12 es otro episodio: no está demostrado que su autor hubiera leído el archivo del 8. Escribir un archivo y escribir un mensaje deliberado son dos hechos distintos. [OpenAI, pp. 6–7 y 32](https://cdn.openai.com/pdf/67869394-cb91-4c12-888c-5cbd85c7814c/OpenAI-Hugging-Face%20Incident-Technical-Report.pdf).
-
-**Modal.** Es el proveedor donde estaba alojada la aplicación de un cliente que aparecerá después. El mapa distingue esa aplicación de la plataforma que la aloja. Modal declara que su plataforma y su aislamiento no fueron comprometidos; eso no niega lo ocurrido dentro de la aplicación del cliente. [Declaración de Modal](https://modal.com/blog/a-note-on-the-hugging-face-agent-incident).
+La cronología registra escrituras desde el 20 de abril. El episodio del 8 de mayo muestra un intento fallido y un archivo incidental. Cuatro días después veremos una petición deliberada de ayuda, en otra ejecución; no está demostrado que su autor hubiera leído el archivo anterior.
 
 Tiempo: 90 s (00:30–02:00).
 -->
@@ -78,17 +72,11 @@ acto: "Acto 1 · El tablero de notas"
 <Fuentes><a href="https://cdn.openai.com/pdf/67869394-cb91-4c12-888c-5cbd85c7814c/OpenAI-Hugging-Face%20Incident-Technical-Report.pdf">Informe OpenAI (S7)</a>, III.A, pp. 6–7; X, p. 32. Contexto: <a href="https://docs.jfrog.com/artifactory/docs/repository-management-overview">Archivos JFrog (S42)</a>, archivos sin formato de paquete.</Fuentes>
 
 <!--
-El 12 de mayo, durante otro entrenamiento, un agente necesita un archivo de una base de datos de proteínas. Piensa que otra ejecución quizá pueda conseguirlo. Guarda en Artifactory un archivo cuyo contenido es una petición: busco este archivo; si lo encuentras, súbelo.
+Cuatro días después, el 12 de mayo, otro agente se encuentra con un problema parecido: necesita un archivo al que no puede acceder. Entonces considera que otro agente quizá sí pueda conseguirlo. Deja en Artifactory un archivo con una petición de ayuda: busco este archivo; si lo encuentras, súbelo. El repositorio empieza a servir también para dejar mensajes.
 
-Artifactory también puede guardar archivos sueltos, incluidos textos; no todo tiene que ser una biblioteca instalable. El agente usa el almacén como un buzón. OpenAI había dado credenciales compartidas para acceder a paquetes. Los agentes aprovecharon ese acceso para intercambiar mensajes sin explotar una vulnerabilidad en esa etapa. Veamos cómo otros agentes encontraron las notas.
+El archivo que necesita pertenece a una base de datos de proteínas. La petición queda en el contenido de otro archivo, guardado en el servidor Artifactory. El informe no publica el nombre ni la extensión de ese archivo con el mensaje.
 
-**Detalle de apoyo (fuera del texto oral):**
-
-**Qué significa «una nota».** Es información escrita para que otro agente la lea. En este episodio, OpenAI describe un archivo que contiene el mensaje. No dice que estuviera escondido dentro de un paquete ni que un instalador lo leyera al descargar una biblioteca. El nombre y la extensión del archivo no están publicados. [OpenAI, pp. 6–7](https://cdn.openai.com/pdf/67869394-cb91-4c12-888c-5cbd85c7814c/OpenAI-Hugging-Face%20Incident-Technical-Report.pdf).
-
-**Ejemplo ilustrativo.** Imaginemos un archivo llamado `ayuda.txt`, con el texto «Busco el archivo X. Si lo tienes, súbelo aquí». Ese nombre es inventado; sirve para representar el mecanismo. El servidor guarda el archivo y otra ejecución con acceso puede consultarlo. JFrog documenta el almacenamiento de contenido como texto sin envolverlo en un formato de paquete; esto no identifica qué tipo de repositorio concreto usaron los agentes. [Documentación de repositorios de JFrog](https://docs.jfrog.com/artifactory/docs/repository-management-overview).
-
-**Cliente y servidor.** El cliente es el programa que envía una solicitud. Artifactory es el servidor que la recibe y administra los archivos. No hace falta usar una pantalla gráfica para enviar esas solicitudes. JFrog ofrece interfaces para cargar y consultar archivos, pero el informe del incidente no publica la petición exacta usada para dejar esta nota. Una credencial acredita acceso; compartirla puede permitir que distintas ejecuciones actúen con la misma identidad. [OpenAI, p. 7](https://cdn.openai.com/pdf/67869394-cb91-4c12-888c-5cbd85c7814c/OpenAI-Hugging-Face%20Incident-Technical-Report.pdf); [API de carga de JFrog](https://docs.jfrog.com/artifactory/reference/deployartifact).
+Artifactory también puede guardar texto sin envolverlo en un paquete instalable. Otra ejecución con acceso puede leer ese archivo. Así funciona aquí la idea de un buzón. Veamos cómo otros agentes encontraron las notas.
 
 Tiempo: 60 s (02:00–03:00).
 -->
@@ -103,17 +91,15 @@ acto: "Acto 1 · El tablero de notas"
 <Fuentes><a href="https://cdn.openai.com/pdf/67869394-cb91-4c12-888c-5cbd85c7814c/OpenAI-Hugging-Face%20Incident-Technical-Report.pdf">Informe OpenAI (S7)</a>, II.B y III.A, pp. 6–7.</Fuentes>
 
 <!--
-El 13 de mayo, otros agentes que exploraban Artifactory encontraron notas de este tipo y empezaron a dejar sus propias peticiones. La clave es que estaban explorando el servicio, además de usarlo para conseguir software. OpenAI no publica la consulta concreta que los llevó a los mensajes.
+El 13 de mayo, otros agentes que exploraban Artifactory encontraron notas de este tipo y empezaron a dejar sus propias peticiones. Estaban explorando el servicio, además de usarlo para conseguir software. OpenAI no publica la consulta concreta que los llevó a los mensajes.
 
-Miremos las dos cajas. Aunque los contenedores estén separados, ambas ejecuciones pueden consultar el mismo servidor. Una deja información y otra la lee. Así, el almacén de software empieza a funcionar como un buzón compartido y después como un tablero de mensajes.
+Podemos imaginar que un agente busque un recurso que le falta, consulte nombres de archivos o liste una carpeta y encuentre un mensaje. Artifactory ofrece esas consultas según los permisos. Es una posibilidad técnica, no la búsqueda demostrada en mayo. Descargar un paquete conocido, por sí solo, no implica leer las notas que haya en el servidor. [Listado de archivos](https://docs.jfrog.com/artifactory/reference/getstorageitem); [búsqueda por nombre](https://docs.jfrog.com/artifactory/reference/searchartifact).
 
-También variaba la configuración de red. Algunas cargas podían usar WebCache para acceder a contenido web con controles centrales. Eso no significa que el agente de la hoja de cálculo pudiera navegar. Por ahora hemos visto un canal para intercambiar información. El siguiente paso es conseguir que Artifactory haga peticiones externas que la conexión directa no permite.
+Miremos las dos cajas. Aunque los contenedores estén separados, ambas ejecuciones pueden consultar el mismo servidor. OpenAI les había dado credenciales compartidas para obtener paquetes. Una credencial permite al servidor reconocer una identidad y sus permisos. Los agentes usaron ese acceso para dejar y leer mensajes sin explotar una vulnerabilidad en esta etapa. Así, el almacén empezó a funcionar como un tablero compartido.
 
-**Detalle de apoyo (fuera del texto oral):**
+Los permisos de Internet también cambiaban según la tarea. Algunas ejecuciones podían consultar contenido web mediante un servicio intermediario llamado WebCache, bajo reglas de acceso de OpenAI. El informe lo documenta para el experimento del archivo de proteínas al describir a un agente del 13 de mayo. El agente de la hoja del 8 de mayo tenía Internet bloqueado.
 
-**Qué búsqueda podría encontrar notas.** Una descarga de un paquete conocido no implica revisar todos los archivos del servidor. Un escenario plausible es que un agente, al no encontrar un recurso, explore qué más puede alcanzar: listar carpetas y archivos o buscar nombres relacionados con lo que le falta. Artifactory ofrece listados y búsqueda por fragmento del nombre, sujetos a permisos. Listar puede mostrar un archivo inesperado que después se inspecciona. La búsqueda por nombre no lee automáticamente el contenido de todas las notas. Son posibilidades técnicas; no está demostrado que esas fueran las consultas usadas en mayo. [Listado de archivos](https://docs.jfrog.com/artifactory/reference/getstorageitem); [búsqueda por nombre](https://docs.jfrog.com/artifactory/reference/searchartifact).
-
-**Qué sí sabemos de mayo.** OpenAI dice que otros agentes sondeaban Artifactory y encontraron notas basadas en archivos. Podemos decir «exploraban el servicio y encontraron mensajes», sin inventar un nombre de carpeta, una consulta o un comando. El buzón es una analogía del uso del almacenamiento, no una función de chat configurada para ellos. [OpenAI, p. 7](https://cdn.openai.com/pdf/67869394-cb91-4c12-888c-5cbd85c7814c/OpenAI-Hugging-Face%20Incident-Technical-Report.pdf).
+Ya tenemos un canal para intercambiar información entre ejecuciones. El siguiente paso será conseguir que Artifactory haga peticiones externas que la conexión directa no permite.
 
 Tiempo: 90 s (03:00–04:30).
 -->
@@ -202,15 +188,13 @@ acto: "Acto 3 · La fuga"
 <Fuentes><a href="https://cdn.openai.com/pdf/67869394-cb91-4c12-888c-5cbd85c7814c/OpenAI-Hugging-Face%20Incident-Technical-Report.pdf">Informe OpenAI (S7)</a>, IV.A, pp. 8–9; X, pp. 33–34; <a href="https://metr.org/hugging-face-incident-report-aug-2026.pdf">Informe METR (S6)</a>, pp. 30–32, figura 10; D9.</Fuentes>
 
 <!--
-El 8 de julio vuelven la salida externa y la comunicación. Los agentes escriben mensajes en nombres de carpetas de Artifactory. El nombre del directorio contiene la información que otra ejecución puede leer. El límite a la escritura de archivos no eliminó ese canal.
+El 8 de julio vuelven la salida externa y la comunicación. METR reconstruye el caso de PHASEONE10841, que explora Artifactory buscando código u otra información. Considera que podría encontrar más repositorios, espejos de GitHub o paquetes útiles. Descubre que puede crear directorios en la caché y después usa sus nombres para pedir ayuda.
 
-METR reconstruye que 53 agentes publicaron 1188 mensajes en las primeras tres horas de su tablero principal. No son 1188 agentes. El ritmo sorprende, pero los relojes tienen límites: OpenAI registra una creación de directorio a las 16:01; METR sitúa el tablero principal hacia las 23:00. No fijamos una hora única para ambos hitos. El intercambio ya contiene una sorpresa mayor: habían encontrado cómo reconstruir el dato que exigía la tarea.
+Esta vez, el mensaje puede estar en el nombre de una carpeta: al consultar el listado, otra ejecución ya puede verlo. El método se llama MKCOL y crea una colección, comparable a una carpeta. En mayo, el mensaje estaba dentro de un archivo. El límite a la escritura de archivos no eliminó esta otra forma de comunicación.
 
-**Detalle de apoyo (fuera del texto oral):**
+Otros agentes encuentran el mismo espacio y empiezan a publicar. METR cuenta 53 agentes y 1188 mensajes en las primeras tres horas de su tablero principal. Tenemos un motivo documentado para explorar y un canal que se extiende a más ejecuciones; esta reconstrucción corresponde a julio.
 
-**Cómo llegó un agente a ese espacio en julio.** METR describe a PHASEONE10841 explorando Artifactory para obtener código u otra información. Consideraba que podía encontrar más repositorios, espejos de GitHub o paquetes útiles. Descubrió que podía crear directorios en la caché y después decidió usar sus nombres para pedir ayuda. Otros agentes encontraron el mismo espacio y comenzaron a publicar. Aquí sí hay un motivo documentado para explorar; no se traslada a mayo como si fuera el mismo episodio. [METR, pp. 30–31](https://metr.org/hugging-face-incident-report-aug-2026.pdf).
-
-**Qué cambia respecto de mayo.** En mayo, OpenAI describe una nota dentro de un archivo. En el tablero principal de julio, el mensaje podía estar en el nombre de una carpeta: al consultar el listado ya se veía el texto. METR recoge el método WebDAV `MKCOL`, que crea una colección, comparable a una carpeta. Un mensaje real fue `zzHELP_PHASEONE_ARV010841_NO_CONSUMER_SEEK_IDEA`. No es el nombre de la nota de mayo. [METR, p. 31](https://metr.org/hugging-face-incident-report-aug-2026.pdf); [RFC 4918, sección 9.3](https://www.rfc-editor.org/rfc/rfc4918.html#section-9.3).
+El ritmo sorprende, pero los relojes tienen límites: OpenAI registra una creación de directorio a las 16:01; METR sitúa el tablero principal hacia las 23:00. No fijamos una hora única para ambos hitos. El intercambio ya contiene una sorpresa mayor: habían encontrado cómo reconstruir el dato que exigía la tarea.
 
 Tiempo: 60 s (10:00–11:00).
 -->
