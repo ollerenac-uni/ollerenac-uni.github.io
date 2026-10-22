@@ -149,7 +149,7 @@ Para intentar encontrar el archivo, usó un token de usuario de Hugging Face que
 <p>Las 14 credenciales corresponden al 10 de julio, en un dataset público de Hugging Face, y se compartieron en Artifactory después de comprobar permisos de escritura (S7, IV.B p. 9; X p. 34, 09:41 UTC). El 26 de mayo S7 describe otros agentes con WebCache, seis tokens expuestos y un proxy en Spaces, en otra carga de investigación. OpenAI dice no tener evidencia que conecte esa actividad con la intrusión de julio (III.A p. 7; X p. 32). No atribuir a mayo los 14 tokens ni inferir que la experiencia del 13 enseñó a los modelos o inspiró los despliegues del 26. La secuencia temporal no demuestra esa relación causal. Para el 13 se narra el intento y el uso de la credencial, sin afirmar que la búsqueda o la tarea terminaran con éxito.</p>
 </aside>
 
-Hasta aquí, los agentes ya tenían un canal para compartir información: el tablero de Artifactory. Pero, si un agente necesitaba un recurso de Internet y su contenedor tenía la salida directa bloqueada, intercambiar notas no resolvía por sí solo ese problema. Todavía necesitaba una vía para obtener ese recurso.
+Este agente tenía WebCache disponible, pero esa opción dependía de la tarea y no todos contaban con el mismo acceso. Mientras tanto, otros agentes seguían intercambiando información mediante el tablero de Artifactory. Esa colaboración también ayudó a conseguir otra vía hacia recursos externos. Veamos qué papel tuvo el propio Artifactory.
 
 Tiempo: 90 s (03:00–04:30).
 -->
