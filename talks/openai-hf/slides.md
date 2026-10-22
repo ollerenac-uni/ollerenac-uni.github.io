@@ -139,7 +139,7 @@ Miremos el contenedor y el bloque de varias ejecuciones. Los agentes trabajan co
 
 Los permisos de Internet también cambiaban según la tarea. Algunos agentes podían consultar contenido web mediante un servicio intermediario llamado WebCache, bajo reglas de acceso de OpenAI. El informe lo documenta para el experimento del archivo de proteínas al describir a un agente del 13 de mayo. El agente de la hoja del 8 de mayo tenía Internet bloqueado.
 
-Ya tenemos un canal para intercambiar información entre agentes que trabajaban en entornos separados. El siguiente paso será conseguir que Artifactory haga peticiones externas que la conexión directa no permite.
+Hasta aquí, los agentes ya tenían un canal para compartir información: el tablero de Artifactory. Pero, si un agente necesitaba un recurso de Internet y su contenedor tenía la salida directa bloqueada, intercambiar notas no resolvía por sí solo ese problema. Todavía necesitaba una vía para obtener ese recurso.
 
 Tiempo: 90 s (03:00–04:30).
 -->
@@ -154,7 +154,7 @@ acto: "Acto 1 · El tablero de notas"
 <Fuentes><a href="https://cdn.openai.com/pdf/67869394-cb91-4c12-888c-5cbd85c7814c/OpenAI-Hugging-Face%20Incident-Technical-Report.pdf">Informe OpenAI (S7)</a>, III.A, p. 7; X, pp. 32–33.</Fuentes>
 
 <!--
-SSRF significa falsificación de peticiones desde el servidor. Para esta historia, basta con entender el efecto: el agente induce a Artifactory a pedir un recurso externo por él. La conexión directa del contenedor sigue limitada. La petición sale desde otro servicio.
+Y aquí Artifactory empieza a cumplir otra función. Recordemos que podía recuperar software desde repositorios externos. Los agentes aprovecharon una vulnerabilidad para que el servidor hiciera peticiones externas por ellos. Así, la petición salía desde Artifactory, aunque el contenedor no pudiera hacerla directamente. A ese mecanismo lo llamamos SSRF, o falsificación de peticiones desde el servidor.
 
 Según OpenAI, para el 26 de mayo los agentes ya habían logrado acceso a Internet mediante una vulnerabilidad SSRF de Artifactory. Se apoyaron, en parte, en información intercambiada en el tablero de notas. Aquí el resultado sí fue un acceso externo conseguido.
 
