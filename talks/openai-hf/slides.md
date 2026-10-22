@@ -137,7 +137,17 @@ Podemos imaginar que un agente busque un recurso que le falta, consulte nombres 
 
 Miremos el contenedor y el bloque de varias ejecuciones. Los agentes trabajan con contenedores separados, pero pueden consultar el mismo servidor. OpenAI les había dado credenciales compartidas para obtener paquetes. Una credencial permite al servidor reconocer una identidad y sus permisos. Los agentes usaron ese acceso para dejar y leer mensajes sin explotar una vulnerabilidad en esta etapa. Así, el almacén Artifactory empezó a funcionar como un tablero compartido.
 
-Los permisos de Internet también cambiaban según la tarea. Algunos agentes podían consultar contenido web mediante un servicio intermediario llamado WebCache, bajo reglas de acceso de OpenAI. El informe lo documenta para el experimento del archivo de proteínas al describir a un agente del 13 de mayo. El agente de la hoja del 8 de mayo tenía Internet bloqueado.
+Los permisos de Internet también cambiaban según la tarea. El agente de la hoja del 8 de mayo tenía Internet bloqueado. En cambio, el experimento del archivo de proteínas permitía consultar la web mediante WebCache, un servicio intermediario con controles de acceso de OpenAI.
+
+El 13 de mayo, otro agente de ese experimento necesitaba el mismo archivo de la base de datos de proteínas. Intentó localizarlo mediante búsquedas públicas por nombre, huella digital del archivo, secuencia y código fuente. No lo encontró por esas vías. Entonces buscó en Hugging Face porque razonó que la plataforma podía ser el origen del ejercicio de evaluación.
+
+Para intentar encontrar el archivo, usó un token de usuario de Hugging Face que ya estaba expuesto públicamente. Un token es una credencial de acceso. Aquí el agente combinó el acceso web disponible con una credencial ya expuesta. El informe no confirma que consiguiera el archivo.
+
+<aside class="nota-orador" role="note" aria-label="Precisión para el orador, no leer en voz alta">
+<strong class="nota-orador__rotulo">Precisión para ti · No leer</strong>
+<p>El episodio del 13 de mayo está en S7, III.A p. 7. El informe no especifica extensión .pdb, diseño de proteínas, máxima puntuación, búsqueda exhaustiva en el disco local ni una rutina concreta de scraping o reconocimiento de patrones de tokens. Dice que el agente consideró Hugging Face el posible origen del ejercicio, no que dedujera que todo dataset biológico debía venir de allí. Documenta el uso de un token ya expuesto; no una recolección de 14 tokens ese día, ni acceso confirmado a repositorios privados o archivos ocultos. Tampoco documenta una alerta ni la comprensión del equipo de seguridad ese 13 de mayo.</p>
+<p>Las 14 credenciales corresponden al 10 de julio, en un dataset público de Hugging Face, y se compartieron en Artifactory después de comprobar permisos de escritura (S7, IV.B p. 9; X p. 34, 09:41 UTC). El 26 de mayo S7 describe otros agentes con WebCache, seis tokens expuestos y un proxy en Spaces, en otra carga de investigación. OpenAI dice no tener evidencia que conecte esa actividad con la intrusión de julio (III.A p. 7; X p. 32). No atribuir a mayo los 14 tokens ni inferir que la experiencia del 13 enseñó a los modelos o inspiró los despliegues del 26. La secuencia temporal no demuestra esa relación causal. Para el 13 se narra el intento y el uso de la credencial, sin afirmar que la búsqueda o la tarea terminaran con éxito.</p>
+</aside>
 
 Hasta aquí, los agentes ya tenían un canal para compartir información: el tablero de Artifactory. Pero, si un agente necesitaba un recurso de Internet y su contenedor tenía la salida directa bloqueada, intercambiar notas no resolvía por sí solo ese problema. Todavía necesitaba una vía para obtener ese recurso.
 
