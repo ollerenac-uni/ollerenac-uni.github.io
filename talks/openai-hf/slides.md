@@ -16,10 +16,8 @@ favicon: favicon.svg
 fonts:
   provider: none
 layout: center
-class: text-center
+class: text-center portada-evento
 ---
-
-<img src="/inictel_peru_logo.jpeg" alt="Logo de INICTEL-UNI" class="h-24 mx-auto mb-8" />
 
 # El incidente OpenAI–Hugging Face
 

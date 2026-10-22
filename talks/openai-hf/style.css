@@ -5,6 +5,20 @@
 @import '@fontsource/nunito-sans/latin-800.css';
 @import '@fontsource/fira-code/latin-400.css';
 
+/* Plantilla del evento solo en portada: reserva sus franjas sin reducir los mapas. */
+.slidev-layout.portada-evento {
+	padding: 7.2rem 3.5rem 5rem;
+	background: #fff url('/plantilla.png') center / 100% 100% no-repeat;
+	color: #111827;
+}
+.slidev-layout.portada-evento h1 {
+	font-size: 2.6rem;
+	line-height: 1.16;
+}
+.portada-evento .fuentes {
+	bottom: 4.2rem;
+}
+
 /* Recordatorio editorial dentro de las notas, fuera de la narración oral. */
 .slidev-note .nota-orador {
 	margin: 1em 0;

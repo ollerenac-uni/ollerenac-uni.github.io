@@ -40,6 +40,14 @@ cuando cambie la fuente. Todos se corren desde la raíz del repositorio:
 - Si cambia `slides.md`, regenera el PDF: `PLAYWRIGHT_BROWSERS_PATH=0 npm run export`, y haz commit de `public/openai-hf.pdf`.
   Orden para publicar: generadores → `npm run export` → `npm run build:all` (el build copia el PDF a `dist/`).
 
+## Plantilla del evento
+
+`public/plantilla.png` conserva el archivo proporcionado por el evento. La clase `portada-evento`
+en `slides.src.md` lo aplica solo a la primera diapositiva. Su cabecera ya incluye los logotipos;
+el título, autor y fuentes quedan en el área blanca. Las franjas superior e inferior ocuparían
+demasiado espacio en los diagramas, por lo que las demás diapositivas conservan su disposición.
+El archivo vive en `public/`, no en `dist/`, para sobrevivir a los builds e incluirse sin red en el PDF.
+
 ## Notas del orador
 
 La narración se lee en voz alta. Un recordatorio editorial puede usar `<aside class="nota-orador" role="note">`,
