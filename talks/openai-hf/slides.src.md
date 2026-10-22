@@ -4,7 +4,7 @@ theme: default
 title: "El incidente OpenAI–Hugging Face"
 info: |
   El incidente OpenAI–Hugging Face de julio de 2026: permisos, señales y respuesta.
-  Serie cybersecnews. Conferencia del 21 de octubre de 2026.
+  Conferencia del 22 de octubre de 2026.
 htmlAttrs:
   lang: es
 colorSchema: light
@@ -21,7 +21,7 @@ class: text-center portada-evento
 
 # El incidente OpenAI–Hugging Face
 
-INICTEL-UNI · cybersecnews · 21 de octubre de 2026
+INICTEL-UNI · 22 de octubre de 2026
 
 Oscar Llerena
 
