@@ -40,6 +40,14 @@ cuando cambie la fuente. Todos se corren desde la raíz del repositorio:
 - Si cambia `slides.md`, regenera el PDF: `PLAYWRIGHT_BROWSERS_PATH=0 npm run export`, y haz commit de `public/openai-hf.pdf`.
   Orden para publicar: generadores → `npm run export` → `npm run build:all` (el build copia el PDF a `dist/`).
 
+## Notas del orador
+
+La narración se lee en voz alta. Un recordatorio editorial puede usar `<aside class="nota-orador" role="note">`,
+con el rótulo «Precisión para ti · No leer» en `<strong class="nota-orador__rotulo">`. Se escribe en las notas
+del guion y el generador conserva ese HTML. `style.css` limita su recuadro azul a `.slidev-note`, en Presenter.
+El rótulo permite distinguirlo sin depender solo del color. Los límites que cambian la interpretación de los
+hechos siguen dentro de la narración. Por ahora hay un solo ejemplo en «Una tarea imposible».
+
 ## Mapa del incidente
 
 `shared/components/MapaIncidente.vue` lo usan el post (Astro) y la charla (Slidev). Recibe una escena y dibuja una instantánea completa:

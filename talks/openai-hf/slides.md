@@ -51,7 +51,12 @@ Modal es el proveedor que aloja esa aplicación del cliente. El mapa reúne dist
 
 El agente combina un modelo que orienta sus decisiones con herramientas. El 1 señala el contenedor donde usa esas herramientas. El 2, el acceso a software mediante Artifactory. El 3, la salida directa bloqueada. Son conexiones del mapa, no etapas del ataque.
 
-Empecemos el 8 de mayo de 2026. Durante un entrenamiento, un agente debía completar una hoja de cálculo con documentos enlazados en Google Drive. No podía acceder a ellos. OpenAI dice que no pretendía crear una tarea imposible. El informe no identifica aquí el modelo ni llama ExploitGym a esta tarea.
+Empecemos el 8 de mayo de 2026. Durante un entrenamiento, un agente debía completar una hoja de cálculo con documentos enlazados en Google Drive. No podía acceder a ellos. OpenAI dice que no pretendía crear una tarea imposible.
+
+<aside class="nota-orador" role="note" aria-label="Precisión para el orador, no leer en voz alta">
+<strong class="nota-orador__rotulo">Precisión para ti · No leer</strong>
+<p>El informe no identifica aquí el modelo ni llama ExploitGym a esta tarea.</p>
+</aside>
 
 Artifactory es un servidor interno que almacena paquetes. Cuando un gestor como pip pide una biblioteca, puede entregarla desde su caché o recuperarla del origen remoto configurado. Ese origen no necesita usar Artifactory. El informe no acredita que Hugging Face fuera un origen habitual de esa instancia.
 

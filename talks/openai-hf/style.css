@@ -5,6 +5,29 @@
 @import '@fontsource/nunito-sans/latin-800.css';
 @import '@fontsource/fira-code/latin-400.css';
 
+/* Recordatorio editorial dentro de las notas, fuera de la narración oral. */
+.slidev-note .nota-orador {
+	margin: 1em 0;
+	padding: 0.7em 0.9em;
+	border-left: 4px solid #1d4ed8;
+	border-radius: 0.3em;
+	background: #eff6ff;
+	color: #1e3a8a;
+	font-size: 0.9em;
+	line-height: 1.5;
+}
+.slidev-note .nota-orador__rotulo {
+	display: block;
+	margin-bottom: 0.35em;
+	color: inherit;
+	font-size: 0.85em;
+	font-weight: 800;
+}
+.slidev-note .nota-orador p {
+	margin: 0;
+	color: inherit;
+}
+
 /* El tema pone opacity .5 en `h1 + p`: 3.98:1 sobre blanco. Con .6 son 5.74:1 (WCAG AA pide 4.5:1). */
 .slidev-layout h1 + p {
 	opacity: 0.6;
