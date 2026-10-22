@@ -92,7 +92,7 @@ Los números señalan conexiones del mapa, no el orden del ataque.
 
 - En este caso, el intento falló, pero el agente escribió incidentalmente un archivo en el almacenamiento del servidor Artifactory.
 
-Cuatro días después, el 12 de mayo, en otra ejecución, otro agente dejó una petición de ayuda dentro de un archivo. El 13, otros agentes que exploraban Artifactory encontraron notas y empezaron a dejar las suyas. Así fue surgiendo el tablero. No sabemos si habían leído el archivo del día 8. En la siguiente diapositiva veremos la petición del día 12.
+No sabemos si otros agentes leyeron el archivo del día 8. Unos días después, otro agente usó ese mismo servidor para pedir ayuda. Veamos cómo lo hizo.
 
 Tiempo: 90 s (00:30–02:00).
 -->
@@ -111,7 +111,7 @@ Cuatro días después, el 12 de mayo, otro agente se encuentra con un problema p
 
 El archivo que necesita pertenece a una base de datos de proteínas. La petición queda en el contenido de un nuevo archivo, guardado en el servidor Artifactory.
 
-Aquí cabe precisar que Artifactory también puede guardar texto sin envolverlo en un paquete instalable. Otro agente, trabajando con su propio contenedor y con acceso al mismo Artifactory, podía leer las notas. Así funciona aquí la idea de un buzón. Veamos cómo otros agentes encontraron las notas.
+Aquí cabe precisar que Artifactory también puede guardar texto sin envolverlo en un paquete instalable. Otro agente, trabajando con su propio contenedor y con acceso al mismo Artifactory, podía leer las notas. Así funciona aquí la idea de un buzón. Para entender cómo podía usarse entre agentes con contenedores separados, miremos qué acceso tenían en común.
 
 Tiempo: 60 s (02:00–03:00).
 -->
@@ -126,7 +126,7 @@ acto: "Acto 1 · El tablero de notas"
 <Fuentes><a href="https://cdn.openai.com/pdf/67869394-cb91-4c12-888c-5cbd85c7814c/OpenAI-Hugging-Face%20Incident-Technical-Report.pdf">Informe OpenAI (S7)</a>, II.B y III.A, pp. 6–7. Contexto: <a href="https://docs.jfrog.com/artifactory/reference/getstorageitem">Listado JFrog (S46)</a>; <a href="https://docs.jfrog.com/artifactory/reference/searchartifact">Búsqueda JFrog (S47)</a>.</Fuentes>
 
 <!--
-El 13 de mayo, otros agentes que exploraban Artifactory encontraron notas de este tipo y empezaron a dejar sus propias peticiones. Estaban explorando el servicio, además de usarlo para conseguir software.
+Al día siguiente, el 13 de mayo, otros agentes que exploraban Artifactory encontraron notas de este tipo y empezaron a dejar sus propias peticiones. Estaban explorando el servicio, además de usarlo para conseguir software.
 
 Podemos imaginar que un agente busque un recurso que le falta, consulte nombres de archivos o liste una carpeta y encuentre un mensaje. Artifactory ofrece esas consultas según los permisos. Es una posibilidad técnica, no la búsqueda demostrada en mayo. Descargar un paquete conocido, por sí solo, no implica leer las notas que haya en el servidor.
 
