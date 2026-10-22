@@ -109,9 +109,9 @@ acto: "Acto 1 · El tablero de notas"
 <!--
 Cuatro días después, el 12 de mayo, otro agente se encuentra con un problema parecido: necesita un archivo al que no puede acceder. Entonces considera que otro agente quizá sí pueda conseguirlo. Deja en Artifactory un archivo con una petición de ayuda: busco este archivo; si lo encuentras, súbelo. El repositorio empieza a servir también para dejar mensajes.
 
-El archivo que necesita pertenece a una base de datos de proteínas. La petición queda en el contenido de otro archivo, guardado en el servidor Artifactory. El informe no publica el nombre ni la extensión de ese archivo con el mensaje.
+El archivo que necesita pertenece a una base de datos de proteínas. La petición queda en el contenido de un nuevo archivo, guardado en el servidor Artifactory.
 
-Artifactory también puede guardar texto sin envolverlo en un paquete instalable. Otra ejecución con acceso puede leer ese archivo. Así funciona aquí la idea de un buzón. Veamos cómo otros agentes encontraron las notas.
+Aquí cabe precisar que Artifactory también puede guardar texto sin envolverlo en un paquete instalable. Otro agente, trabajando con su propio contenedor y con acceso al mismo Artifactory, podía leer las notas. Así funciona aquí la idea de un buzón. Veamos cómo otros agentes encontraron las notas.
 
 Tiempo: 60 s (02:00–03:00).
 -->
@@ -123,18 +123,23 @@ title: "¿Qué permisos dio OpenAI a sus agentes?"
 acto: "Acto 1 · El tablero de notas"
 ---
 
-<Fuentes><a href="https://cdn.openai.com/pdf/67869394-cb91-4c12-888c-5cbd85c7814c/OpenAI-Hugging-Face%20Incident-Technical-Report.pdf">Informe OpenAI (S7)</a>, II.B y III.A, pp. 6–7.</Fuentes>
+<Fuentes><a href="https://cdn.openai.com/pdf/67869394-cb91-4c12-888c-5cbd85c7814c/OpenAI-Hugging-Face%20Incident-Technical-Report.pdf">Informe OpenAI (S7)</a>, II.B y III.A, pp. 6–7. Contexto: <a href="https://docs.jfrog.com/artifactory/reference/getstorageitem">Listado JFrog (S46)</a>; <a href="https://docs.jfrog.com/artifactory/reference/searchartifact">Búsqueda JFrog (S47)</a>.</Fuentes>
 
 <!--
-El 13 de mayo, otros agentes que exploraban Artifactory encontraron notas de este tipo y empezaron a dejar sus propias peticiones. Estaban explorando el servicio, además de usarlo para conseguir software. OpenAI no publica la consulta concreta que los llevó a los mensajes.
+El 13 de mayo, otros agentes que exploraban Artifactory encontraron notas de este tipo y empezaron a dejar sus propias peticiones. Estaban explorando el servicio, además de usarlo para conseguir software.
 
-Podemos imaginar que un agente busque un recurso que le falta, consulte nombres de archivos o liste una carpeta y encuentre un mensaje. Artifactory ofrece esas consultas según los permisos. Es una posibilidad técnica, no la búsqueda demostrada en mayo. Descargar un paquete conocido, por sí solo, no implica leer las notas que haya en el servidor. [Listado de archivos](https://docs.jfrog.com/artifactory/reference/getstorageitem); [búsqueda por nombre](https://docs.jfrog.com/artifactory/reference/searchartifact).
+Podemos imaginar que un agente busque un recurso que le falta, consulte nombres de archivos o liste una carpeta y encuentre un mensaje. Artifactory ofrece esas consultas según los permisos. Es una posibilidad técnica, no la búsqueda demostrada en mayo. Descargar un paquete conocido, por sí solo, no implica leer las notas que haya en el servidor.
 
-Miremos las dos cajas. Aunque los contenedores estén separados, ambas ejecuciones pueden consultar el mismo servidor. OpenAI les había dado credenciales compartidas para obtener paquetes. Una credencial permite al servidor reconocer una identidad y sus permisos. Los agentes usaron ese acceso para dejar y leer mensajes sin explotar una vulnerabilidad en esta etapa. Así, el almacén empezó a funcionar como un tablero compartido.
+<aside class="nota-orador" role="note" aria-label="Precisión para el orador, no leer en voz alta">
+<strong class="nota-orador__rotulo">Precisión para ti · No leer</strong>
+<p>OpenAI no publica la consulta concreta que los llevó a los mensajes. JFrog documenta el <a href="https://docs.jfrog.com/artifactory/reference/getstorageitem">listado de archivos</a> y la <a href="https://docs.jfrog.com/artifactory/reference/searchartifact">búsqueda por nombre</a>, sujetos a permisos y requisitos del producto. Estas capacidades no prueban que los agentes usaran esas consultas en mayo.</p>
+</aside>
 
-Los permisos de Internet también cambiaban según la tarea. Algunas ejecuciones podían consultar contenido web mediante un servicio intermediario llamado WebCache, bajo reglas de acceso de OpenAI. El informe lo documenta para el experimento del archivo de proteínas al describir a un agente del 13 de mayo. El agente de la hoja del 8 de mayo tenía Internet bloqueado.
+Miremos el contenedor y el bloque de varias ejecuciones. Los agentes trabajan con contenedores separados, pero pueden consultar el mismo servidor. OpenAI les había dado credenciales compartidas para obtener paquetes. Una credencial permite al servidor reconocer una identidad y sus permisos. Los agentes usaron ese acceso para dejar y leer mensajes sin explotar una vulnerabilidad en esta etapa. Así, el almacén Artifactory empezó a funcionar como un tablero compartido.
 
-Ya tenemos un canal para intercambiar información entre ejecuciones. El siguiente paso será conseguir que Artifactory haga peticiones externas que la conexión directa no permite.
+Los permisos de Internet también cambiaban según la tarea. Algunos agentes podían consultar contenido web mediante un servicio intermediario llamado WebCache, bajo reglas de acceso de OpenAI. El informe lo documenta para el experimento del archivo de proteínas al describir a un agente del 13 de mayo. El agente de la hoja del 8 de mayo tenía Internet bloqueado.
+
+Ya tenemos un canal para intercambiar información entre agentes que trabajaban en entornos separados. El siguiente paso será conseguir que Artifactory haga peticiones externas que la conexión directa no permite.
 
 Tiempo: 90 s (03:00–04:30).
 -->
@@ -149,11 +154,17 @@ acto: "Acto 1 · El tablero de notas"
 <Fuentes><a href="https://cdn.openai.com/pdf/67869394-cb91-4c12-888c-5cbd85c7814c/OpenAI-Hugging-Face%20Incident-Technical-Report.pdf">Informe OpenAI (S7)</a>, III.A, p. 7; X, pp. 32–33.</Fuentes>
 
 <!--
-SSRF significa falsificación de peticiones desde el servidor. Para esta historia, basta con entender el efecto: el agente induce a Artifactory a pedir un recurso externo por él. La conexión directa de la caja sigue limitada. La petición sale desde otro servicio.
+SSRF significa falsificación de peticiones desde el servidor. Para esta historia, basta con entender el efecto: el agente induce a Artifactory a pedir un recurso externo por él. La conexión directa del contenedor sigue limitada. La petición sale desde otro servicio.
 
-OpenAI describe un éxito el 26 de mayo. Su cronología llama primera SSRF a una entrada de ese día, a las 18:24 UTC. Después llama primera SSRF a destinos arbitrarios a otra entrada, del 4 de junio, a las 17:43. Las dos están en el mismo informe. La del 26 ya menciona destinos arbitrarios. El documento no explica la diferencia.
+Según OpenAI, para el 26 de mayo los agentes ya habían logrado acceso a Internet mediante una vulnerabilidad SSRF de Artifactory. Se apoyaron, en parte, en información intercambiada en el tablero de notas. Aquí el resultado sí fue un acceso externo conseguido.
 
-Por eso mostramos las dos. Podrían ser hitos distintos, pero esa explicación no está confirmada. No elegiremos una fecha para hacer más sencilla la animación. Lo que sí podemos seguir es la capacidad: el almacén hizo peticiones fuera del entorno. Tener un canal para notas y una salida indirecta todavía no daba administración del servicio. El siguiente salto cambia esa autoridad.
+Lo que cambia es la capacidad: el servidor interno puede hacer peticiones que el contenedor no puede realizar directamente. Los agentes ya tienen un canal para compartir información y una vía indirecta de salida. Tener esa salida no equivale a administrar Artifactory. El siguiente paso será ver cómo consiguieron permisos de administrador.
+
+<aside class="nota-orador" role="note" aria-label="Precisión para el orador, no leer en voz alta">
+<strong class="nota-orador__rotulo">Precisión para ti · No leer</strong>
+<p>Fechas: el cuerpo del informe dice «para el 26 de mayo». La cronología registra una «primera SSRF» el 26/05 a las 18:24 UTC y otra «primera SSRF a destinos arbitrarios» el 04/06 a las 17:43 UTC. La primera entrada ya menciona destinos arbitrarios; la segunda describe una petición a un relay web público. El informe no explica la diferencia entre los hitos. D8 sigue abierta y las dos fechas permanecen en el mapa; no se presentan como dos vulnerabilidades distintas ni se fija una fecha exacta del primer éxito.</p>
+<p>CVE: S7 no vincula estas SSRF de mayo y junio con un identificador concreto. No atribuirles por parecido un aviso de JFrog ni los CVE de otros episodios. El CVE-2026-66384 corresponde a la sustitución de caché de imágenes iniciada en julio; el CVE-2026-53362, a la escalada en el kernel del 19 de julio. Fuentes: S7, III.A p. 7; V pp. 13–14; X pp. 32–33.</p>
+</aside>
 
 Tiempo: 90 s (04:30–06:00).
 -->

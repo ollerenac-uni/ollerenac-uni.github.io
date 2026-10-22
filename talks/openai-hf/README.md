@@ -46,7 +46,7 @@ La narración se lee en voz alta. Un recordatorio editorial puede usar `<aside c
 con el rótulo «Precisión para ti · No leer» en `<strong class="nota-orador__rotulo">`. Se escribe en las notas
 del guion y el generador conserva ese HTML. `style.css` limita su recuadro azul a `.slidev-note`, en Presenter.
 El rótulo permite distinguirlo sin depender solo del color. Los límites que cambian la interpretación de los
-hechos siguen dentro de la narración. Por ahora estos recuadros se usan solo en «Una tarea imposible».
+hechos siguen dentro de la narración. Por ahora estos recuadros se usan en las diapositivas 2, 4 y 5.
 
 ## Mapa del incidente
 

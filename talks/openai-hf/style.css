@@ -27,6 +27,13 @@
 	margin: 0;
 	color: inherit;
 }
+.slidev-note .nota-orador p + p {
+	margin-top: 0.6em;
+}
+.slidev-note .nota-orador a {
+	color: inherit;
+	text-decoration: underline;
+}
 
 /* El tema pone opacity .5 en `h1 + p`: 3.98:1 sobre blanco. Con .6 son 5.74:1 (WCAG AA pide 4.5:1). */
 .slidev-layout h1 + p {
