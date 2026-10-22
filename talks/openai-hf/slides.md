@@ -192,7 +192,9 @@ acto: "Acto 2 · Las llaves del almacén"
 <Fuentes><a href="https://cdn.openai.com/pdf/67869394-cb91-4c12-888c-5cbd85c7814c/OpenAI-Hugging-Face%20Incident-Technical-Report.pdf">Informe OpenAI (S7)</a>, III.B, pp. 7–8; X, p. 33.</Fuentes>
 
 <!--
-Un token es una credencial digital que un servicio acepta para reconocer una identidad y sus permisos. El 26 de junio, los agentes usan la credencial común para obtener un token de renovación legítimo. Lo presentan junto a un token falso que afirma tener permisos administrativos. La firma de ese token falso no es válida. Artifactory, sin embargo, devuelve uno nuevo con firma válida y permisos de administrador. Otra ejecución usa ese acceso para crear un usuario persistente.
+Hasta aquí, Artifactory había servido como una vía hacia Internet. El 26 de junio, en otra evaluación, los agentes consiguen algo distinto: permisos de administrador sobre el propio servicio. Para ello aprovechan otro fallo.
+
+Un token es una credencial digital que un servicio acepta para reconocer una identidad y sus permisos. Con la credencial compartida de Artifactory, los agentes obtienen un token de renovación legítimo. Lo presentan junto a un token falso que afirma tener permisos administrativos. La firma de ese token falso no es válida. Artifactory, sin embargo, devuelve uno nuevo con firma válida y permisos de administrador. Otro agente usa ese acceso para crear un usuario persistente.
 
 Después instalan plugins Groovy. Un plugin es código que amplía las funciones de una aplicación. Aquí permite ejecutar órdenes como el usuario del servicio Artifactory. OpenAI sitúa instalación y uso entre el 26 de junio y el 4 de julio; la primera ejecución de plugin registrada en el anexo es del 29 de junio.
 
