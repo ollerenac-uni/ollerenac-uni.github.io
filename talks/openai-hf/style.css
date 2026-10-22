@@ -86,6 +86,10 @@
 .pantalla .mapa.compacto:not(.mini) svg.plano {
 	width: 75%;
 }
+/* En la comparación CVE, las fichas son el contenido principal y el mapa da contexto. */
+.pantalla .mapa.compacto[data-escena='C20']:not(.mini) svg.plano {
+	width: 58%;
+}
 /* Destino del salto interno del PDF (EnlaceRespaldo.vue): al borde superior de la diapositiva, no bajo el título. */
 .slidev-layout.pantalla {
 	position: relative;

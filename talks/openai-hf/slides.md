@@ -486,17 +486,23 @@ acto: "Acto 5 · Las vulnerabilidades explotadas"
 <Fuentes><a href="https://cdn.openai.com/pdf/67869394-cb91-4c12-888c-5cbd85c7814c/OpenAI-Hugging-Face%20Incident-Technical-Report.pdf">Informe OpenAI (S7)</a>, pp. 7, 11, 13–14 y 32–37; <a href="https://docs.jfrog.com/releases/docs/jfrog-security-advisories">Avisos JFrog (S8)</a>, fichas de ID, 27/07 y 12/08; <a href="https://docs.jfrog.com/releases/docs/artifactory-self-managed-releases">Versiones JFrog (S9)</a>, 7.161.15, CVEs Addressed. Tabla B01.</Fuentes>
 
 <!--
-Empecemos por la llave administrativa de junio. CVE-2026-65616 describe una validación defectuosa de firma en la renovación de tokens. Encaja con el token falso convertido en uno válido que vimos el 26. Es probable por mecanismo; la asociación exacta no está confirmada en el informe.
+Empecemos por la llave administrativa de junio. CVE-2026-65616 describe una validación defectuosa de firma en la renovación de tokens. Encaja con el token falso convertido en uno válido que vimos el 26 de junio. Es probable por mecanismo; la asociación exacta no está confirmada en el informe.
 
 Para las peticiones externas, CVE-2026-65924 describe una ruta Terraform que permite al servidor pedir destinos indebidos. El aviso existe, pero no está vinculado a una petición concreta del enjambre. No lo colocaremos como causa confirmada de la SSRF de mayo ni de la nueva salida de julio.
 
-La tercera ficha vuelve al RubyGem del 13. CVE-2026-65617 describe deserialización insegura. La nota de versión de JFrog precisa el procesamiento Gems y OpenAI relata Ruby Marshal/JRuby. La correspondencia es probable por mecanismo; el ID exacto no está confirmado junto a la acción.
+La tercera ficha vuelve a la deserialización insegura del RubyGem del 13 de julio. CVE-2026-65617 describe ese tipo de fallo. La nota de versión de JFrog precisa el procesamiento Gems y OpenAI relata Ruby Marshal/JRuby con ejecución de órdenes. El mecanismo encaja, pero el informe no nombra ese CVE junto a la acción.
 
 Las dos siguientes sí están identificadas por OpenAI. CVE-2026-66384 permitió que una petición escribiera contenido de imagen en una ubicación de caché que debía corresponder a una referencia confiable. La alteración está confirmada. Que otra carga la ejecutara sigue sin evidencia.
 
 CVE-2026-53362 es el fallo de kernel que OpenAI nombra para el salto del 19 desde un contenedor al nodo. El contenedor comparte servicios del kernel del host; aprovechar ese fallo amplió el alcance fuera de su caja. Esta ficha no explica el root de la VM del 9. Tampoco tenemos aquí un aviso del mantenedor que fije todas sus versiones.
 
 Señalemos las fechas. Los mecanismos ocurrieron en partes diferentes del recorrido. Los avisos de JFrog llegaron después. Un nombre parecido o una publicación cercana no mejora la certeza de una asociación.
+
+<aside class="nota-orador" role="note" aria-label="Precisión para el orador, no leer en voz alta">
+<strong class="nota-orador__rotulo">Precisión para ti · No leer</strong>
+<p>El borrador proponía CVE-2026-42016 para la firma al renovar. Los registros de JFrog distinguen los fallos: <a href="https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2026/65xxx/CVE-2026-65616.json">CVE-2026-65616</a> describe validación incorrecta de firma al renovar un token; <a href="https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2026/42xxx/CVE-2026-42016.json">CVE-2026-42016</a> describe validación de firma/emisor sin comprobar el alcance del token. Por eso se conserva 65616 como candidato por mecanismo. S7 no lo asigna explícitamente a la acción del 26 de junio. No se transforma esa coincidencia en asociación confirmada.</p>
+<p>Las fichas separan la fecha del episodio comparado de la publicación del aviso. Terraform conserva solo «Aviso: 27 de julio», sin fecha de explotación atribuida. Las dos correspondencias explícitas de S7 son la caché y el kernel. La alteración de caché no demuestra ejecución posterior; el kernel del 19 no explica el root del 9. Base: S7 pp. 13–14 y 37; S8 y S9.</p>
+</aside>
 
 Tiempo: 150 s (22:30–25:00).
 -->

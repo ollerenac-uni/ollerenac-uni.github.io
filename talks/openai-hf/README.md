@@ -46,7 +46,7 @@ La narración se lee en voz alta. Un recordatorio editorial puede usar `<aside c
 con el rótulo «Precisión para ti · No leer» en `<strong class="nota-orador__rotulo">`. Se escribe en las notas
 del guion y el generador conserva ese HTML. `style.css` limita su recuadro azul a `.slidev-note`, en Presenter.
 El rótulo permite distinguirlo sin depender solo del color. Los límites que cambian la interpretación de los
-hechos siguen dentro de la narración. Por ahora estos recuadros se usan en las diapositivas 2, 4, 5 y 6.
+hechos siguen dentro de la narración. Por ahora estos recuadros se usan en las diapositivas 2, 4, 5, 6 y 20.
 
 ## Fechas en la charla
 
@@ -86,6 +86,11 @@ La discrepancia D8 permanece en las notas y en los datos compartidos del post.
 - Accesibilidad: el `<svg>` tiene `role="img"`, nombre = título de la escena y descripción (`aria-describedby`) con cada nodo activo y su organización
   y cada conexión con número, origen, destino, tipo y restricción. En el post, Siguiente/Anterior usan `aria-disabled`: el foco no sale del mapa en los extremos.
 - Los carriles de respuesta solo aparecen en las escenas que los usan.
+- C20 conserva cinco fichas en `mapa-layout.mjs`, con campos explícitos de identificador, mecanismo,
+  tipo de fecha, fecha, frontera, certeza y límite. El componente las dibuja con la misma jerarquía:
+  episodio/acción o aviso, seguido del dictamen. Dos son probables, una no tiene vinculación y dos
+  están confirmadas. Texto, bordes y color distinguen los estados; la confirmación de la caché
+  queda separada de la ejecución posterior no acreditada. Este bloque es compartido con el post.
 - Iconos: set [Carbon](https://carbondesignsystem.com/elements/icons/library/) (Apache 2.0), copiados a `shared/data/icons.json` con
   `node scripts/extract-icons.mjs`. Sin red. Las diapositivas usan el mismo set con `<carbon-key />` (Iconify de Slidev).
 - Con movimiento reducido no hay transiciones.

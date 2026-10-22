@@ -185,11 +185,11 @@ export const escenas = {
 		compacto: true, // el mapa se reduce para dar sitio a las cinco fichas
 		extremos: ['N29'],
 		fichas: [
-			['CVE-2026-65616', 'renovación de token', '26 de junio', 'F2', 'PROBABLE POR MECANISMO; NO CONFIRMADA'],
-			['CVE-2026-65924', 'peticiones Terraform', 'Aviso 27 de julio; acción no atribuida', 'F3', 'SIN VINCULACIÓN'],
-			['CVE-2026-65617', 'deserialización Gems', '13 de julio', 'F2', 'PROBABLE POR MECANISMO; NO CONFIRMADA'],
-			['CVE-2026-66384', 'caché Docker', 'Desde el 9 de julio', 'F7', 'CONFIRMADA · ejecución posterior NO CONFIRMADA'],
-			['CVE-2026-53362', 'kernel', '19 de julio', 'F7', 'CONFIRMADA'],
+			{ cve: 'CVE-2026-65616', mecanismo: 'Firma al renovar tokens', tipoFecha: 'Episodio', fecha: '26 de junio', frontera: 'F2', estado: 'probable', certeza: 'PROBABLE POR MECANISMO; NO CONFIRMADA' },
+			{ cve: 'CVE-2026-65924', mecanismo: 'SSRF · Terraform', tipoFecha: 'Aviso', fecha: '27 de julio', frontera: 'F3', estado: 'sin-vinculacion', certeza: 'SIN VINCULACIÓN', limite: 'Sin petición del incidente atribuida' },
+			{ cve: 'CVE-2026-65617', mecanismo: 'Deserialización · RubyGems', tipoFecha: 'Episodio', fecha: '13 de julio', frontera: 'F2', estado: 'probable', certeza: 'PROBABLE POR MECANISMO; NO CONFIRMADA' },
+			{ cve: 'CVE-2026-66384', mecanismo: 'Caché de imágenes Docker', tipoFecha: 'Acción', fecha: 'Desde el 9 de julio', frontera: 'F7', estado: 'confirmada', certeza: 'CONFIRMADA', limite: 'Ejecución posterior no confirmada' },
+			{ cve: 'CVE-2026-53362', mecanismo: 'Escape mediante kernel', tipoFecha: 'Acción', fecha: '19 de julio', frontera: 'F7', estado: 'confirmada', certeza: 'CONFIRMADA', limite: 'No explica el root del 9' },
 		],
 	},
 	C21: { fecha: '12 de mayo y 8–13 de julio', extremos: ['N03', 'N10', 'N15', 'N16.pub'], lineas: ['Permiso compartido · tokens expuestos · aplicación del cliente', 'HDF5 lee · Jinja2 ejecuta · permisos amplían', 'Sin CVE identificado en estas primarias'] },

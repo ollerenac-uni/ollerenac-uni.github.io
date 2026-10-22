@@ -337,11 +337,14 @@ function stop(s) {
 				<li v-for="[e, d] in cur.leyenda" :key="e"><strong>{{ e }}</strong> · {{ d }}</li>
 			</ul>
 			<ul v-if="cur.fichas" class="fichas">
-				<li v-for="f in cur.fichas" :key="f[0]">
-					<strong>{{ f[0] }}</strong>
-					<span>{{ f[1] }}</span>
-					<span>{{ f[2] }} · {{ f[3] }}</span>
-					<span class="estado">{{ f[4] }}</span>
+				<li v-for="f in cur.fichas" :key="f.cve" :class="f.estado" :data-cve="f.cve">
+					<strong class="cve">{{ f.cve }}</strong>
+					<span class="mecanismo">{{ f.mecanismo }}</span>
+					<p class="fecha-ficha"><span class="tipo-fecha">{{ f.tipoFecha }} · {{ f.frontera }}</span><span>{{ f.fecha }}</span></p>
+					<div class="dictamen">
+						<span class="estado">{{ f.certeza }}</span>
+						<span v-if="f.limite" class="alcance">{{ f.limite }}</span>
+					</div>
 				</li>
 			</ul>
 		</div>
@@ -460,8 +463,16 @@ svg.plano {
 .leyenda-cve { display: grid; gap: 0.3rem; margin-top: 0.3rem !important; }
 .leyenda-cve li { margin: 0; padding: 0.3rem 0.8rem; border: 2px solid #111827; border-radius: 0.4rem; line-height: 1.3; }
 .fichas { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0.45rem; margin-top: 0.3rem !important; }
-.fichas li { margin: 0; display: flex; flex-direction: column; gap: 0.05rem; padding: 0.25rem 0.45rem; border: 2px solid #111827; border-radius: 0.4rem; font-size: 0.74em; line-height: 1.2; }
-.fichas .estado { margin-top: auto; padding-top: 0.2rem; font-weight: 800; }
+.fichas li { --acento: #1e3a8a; --fondo: #eff6ff; margin: 0; display: flex; flex-direction: column; gap: 0.15rem; padding: 0.35rem 0.5rem; border: 2px solid var(--acento); border-top-width: 5px; border-radius: 0.35rem; background: #fff; font-size: 0.82em; line-height: 1.2; }
+.fichas li.probable { --acento: #9a3412; --fondo: #fff7ed; }
+.fichas li.sin-vinculacion { --acento: #374151; --fondo: #f3f4f6; border-style: dashed; }
+.fichas .cve { color: var(--acento); font-weight: 800; }
+.fichas .mecanismo { font-weight: 700; }
+.fichas .fecha-ficha { display: flex; flex-direction: column; gap: 0.15rem; padding: 0.2rem 0; font-size: inherit; line-height: 1.2; }
+.fichas .tipo-fecha { color: #374151; font-weight: 700; }
+.fichas .dictamen { margin-top: auto; padding: 0.25rem 0.3rem; border-top: 1px solid var(--acento); background: var(--fondo); color: var(--acento); }
+.fichas .estado { display: block; font-weight: 800; }
+.fichas .alcance { display: block; margin-top: 0.2rem; }
 .fronteras { display: flex; flex-direction: column; margin-top: 0.15rem !important; font-size: 0.74em; line-height: 1.25; color: #374151; }
 
 @media (min-width: 761px) {
