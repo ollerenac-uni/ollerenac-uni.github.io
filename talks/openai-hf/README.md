@@ -54,7 +54,16 @@ La narración se lee en voz alta. Un recordatorio editorial puede usar `<aside c
 con el rótulo «Precisión para ti · No leer» en `<strong class="nota-orador__rotulo">`. Se escribe en las notas
 del guion y el generador conserva ese HTML. `style.css` limita su recuadro azul a `.slidev-note`, en Presenter.
 El rótulo permite distinguirlo sin depender solo del color. Los límites que cambian la interpretación de los
-hechos siguen dentro de la narración. Por ahora estos recuadros se usan en las diapositivas 2, 4, 5, 6 y 20.
+hechos siguen dentro de la narración. Se usa en 2, 4, 5 y 6, y en el tramo 12–32 cuando hace falta
+separar un cotejo de fuentes o una precisión para preguntas del relato oral.
+
+Las notas 12–18 siguen las acciones, sus resultados y las respuestas de cada equipo. El regreso al 9 de julio
+en la 15 se anuncia expresamente. Las notas 19–22 vuelven al recorrido para explicar los mecanismos;
+las fichas CVE siguen los episodios del 26 de junio y del 9, 13 y 19 de julio, con el aviso Terraform al final.
+La 19 introduce este regreso mediante los hitos de mayo, junio y julio. Los grados de certeza
+se leen en cada ficha de la 20; la definición completa queda en el recuadro de las notas.
+Las interpretaciones, recomendaciones y otros casos conservan su categoría y usan episodios narrados
+como punto de partida. Los recuadros quedan fuera de la lectura oral y del conteo de palabras.
 
 ## Fechas en la charla
 

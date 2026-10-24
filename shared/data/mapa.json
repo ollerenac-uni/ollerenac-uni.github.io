@@ -1581,7 +1581,7 @@
 				"≈700 atacantes: estimación METR"
 			],
 			"signo": "N18",
-			"limite": "D10 · HF registra actividad desde un pod ya comprometido a las 10:10 UTC; OpenAI fecha su primera Jinja confirmada a las 16:07. No se restan como si fueran la misma primera ejecución."
+			"limite": "D10 · HF y OpenAI registran hitos distintos el 11 de julio; no fijan una primera ejecución común."
 		},
 		"C14": {
 			"id": "C14",
@@ -1654,7 +1654,7 @@
 		"C16": {
 			"id": "C16",
 			"act": 4,
-			"fecha": "12–16 de julio",
+			"fecha": "13–16 de julio, respuesta y publicación",
 			"titulo": "HF detectó, respondió y publicó",
 			"nodos": [
 				"N02",
@@ -1672,8 +1672,8 @@
 			"insignias": {},
 			"extremos": [],
 			"lineas": [
-				"HF · Detección: fecha no publicada · 13: interrumpe acceso · 16: publica",
-				"12: caen muchas ejecuciones; causa sin resolver"
+				"HF · 13: interrumpe el acceso · 16: publica el incidente",
+				"Señales correlacionadas; aviso tardío a guardia"
 			],
 			"signo": "N26.hf"
 		},
@@ -1703,9 +1703,9 @@
 			"insignias": {},
 			"extremos": [],
 			"lineas": [
-				"17: contacta como cliente",
-				"19: alerta 12:03; comienza parada 17:37 UTC",
-				"Dos acciones internas separadas; kernel a las 15:59"
+				"17: OpenAI contacta a HF como cliente",
+				"19: alerta 12:03 → parada 17:37 UTC",
+				"Ese día: kernel y recuperación de administración"
 			]
 		},
 		"C18": {
@@ -1733,39 +1733,29 @@
 				"23 / 25 / 29: parada por etapas"
 			],
 			"signo": "N27.oa",
-			"limite": "Hitos de parada y cobertura, no un apagado total demostrado el 25."
+			"limite": "29 de julio: último checkpoint identificado en esta cronología."
 		},
 		"C19": {
 			"id": "C19",
 			"act": 5,
 			"fecha": "lectura retrospectiva",
-			"titulo": "Qué significa asociar un CVE",
+			"titulo": "Cómo se abrieron las fronteras",
 			"nodos": [],
 			"enlaces": [],
 			"frontera": [],
 			"insignias": {},
 			"extremos": [],
-			"lineas": [],
-			"leyenda": [
-				[
-					"CONFIRMADA",
-					"OpenAI nombra el ID junto a la acción"
-				],
-				[
-					"PROBABLE POR MECANISMO; NO CONFIRMADA",
-					"el mecanismo encaja, sin esa identificación"
-				],
-				[
-					"SIN VINCULACIÓN",
-					"no se localizó una acción atribuida a ese ID"
-				]
+			"lineas": [
+				"Mayo: Artifactory hace peticiones externas",
+				"26 de junio: credencial ordinaria → administración",
+				"Julio: caché de imágenes · paquetes · kernel"
 			]
 		},
 		"C20": {
 			"id": "C20",
 			"act": 5,
 			"fecha": "26 de mayo a 19 de julio; avisos 27 de julio y 12 de agosto",
-			"titulo": "Cinco fichas en las mismas fronteras",
+			"titulo": "Del token al escape del contenedor",
 			"nodos": [
 				"N05",
 				"N11",
@@ -1807,14 +1797,14 @@
 					"certeza": "PROBABLE POR MECANISMO; NO CONFIRMADA"
 				},
 				{
-					"cve": "CVE-2026-65924",
-					"mecanismo": "SSRF · Terraform",
-					"tipoFecha": "Aviso",
-					"fecha": "27 de julio",
-					"frontera": "F3",
-					"estado": "sin-vinculacion",
-					"certeza": "SIN VINCULACIÓN",
-					"limite": "Sin petición del incidente atribuida"
+					"cve": "CVE-2026-66384",
+					"mecanismo": "Caché de imágenes Docker",
+					"tipoFecha": "Acción",
+					"fecha": "Desde el 9 de julio",
+					"frontera": "F7",
+					"estado": "confirmada",
+					"certeza": "CONFIRMADA",
+					"limite": "Ejecución posterior no confirmada"
 				},
 				{
 					"cve": "CVE-2026-65617",
@@ -1826,16 +1816,6 @@
 					"certeza": "PROBABLE POR MECANISMO; NO CONFIRMADA"
 				},
 				{
-					"cve": "CVE-2026-66384",
-					"mecanismo": "Caché de imágenes Docker",
-					"tipoFecha": "Acción",
-					"fecha": "Desde el 9 de julio",
-					"frontera": "F7",
-					"estado": "confirmada",
-					"certeza": "CONFIRMADA",
-					"limite": "Ejecución posterior no confirmada"
-				},
-				{
 					"cve": "CVE-2026-53362",
 					"mecanismo": "Escape mediante kernel",
 					"tipoFecha": "Acción",
@@ -1844,6 +1824,16 @@
 					"estado": "confirmada",
 					"certeza": "CONFIRMADA",
 					"limite": "No explica el root del 9"
+				},
+				{
+					"cve": "CVE-2026-65924",
+					"mecanismo": "SSRF · Terraform",
+					"tipoFecha": "Aviso",
+					"fecha": "27 de julio",
+					"frontera": "F3",
+					"estado": "sin-vinculacion",
+					"certeza": "SIN VINCULACIÓN",
+					"limite": "Sin petición del incidente atribuida"
 				}
 			]
 		},
@@ -1851,7 +1841,7 @@
 			"id": "C21",
 			"act": 5,
 			"fecha": "12 de mayo y 8–13 de julio",
-			"titulo": "Mecanismos sin CVE identificado",
+			"titulo": "Cómo se encadenaron los accesos",
 			"nodos": [
 				"N07",
 				"N25",
@@ -1890,16 +1880,16 @@
 				"N16.pub"
 			],
 			"lineas": [
-				"Permiso compartido · tokens expuestos · aplicación del cliente",
-				"HDF5 lee · Jinja2 ejecuta · permisos amplían",
-				"Sin CVE identificado en estas primarias"
+				"Archivo compartido → mensajes",
+				"Credencial expuesta → repositorios",
+				"HDF5: lectura · Jinja2: órdenes · credenciales: nuevos accesos"
 			]
 		},
 		"C22": {
 			"id": "C22",
 			"act": 5,
 			"fecha": "correcciones publicadas 27 de julio / 12 de agosto",
-			"titulo": "Un parche tiene alcance",
+			"titulo": "Las correcciones llegaron por etapas",
 			"nodos": [
 				"N05",
 				"N33"
@@ -1909,9 +1899,9 @@
 			"insignias": {},
 			"extremos": [],
 			"lineas": [
-				"27/07: 7.161.15, fallos de su entrada",
-				"12/08: CVE-2026-66384 → 7.146.35 / 7.161.16",
-				"15 ID en respaldo ≠ 15 exploits confirmados"
+				"27 de julio: JFrog publica 7.161.15 con correcciones",
+				"12 de agosto: aviso de caché → 7.146.35 / 7.161.16",
+				"Cada fallo tiene sus versiones corregidas"
 			],
 			"signo": "N33"
 		},
