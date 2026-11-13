@@ -462,3 +462,13 @@
 
 /* Lista de países roamer (slide 11): punch, resalta lo foráneo. */
 .pantalla .paises { margin: 0.35rem 0 0; font-size: 1.3rem; font-weight: 800; color: #b91c1c; letter-spacing: 0.01em; }
+
+/* Franja de espectro al fondo de la portada (solo slide 1), sin tapar el logo. */
+.portada-espectro { position: relative; flex: 0 0 auto; width: 100%; height: 9.5rem; overflow: hidden; background: #1a0b2e; }
+.portada-espectro img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+.portada-espectro .barrido {
+	position: absolute; top: 0; bottom: 0; left: -22%; width: 22%; pointer-events: none;
+	background: linear-gradient(90deg, transparent, rgba(170, 215, 255, 0.18), transparent);
+	animation: barrido 3.5s linear infinite;
+}
+@keyframes barrido { to { left: 100%; } }
