@@ -369,3 +369,17 @@
 .portada .nombre { font-size: 1.35rem; font-weight: 700; margin: 0; color: #172641; opacity: 1; }
 .portada .desc { font-size: 0.98rem; margin: 0; color: #475569; opacity: 1; }
 .portada .logo-yachaq { height: 3.4rem; margin-top: 1.1rem; }
+
+/* Marca YachaqLabs: panel limpio a la izquierda que cubre la franja diagonal del banner. */
+.banner { height: 3.5rem; }
+.pantalla .banner { margin: -0.55rem -1.4rem 0.35rem; }
+.banner .banner-marca {
+	position: absolute; left: 0; top: 0; bottom: 0;
+	display: flex; align-items: center;
+	padding: 0 2.4rem 0 1.5rem;
+	background: linear-gradient(90deg, #0b1c3a 0%, #0b1c3a 60%, rgba(11, 28, 58, 0) 100%);
+}
+.banner .banner-marca .banner-logo {
+	position: static; transform: none;
+	height: 2.5rem; opacity: 1; filter: brightness(0) invert(1);
+}
