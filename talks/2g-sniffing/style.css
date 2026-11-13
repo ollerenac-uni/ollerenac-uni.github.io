@@ -441,3 +441,24 @@
 .pantalla > .cuerpo { flex: 1 1 auto; min-height: 0; overflow: hidden; padding: 0.25rem 1.4rem 0; }
 /* Slides sin mapa (interfaz, defensa, cierre): el cuerpo centra en el espacio restante. */
 .pantalla.sin-mapa > .cuerpo { justify-content: center; }
+
+/* ===== Contenido bajo el canvas: compacto y legible (no tamaños de slide completo) ===== */
+/* Leyenda del mapa (Conexiones del mapa): más grande/legible. */
+.pantalla .mapa { font-size: 14px; }
+.pantalla .mapa .meta { line-height: 1.35; }
+/* Líneas de apoyo */
+.pantalla .lineas { margin: 0.2rem 0; }
+.pantalla .lineas li { font-size: 1.02rem; font-weight: 700; margin: 0 0 0.3rem; line-height: 1.25; }
+/* Etiqueta */
+.pantalla .etiqueta { font-size: 0.92rem; margin: 0.15rem 0 0.4rem; padding: 0.18rem 0.7rem; border-width: 2px; }
+/* Tarjetas (IMSI/TMSI, defensa): más bajas */
+.pantalla .dos, .pantalla .tres { gap: 0.7rem; margin: 0.35rem 0; }
+.pantalla .tarjeta { padding: 0.5rem 0.85rem; border-width: 2px; }
+.pantalla .tarjeta h2 { font-size: 0.74rem; margin: 0 0 0.15rem; }
+.pantalla .tarjeta p { font-size: 1.1rem; line-height: 1.2; }
+.pantalla .tarjeta svg { width: 2.5rem; height: 2.5rem; margin-bottom: 0.2rem; }
+/* Frase destacada (slide 9) */
+.pantalla .cierre { font-size: 1.45rem; margin-top: 0.7rem; line-height: 1.25; }
+
+/* Lista de países roamer (slide 11): punch, resalta lo foráneo. */
+.pantalla .paises { margin: 0.35rem 0 0; font-size: 1.3rem; font-weight: 800; color: #b91c1c; letter-spacing: 0.01em; }

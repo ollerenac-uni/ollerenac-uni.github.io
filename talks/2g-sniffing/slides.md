@@ -102,12 +102,6 @@ acto: "Acto 2 · setup"
 scene: C07
 ---
 
-<div class="etiqueta">BCCH · CCCH</div>
-<ul class="lineas">
-<li>System Information, Paging, procedimientos MM</li>
-<li>Sin cifrado de identidad en esta fase</li>
-</ul>
-
 <!--
 BCCH/CCCH transportan los procedimientos de Mobility Management. El IMSI se expone
 cuando ocurre un location update sin TMSI aún asignado, o un paging/identity por
@@ -161,11 +155,7 @@ acto: "Acto 4 · escala"
 scene: C11
 ---
 
-<div class="etiqueta">MCC extranjero = SIM foránea</div>
-<ul class="lineas">
-<li>USA, España, Liechtenstein, Chile, Argentina…</li>
-<li>Perfilar nacionalidad de la SIM, pasivamente</li>
-</ul>
+<p class="paises">USA · España · Liechtenstein · Chile · Argentina · …</p>
 
 <!--
 El MCC/MNC del IMSI es la red de origen del abonado. Un MCC != 716 (Perú) = roamer.
