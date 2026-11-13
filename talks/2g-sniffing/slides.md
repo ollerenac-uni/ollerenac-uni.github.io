@@ -211,22 +211,24 @@ layout: pantalla-anim
 title: "A la escucha de la celda"
 ---
 
-<div class="live-slide">
-  <div class="live-panels">
-    <figure class="live-fig" v-motion :initial="{ opacity: 0, y: 14 }" :enter="{ opacity: 1, y: 0, transition: { delay: 400, duration: 500 } }">
-      <img src="./img/spectrum.webp" alt="Frequency sink: espectro GSM con la ARFCN objetivo resaltada" />
-      <figcaption><b>Frequency sink</b> · señal en vivo · ARFCN 181 resaltada</figcaption>
-    </figure>
-    <figure class="live-fig" v-motion :initial="{ opacity: 0, y: 14 }" :enter="{ opacity: 1, y: 0, transition: { delay: 1000, duration: 500 } }">
-      <img src="./img/tshark-capture.png" alt="tshark: señalización GSMTAP capturada en claro" />
-      <figcaption><b>tshark</b> · señalización GSMTAP en claro</figcaption>
-    </figure>
-  </div>
-  <div class="live-rig" v-motion :initial="{ opacity: 0 }" :enter="{ opacity: 1, transition: { delay: 1500, duration: 450 } }">
-    <img class="receptor-foto" src="./img/sdr-setup.webp" alt="USRP B210 + laptop" />
-    <div class="rig-badge"><b>gr-gsm</b><span>GNU Radio</span></div>
-    <p class="live-note">La misma celda, en dos vistas: la <strong>señal</strong> cruda y su <strong>señalización</strong> ya decodificada. El paging viaja sin cifrar — IMSI y TMSI visibles.</p>
-  </div>
+<CanvasZonas>
+  <template #redes><RedesMoviles /></template>
+  <template #recepcion>
+    <div class="recep-live">
+      <figure class="live-fig" v-motion :initial="{ opacity: 0, y: 12 }" :enter="{ opacity: 1, y: 0, transition: { delay: 400, duration: 500 } }">
+        <img src="./img/spectrum.webp" alt="Frequency sink: espectro GSM con la ARFCN objetivo resaltada" />
+        <figcaption><b>frequency sink</b> · señal en vivo · ARFCN 181</figcaption>
+      </figure>
+      <figure class="live-fig" v-motion :initial="{ opacity: 0, y: 12 }" :enter="{ opacity: 1, y: 0, transition: { delay: 1000, duration: 500 } }">
+        <img src="./img/tshark-mini.png" alt="tshark: señalización GSMTAP capturada en claro" />
+        <figcaption><b>tshark</b> · señalización GSMTAP en claro</figcaption>
+      </figure>
+    </div>
+  </template>
+</CanvasZonas>
+
+<div class="live-note" v-motion :initial="{ opacity: 0, y: 8 }" :enter="{ opacity: 1, y: 0, transition: { delay: 1500, duration: 450 } }">
+  <p>La misma celda, en dos vistas: la <strong>señal</strong> cruda y su <strong>señalización</strong> ya decodificada. El paging viaja sin cifrar — IMSI y TMSI visibles.</p>
 </div>
 
 <!--
