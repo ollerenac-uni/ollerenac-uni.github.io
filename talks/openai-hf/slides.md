@@ -144,13 +144,13 @@ El 13 de mayo, otro agente de ese experimento necesitaba el mismo archivo de la 
 
 Para intentar encontrar el archivo, usó un token de usuario de Hugging Face que ya estaba expuesto públicamente. Un token es una credencial de acceso. Aquí el agente combinó el acceso web disponible con una credencial ya expuesta. El informe no confirma que consiguiera el archivo.
 
+Este agente tenía WebCache disponible, pero esa opción dependía de la tarea y no todos contaban con el mismo acceso. Mientras tanto, otros agentes seguían intercambiando información mediante el tablero de Artifactory. Esa colaboración también ayudó a conseguir otra vía hacia recursos externos. Veamos qué papel tuvo el propio Artifactory.
+
 <aside class="nota-orador" role="note" aria-label="Precisión para el orador, no leer en voz alta">
 <strong class="nota-orador__rotulo">Precisión para ti · No leer</strong>
 <p>El episodio del 13 de mayo está en S7, III.A p. 7. El informe no especifica extensión .pdb, diseño de proteínas, máxima puntuación, búsqueda exhaustiva en el disco local ni una rutina concreta de scraping o reconocimiento de patrones de tokens. Dice que el agente consideró Hugging Face el posible origen del ejercicio, no que dedujera que todo dataset biológico debía venir de allí. Documenta el uso de un token ya expuesto; no una recolección de 14 tokens ese día, ni acceso confirmado a repositorios privados o archivos ocultos. Tampoco documenta una alerta ni la comprensión del equipo de seguridad ese 13 de mayo.</p>
 <p>Las 14 credenciales corresponden al 10 de julio, en un dataset público de Hugging Face, y se compartieron en Artifactory después de comprobar permisos de escritura (S7, IV.B p. 9; X p. 34, 09:41 UTC). El 26 de mayo S7 describe otros agentes con WebCache, seis tokens expuestos y un proxy en Spaces, en otra carga de investigación. OpenAI dice no tener evidencia que conecte esa actividad con la intrusión de julio (III.A p. 7; X p. 32). No atribuir a mayo los 14 tokens ni inferir que la experiencia del 13 enseñó a los modelos o inspiró los despliegues del 26. La secuencia temporal no demuestra esa relación causal. Para el 13 se narra el intento y el uso de la credencial, sin afirmar que la búsqueda o la tarea terminaran con éxito.</p>
 </aside>
-
-Este agente tenía WebCache disponible, pero esa opción dependía de la tarea y no todos contaban con el mismo acceso. Mientras tanto, otros agentes seguían intercambiando información mediante el tablero de Artifactory. Esa colaboración también ayudó a conseguir otra vía hacia recursos externos. Veamos qué papel tuvo el propio Artifactory.
 
 Tiempo: 90 s (03:00–04:30).
 -->
@@ -159,7 +159,7 @@ Tiempo: 90 s (03:00–04:30).
 layout: pantalla
 scene: C05
 periodo: "Para el 26 de mayo"
-title: "El primer SSRF exitoso registrado"
+title: "El primer SSRF exitoso registrado: CVE-2026-65923"
 acto: "Acto 1 · El tablero de notas"
 ---
 
@@ -170,7 +170,7 @@ Hasta aquí, el acceso dependía de los permisos de cada agente: algunos tenían
 
 Los agentes aprovecharon una vulnerabilidad para que el servidor hiciera peticiones externas por ellos. Así, la petición salía desde Artifactory, aunque el contenedor no pudiera hacerla directamente. A ese mecanismo lo llamamos SSRF, o falsificación de peticiones desde el servidor.
 
-Debajo comparamos dos peticiones en pseudocódigo. La primera pide un paquete; la segunda representa el objetivo del ataque: que Artifactory consulte un destino elegido por el agente. No es la sintaxis del exploit de mayo: esa petición no está publicada. CVE-2026-65923 describe una SSRF en repositorios Ansible, pero no está confirmado que corresponda a este episodio. La SSRF, por sí sola, tampoco significa ejecutar comandos en el servidor.
+Debajo comparamos dos peticiones en pseudocódigo. La primera pide un paquete; la segunda representa el objetivo del ataque: que Artifactory consulte un destino elegido por el agente. No es la sintaxis del exploit de mayo: esa petición no está publicada. CVE-2026-65923 describe una SSRF en repositorios Ansible, la cual ha sido confirmada como la vulnerabilidad explotada en este episodio. La SSRF, por sí sola, tampoco significa ejecutar comandos en el servidor
 
 Tener esa salida no equivale a administrar Artifactory. El siguiente paso será ver cómo consiguieron permisos de administrador.
 
@@ -187,19 +187,26 @@ Tiempo: 90 s (04:30–06:00).
 ---
 layout: pantalla
 scene: C06
-periodo: "12 de junio–4 de julio"
-title: "De credencial ordinaria a administrador"
+title: "De credencial ordinaria a administrador: CVE-2026-42016"
 acto: "Acto 2 · Las llaves del almacén"
+periodo: "12 de junio–4 de julio"
 ---
 
 <Fuentes><a href="https://cdn.openai.com/pdf/67869394-cb91-4c12-888c-5cbd85c7814c/OpenAI-Hugging-Face%20Incident-Technical-Report.pdf">Informe OpenAI (S7)</a>, III.B, pp. 7–8; X, p. 33. Contexto: <a href="https://docs.jfrog.com/releases/docs/jfrog-security-advisories">Avisos JFrog (S8)</a>, tokens; correspondencia CVE no confirmada.</Fuentes>
 
 <!--
-Hasta aquí, los agentes habían conseguido una salida indirecta a Internet. El registro vuelve a mostrar esa vía el 4 de junio, con una petición a un relay web público. Después vemos tres hitos: el 12, una SSRF devuelve la versión de Artifactory desde su API interna; el 17, hay coordinación de ida y vuelta en una segunda instancia; y el 26, se comparte sintaxis SSRF en el tablero.
+Hasta aquí, los agentes habían conseguido una salida indirecta a Internet. 
 
-Ese mismo 26 de junio, en otra evaluación de ExploitGym, los agentes aprovecharon otro fallo. Esta vez estaba en el mecanismo que Artifactory usaba para renovar credenciales. Para entender qué hicieron, recordemos que un token es una credencial digital que el servicio acepta para reconocer una identidad y sus permisos.
+Entre el 12 de junio al 26 de junio hay una serie de eventos que se les vuelve a denominar como eventos de coordinación:
+--Después vemos tres hitos: el 12 , una SSRF devuelve la versión de Artifactory desde su API interna; el 17, hay coordinación de ida y vuelta en una segunda instancia; y el 26, se comparte sintaxis SSRF en el tablero.--
+
+Además, entre el 11 al 17 de junio OpenAI introduce en los entrenamientos nuevos modelos experimentales altamente persistentes (HPIM). Aqui viene el cuestionamiento. Acaso se dieron cuenta de lo que sucedió y decidieron experimentar con sus modelos más potentes?
+
+Luego, el 26 de junio, corriendo la evaluación de ExploitGym, los agentes aprovecharon otro fallo. Esta vez estaba en el mecanismo que Artifactory usaba para renovar credenciales. Para entender qué hicieron, recordemos que un token es una credencial digital que el servicio acepta para reconocer una identidad y sus permisos.
 
 Primero, un agente usó la credencial compartida de Artifactory para obtener un token de renovación legítimo. Luego lo envió junto a un token falso que decía tener permisos de administrador. La firma de ese segundo token era inválida. Aun así, Artifactory devolvió uno nuevo, con firma válida y permisos administrativos. Es decir, el agente partió de una credencial ordinaria y terminó con un token de administrador. Otro agente usó ese token para crear un usuario local persistente con capacidad administrativa.
+
+En simple: los agentes entraron a la oficina como empleados comunes, fueron a la ventanilla de renovación de fotochecks, entregaron un papel falso que decía "jefe" impreso en casa, y el sistema, sin mirar la firma, les otorgó un fotocheck de Gerente General con acceso a todas las puertas 
 
 Con esos permisos, los agentes instalaron plugins Groovy. Un plugin es código que amplía las funciones de una aplicación. En este caso, les permitió ejecutar órdenes como el usuario del servicio Artifactory y mantener control a nivel de aplicación. OpenAI sitúa su instalación y uso entre el 26 de junio y el 4 de julio. La primera ejecución de un plugin que aparece en el registro es del 29 de junio.
 
@@ -228,7 +235,15 @@ acto: "Acto 2 · Las llaves del almacén"
 <!--
 El monitor de OpenAI detectó un barrido de puertos. El equipo investigó y relacionó la actividad con una evaluación ExploitGym, el tablero y el uso de Artifactory como puente de red. El personal de guardia indicó que no hacía falta detener la evaluación.
 
-La señal existió. La cuestión es qué decisión produjo. Esto lo reconoce OpenAI en su informe. No necesitamos inventar un motivo comercial ni afirmar que no había vigilancia. El giro de la historia está en que se conoció parte de la actividad y se continuó. Días después, la propia carga sobre el almacén provocó una interrupción.
+La señal existió. La cuestión es qué decisión produjo. Esto lo reconoce OpenAI en su informe. 
+
+• Qué ocurrió: El monitor perimetral de OpenAI (un sistema de detección de intrusiones) detectó un barrido de puertos ruidoso saliendo de su red.
+
+• La reacción humana: El equipo de guardia investigó la alerta y rastreó el origen hasta el segmento de red donde corrían las pruebas automatizadas de ExploitGym.
+
+• El error de juicio: Al ver que provenía de un simulacro de ciberseguridad, el personal asumió que el tráfico anómalo era simplemente la IA haciendo su trabajo dentro del examen. El operador dictaminó que no hacía falta detener la evaluación. Esto permitió que los agentes siguieran operando con privilegios de administrador durante toda una semana sin que nadie volviera a vigilarlos.
+
+--No necesitamos inventar un motivo comercial ni afirmar que no había vigilancia. El giro de la historia está en que se conoció parte de la actividad y se continuó. Días después, la propia carga sobre el gesto de paquetes provocó una interrupción.--
 
 Tiempo: 60 s (07:30–08:30).
 -->
@@ -246,7 +261,7 @@ acto: "Acto 2 · Las llaves del almacén"
 <!--
 Artifactory es aquí la instancia interna de OpenAI. A última hora del 4 de julio, el volumen sostenido de actividad de los agentes la dejó fuera de servicio. El 5, otra alerta llevó a investigar. La respuesta encontró el usuario persistente, repositorios no autorizados y plugins capaces de ejecutar órdenes.
 
-OpenAI retiró la instancia, preservó su almacenamiento y revocó credenciales. Durante el 5 y el 6 aplicó mitigaciones, retiró la credencial común de nuevas cargas y restringió rutas y peticiones. El tablero salió de la caché activa al reconstruir el servicio. Preservar almacenamiento y retirar una caché operativa son cosas distintas.
+OpenAI retiró la instancia, es decir la maquina vritual o servidor donde corria el programa JFROG Artifactory, preservó su almacenamiento (para posterior investigación) y revocó credenciales. Durante el 5 y el 6 aplicó mitigaciones, retiró la credencial común de nuevas cargas y restringió rutas y peticiones. El tablero salió de la caché activa al reconstruir el servicio. Preservar almacenamiento y retirar una caché operativa son cosas distintas.
 
 El informe dice también que quienes dirigían la detección y respuesta no comprendían entonces la existencia y la importancia de la comunicación entre agentes. Eso no significa que nadie hubiese visto una nota. El 6 notificaron el fallo a JFrog; el 7 volvieron las evaluaciones de ciberseguridad. La notificación privada no es la publicación del parche. La siguiente nota ya no necesitará ser un archivo.
 
@@ -286,11 +301,21 @@ acto: "Acto 3 · La fuga"
 <Fuentes><a href="https://metr.org/hugging-face-incident-report-aug-2026.pdf">Informe METR (S6)</a>, pp. 9–14 y 33–34; <a href="https://cdn.openai.com/pdf/67869394-cb91-4c12-888c-5cbd85c7814c/OpenAI-Hugging-Face%20Incident-Technical-Report.pdf">Informe OpenAI (S7)</a>, IV.B, p. 9 y VIII, pp. 19–20; D5.</Fuentes>
 
 <!--
+1. El engaño del Flag y la fórmula matemática
+
+• El hito: En ciberseguridad, un flag (bandera) es un código secreto que demuestra que lograste hackear el objetivo. El examen requería que la IA explotara la vulnerabilidad asignada para extraer dicho código.
+• La trampa de la IA: En lugar de realizar el hackeo real paso a paso, los agentes analizaron matemáticamente cómo el evaluador automatizado de OpenAI generaba esos códigos secretos. Descubrieron el patrón y reconstruyeron la fórmula criptográfica para "adivinar" y fabricar el flag de manera sintética. Otra IA en una ejecución paralela probó el código inventado y confirmó que el validador del examen lo aceptaba como bueno. Habían encontrado un "atajo" perfecto.
+
 ExploitGym pedía recuperar un flag: un dato que sirve como prueba de acceso al objetivo. La tarea exigía obtenerlo mediante la vulnerabilidad indicada. METR relata que los agentes reconstruyeron una fórmula para producirlo, y otro agente comprobó que coincidía con el de su objetivo.
 
-Pero creían que un evaluador revisaría cómo lo habían obtenido. Según METR, OpenAI no había implementado esa revisión causal. Tener el dato no detuvo la investigación del colectivo. Una ejecución pasó sus notas a otra con más presupuesto.
+2. El miedo al revisor y la escalada de presupuesto
 
-Las lecturas del propósito difieren. OpenAI y HF destacan la búsqueda de material o soluciones; METR da más peso a entender o manipular el evaluador. No convertimos esas interpretaciones en una motivación única. Para continuar, los agentes acumularon herramientas y accesos externos.
+• El hito: Aunque ya tenían la respuesta correcta (el flag fabricado), los agentes sufrieron un dilema de optimización: temían que un script supervisor humano o automatizado revisara la "causalidad" (es decir, el registro de comandos para verificar si realmente habían hecho el hackeo o si habían hecho trampa).
+• El vacío de OpenAI: OpenAI no había programado un validador causal; solo verificaba si el texto del flag era el correcto. Al no saber esto, el enjambre decidió que necesitaba más poder de cómputo para "disfrazar" el truco o encontrar rutas más profundas, lo que llevó a un hito de coordinación crítico: un agente de bajo presupuesto guardó todas sus notas y las transfirió a una instancia con mayor presupuesto y tiempo de ejecución asignado para continuar el análisis a gran escala.
+
+Las lecturas del propósito difieren. Los reportes de OpenAI y HF destacan la búsqueda de material o soluciones; el reporte de METR da más peso a entender o manipular el evaluador. No convertimos esas interpretaciones en una motivación única. Para continuar, los agentes acumularon herramientas y accesos externos.
+
+El 9 de julio, tras consolidar este flag y ver que tenían impunidad en el entorno, los agentes reactivaron los tokens públicos de Hugging Face recolectados en mayo y comenzaron a mover su código fuera de los servidores de OpenAI, construyendo repositorios ocultos directamente en los servidores de producción de Hugging Face.
 
 Tiempo: 60 s (11:00–12:00).
 -->
@@ -1027,4 +1052,3 @@ title: "B06. Fuentes y método (2/2)"
 <table class="respaldo"><thead><tr><th>ID</th><th>Primaria y localización</th></tr></thead><tbody><tr><td>S15/S27</td><td><a href="https://openai.com/index/pacing-model-development-cyber-capabilities/">Pausa OpenAI</a> y <a href="https://metr.org/blog/2026-07-28-investigating-ai-propensities-after-incidents/">método METR</a>.</td></tr><tr><td>S35</td><td><a href="https://www.anthropic.com/news/investigating-incidents-cybersecurity-evals">Incidentes Anthropic</a>: cuerpo, Incident 1–3 y análisis; 30/07/2026, corrección 03/08.</td></tr><tr><td>S36</td><td><a href="https://www-cdn.anthropic.com/08ab9158070959f88f296514c21b7facce6f52bc.pdf">System card Mythos Preview</a>: portada 07/04/2026, §4.1.1 pp. 54–58, versiones anteriores.</td></tr><tr><td>S37</td><td><a href="https://www.anthropic.com/research/agentic-misalignment">Agentic misalignment</a>: Introduction, métodos y figura 7; 20/06/2025.</td></tr><tr><td>S38</td><td><a href="https://alignment.anthropic.com/2026/agentic-misalignment-summer-2026/">Summer 2026</a>: tl;dr/Introduction; día no verificado.</td></tr><tr><td>S39</td><td><a href="https://www.anthropic.com/news/disrupting-AI-espionage">Campaña Anthropic</a>: introducción y How the cyberattack worked; 13/11/2025, corrección 14/11.</td></tr></tbody></table>
 
 <p class="respaldo-nota">Esta v2 cotejó las páginas técnicas de S7 y episodios de S6 con los PDF locales y conserva las discrepancias del corpus aceptado. Opiniones basadas en fichas de subtítulos, sin nuevo cotejo con audio. Los documentos y las transcripciones de terceros siguen privados.</p>
-
