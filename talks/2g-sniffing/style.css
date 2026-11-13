@@ -401,3 +401,43 @@
 .cierre-lista { text-align: center; }
 .cierre-lista p { margin: 0.25rem 0; font-size: 1.7rem; font-weight: 800; color: #111827; opacity: 1; }
 .cierre-preguntas { text-align: center; margin-top: 1.4rem; font-size: 1.15rem; font-weight: 700; color: #374151; opacity: 1; }
+
+/* ================= AUTORITATIVO: cabecera + banner + canvas FIJOS ================= */
+
+/* Panel oscuro a la izquierda del banner (igual en portada y contenido): tapa la
+   franja diagonal y da color consistente. El logo solo aparece con `marca`. */
+.banner .banner-panel {
+	position: absolute; left: 0; top: 0; bottom: 0;
+	width: 16rem;
+	display: flex; align-items: center;
+	padding-left: 1.5rem;
+	background: linear-gradient(90deg, #0b1c3a 0%, #0b1c3a 60%, rgba(11, 28, 58, 0) 100%);
+}
+.banner .banner-panel .banner-logo {
+	position: static; transform: none;
+	height: 2.5rem; opacity: 1; filter: brightness(0) invert(1);
+}
+
+/* Distribución FIJA: banner → título → canvas (mismas alturas en todas las slides).
+   Solo el contenido bajo el canvas (.cuerpo) ocupa el espacio restante y se ajusta. */
+.slidev-layout.pantalla {
+	display: flex; flex-direction: column;
+	justify-content: flex-start;
+	gap: 0;
+	padding: 0 0 0.7rem;
+	overflow: hidden;
+}
+.pantalla > .banner { flex: 0 0 auto; margin: 0 0 0.35rem; }
+.pantalla > header {
+	flex: 0 0 2.2rem; height: 2.2rem; margin: 0;
+	padding: 0 1.4rem; display: flex; align-items: center;
+}
+.slidev-layout.pantalla h1 {
+	font-size: 1.4rem; line-height: 1.1; margin: 0;
+	white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;
+}
+.pantalla > .mapa { flex: 0 0 auto; margin: 0; padding: 0 1.4rem; }
+.pantalla > .mapa:not(.mini) svg.plano { width: 78%; margin: 0 auto; }
+.pantalla > .cuerpo { flex: 1 1 auto; min-height: 0; overflow: hidden; padding: 0.25rem 1.4rem 0; }
+/* Slides sin mapa (interfaz, defensa, cierre): el cuerpo centra en el espacio restante. */
+.pantalla.sin-mapa > .cuerpo { justify-content: center; }

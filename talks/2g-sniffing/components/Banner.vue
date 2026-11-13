@@ -9,8 +9,8 @@ defineProps({ marca: Boolean })
 <template>
 	<div class="banner">
 		<img class="banner-bg" :src="banner" alt="Deep Security · Expertos en Ciberseguridad" />
-		<div v-if="marca" class="banner-marca">
-			<img class="banner-logo" :src="logo" alt="YachaqLabs" />
+		<div class="banner-panel">
+			<img v-if="marca" class="banner-logo" :src="logo" alt="YachaqLabs" />
 		</div>
 	</div>
 </template>
