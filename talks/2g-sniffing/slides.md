@@ -306,15 +306,54 @@ privacidad. Del paging al identificador permanente, sin transmitir nada.
 -->
 
 ---
-layout: pantalla
+layout: pantalla-anim
 title: "No es un abonado"
-acto: "Acto 4 · escala"
-scene: C10
 ---
 
+<CanvasZonas>
+  <template #redes><RedesMoviles /></template>
+  <template #recepcion>
+    <div class="exp-rig">
+      <img class="receptor-foto" src="./img/sdr-setup.webp" alt="USRP B210 + laptop" />
+      <div class="rig-badge"><b>GSMEvil2</b><span>sniffer</span></div>
+    </div>
+  </template>
+  <template #exposicion>
+    <div class="exp-count" v-motion :initial="{ opacity: 0, scale: 0.6 }" :enter="{ opacity: 1, scale: 1, transition: { delay: 400, type: 'spring' } }">
+      <b>49</b><span>IMSIs únicas</span>
+    </div>
+    <div class="exp-chips">
+      <div class="exp-chip" v-motion :initial="{ opacity: 0, x: 14 }" :enter="{ opacity: 1, x: 0, transition: { delay: 900, duration: 350 } }">
+        <span class="chip-id">310 260 ···</span><span class="chip-pais">USA</span>
+      </div>
+      <div class="exp-chip" v-motion :initial="{ opacity: 0, x: 14 }" :enter="{ opacity: 1, x: 0, transition: { delay: 1050, duration: 350 } }">
+        <span class="chip-id">214 07 ···</span><span class="chip-pais">España</span>
+      </div>
+      <div class="exp-chip" v-motion :initial="{ opacity: 0, x: 14 }" :enter="{ opacity: 1, x: 0, transition: { delay: 1200, duration: 350 } }">
+        <span class="chip-id">716 10 ···</span><span class="chip-pais">Perú</span>
+      </div>
+      <div class="exp-chip" v-motion :initial="{ opacity: 0, x: 14 }" :enter="{ opacity: 1, x: 0, transition: { delay: 1350, duration: 350 } }">
+        <span class="chip-id">730 01 ···</span><span class="chip-pais">Chile</span>
+      </div>
+      <div class="exp-chip" v-motion :initial="{ opacity: 0, x: 14 }" :enter="{ opacity: 1, x: 0, transition: { delay: 1500, duration: 350 } }">
+        <span class="chip-id">295 05 ···</span><span class="chip-pais">Liechtenstein</span>
+      </div>
+      <div class="exp-chip" v-motion :initial="{ opacity: 0, x: 14 }" :enter="{ opacity: 1, x: 0, transition: { delay: 1650, duration: 350 } }">
+        <span class="chip-id">901 43 ···</span><span class="chip-pais">Internacional</span>
+      </div>
+    </div>
+    <div class="exp-more" v-motion :initial="{ opacity: 0 }" :enter="{ opacity: 1, transition: { delay: 1850, duration: 350 } }">+ 43 más …</div>
+  </template>
+</CanvasZonas>
+
+<div class="escala-nota" v-motion :initial="{ opacity: 0, y: 8 }" :enter="{ opacity: 1, y: 0, transition: { delay: 2100, duration: 450 } }">
+  No es un teléfono: <strong>49 identidades únicas</strong> en minutos de escucha — <strong>27 roamers</strong> de 6 países.
+</div>
+
 <!--
-Sobre una ventana de captura se acumulan miles de IMSIs únicas. La escala convierte
-una curiosidad en un problema de privacidad masivo.
+Datos reales de captura pasiva: 49 IMSIs únicas, 27 roamers extranjeros
+(MCC ≠ 716 Perú). Países observados: Perú, España, USA, Chile, Liechtenstein
+e "internacional" (MCC 901). MSIN enmascarado por privacidad en este deck público.
 -->
 
 ---
