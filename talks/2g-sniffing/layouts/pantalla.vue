@@ -10,13 +10,8 @@ import Banner from '../components/Banner.vue'
 		<Banner marca />
 		<header>
 			<h1>{{ $frontmatter.title }}</h1>
-			<p v-if="$frontmatter.acto" class="acto">{{ $frontmatter.acto }}</p>
-			<p v-else-if="$frontmatter.respaldo" class="acto">Respaldo · fuera del tiempo principal</p>
 		</header>
 		<MapaIncidente v-if="$frontmatter.scene" :scene="$frontmatter.scene" :periodo="$frontmatter.periodo" />
 		<div class="cuerpo"><slot /></div>
-		<div v-if="$frontmatter.mini" class="miniatura">
-			<MapaIncidente :scene="$frontmatter.mini" :periodo="$frontmatter.periodo" mini />
-		</div>
 	</div>
 </template>

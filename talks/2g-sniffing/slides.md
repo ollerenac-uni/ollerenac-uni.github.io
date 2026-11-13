@@ -147,7 +147,6 @@ layout: pantalla
 title: "No es un abonado"
 acto: "Acto 4 · escala"
 scene: C10
-mini: C09
 ---
 
 <!--
@@ -238,8 +237,13 @@ title: "Cierre"
 acto: "Acto 5 · contexto"
 ---
 
-<p class="cierre">Recepción pasiva · canales abiertos · falla conocida.</p>
-<p class="cierre-sub">Preguntas</p>
+<div class="cierre-lista">
+<p>Recepción pasiva</p>
+<p>Canales abiertos</p>
+<p>Falla aún no resuelta</p>
+</div>
+
+<p class="cierre-preguntas">Preguntas</p>
 
 <!--
 Alcance claro: recepción pasiva de señalización 2G no protegida, falla documentada.
