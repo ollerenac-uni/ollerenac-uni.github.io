@@ -31,15 +31,39 @@ identidad viaja sin protección de confidencialidad. Uso educativo / investigaci
 -->
 
 ---
-layout: pantalla
+layout: pantalla-anim
 title: "Punto de partida"
-acto: "Acto 0 · el enlace"
-scene: C02
 ---
 
+<div class="canvas2">
+  <section class="zona2 z-op">
+    <span class="z-lab">Redes Móviles</span>
+    <div class="nodo-tel">
+      <carbon-mobile class="ic-big" />
+      <span>Teléfono</span>
+    </div>
+    <div class="flecha1"><span class="b1">1</span></div>
+    <div class="nodo-bts" v-motion :initial="{ opacity: 0, y: 16 }" :enter="{ opacity: 1, y: 0, transition: { delay: 400, duration: 500 } }">
+      <carbon-cell-tower class="ic-big" />
+      <span>Estación base</span>
+      <div class="gens">
+        <b v-motion :initial="{ opacity: 0 }" :enter="{ opacity: 1, transition: { delay: 1200 } }">5G</b>
+        <b v-motion :initial="{ opacity: 0 }" :enter="{ opacity: 1, transition: { delay: 1900 } }">4G</b>
+        <b v-motion :initial="{ opacity: 0 }" :enter="{ opacity: 1, transition: { delay: 2600 } }">3G</b>
+        <b class="g2" v-motion :initial="{ opacity: 0, scale: 0.6 }" :enter="{ opacity: 1, scale: 1, transition: { delay: 3300, type: 'spring' } }">2G</b>
+      </div>
+    </div>
+  </section>
+  <section class="zona2 z-net dim"><span class="z-lab">Recepción pasiva · PC + SDR</span></section>
+  <section class="zona2 z-exp dim"><span class="z-lab">Exposición</span></section>
+</div>
+
+<p class="gsm-line" v-motion :initial="{ opacity: 0, y: 12 }" :enter="{ opacity: 1, y: 0, transition: { delay: 4400, duration: 600 } }">GSM, es decir 2G, emite su plano de señalización <strong>sin cifrar</strong></p>
+
 <!--
-Un teléfono y la estación base 2G intercambian señalización (RR/MM). El plano de
-control de GSM se emite sin cifrar: cualquier receptor en rango lo demodula.
+En nuestras redes móviles, el acceso lo componen los dispositivos móviles y la
+estación base — hoy con infraestructura desplegada para 5G, 4G, 3G e, aún, 2G.
+Y resulta que GSM, es decir 2G, emite su plano de señalización (RR/MM) sin cifrar.
 -->
 
 ---

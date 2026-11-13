@@ -7,7 +7,7 @@
 		"X": { "nombre": "EXTRAÍDO" }
 	},
 	"zones": {
-		"op": { "label": "Red 2G legítima", "x": 20, "y": 30, "w": 250, "h": 300, "rows": 2, "cols": 1, "tone": "oa" },
+		"op": { "label": "Redes Móviles", "x": 20, "y": 30, "w": 250, "h": 300, "rows": 2, "cols": 1, "tone": "oa" },
 		"rx": { "label": "Recepción pasiva · PC + SDR", "x": 300, "y": 30, "w": 440, "h": 300, "rows": 3, "cols": 2, "tone": "net" },
 		"exp": { "label": "Exposición", "x": 760, "y": 30, "w": 220, "h": 300, "rows": 2, "cols": 1, "tone": "hf" }
 	},
