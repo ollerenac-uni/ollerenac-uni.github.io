@@ -67,15 +67,19 @@ Y resulta que GSM, es decir 2G, emite su plano de señalización (RR/MM) sin cif
 -->
 
 ---
-layout: pantalla
+layout: pantalla-anim
 title: "IMSI y TMSI"
 acto: "Acto 1 · la identidad"
-scene: C03
 ---
 
+<div class="identidad-slide">
+<CanvasZonas>
+  <template #redes><RedesMoviles /></template>
+</CanvasZonas>
 <div class="dos">
 <section class="tarjeta"><h2>IMSI</h2><p>identificador permanente del abonado</p></section>
 <section class="tarjeta lectura"><h2>TMSI</h2><p>alias temporal, reasignado por la red</p></section>
+</div>
 </div>
 
 <!--
@@ -126,11 +130,17 @@ pasivamente esos IMSIs del paging/PCH, sin transmitir ni solicitar la identidad.
 -->
 
 ---
-layout: pantalla
+layout: pantalla-anim
 title: "Un receptor más"
 acto: "Acto 1 · la identidad"
-scene: C04
 ---
+
+<CanvasZonas>
+  <template #redes><RedesMoviles /></template>
+  <template #recepcion>
+    <img class="receptor-foto" src="./img/sdr-setup.webp" alt="USRP B210 conectado por USB 3.0 a una laptop" />
+  </template>
+</CanvasZonas>
 
 <!--
 El downlink es un broadcast a toda la celda. Un receptor pasivo capta exactamente
