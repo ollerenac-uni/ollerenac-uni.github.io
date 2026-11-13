@@ -84,6 +84,48 @@ pero hay ventanas donde el IMSI viaja en claro (ver Acto 2).
 -->
 
 ---
+layout: pantalla-anim
+title: "El IMSI en el paging"
+---
+
+<div class="paging-slide">
+  <div class="paging-enlace">
+    <div class="paging-nodo" v-motion :initial="{ opacity: 0, y: 10 }" :enter="{ opacity: 1, y: 0, transition: { duration: 400 } }">
+      <carbon-mobile class="ic-big" />
+      <span>Teléfono</span>
+    </div>
+    <div class="paging-difusion" v-motion :initial="{ opacity: 0, x: 16 }" :enter="{ opacity: 1, x: 0, transition: { delay: 500, duration: 450 } }">
+      <strong>Paging Request · PCH</strong>
+      <span class="paging-flecha" aria-hidden="true"></span>
+      <span>Downlink · difusión a toda la celda</span>
+    </div>
+    <div class="paging-nodo" v-motion :initial="{ opacity: 0, y: 10 }" :enter="{ opacity: 1, y: 0, transition: { duration: 400 } }">
+      <carbon-cell-tower class="ic-big" />
+      <span>Estación base</span>
+    </div>
+  </div>
+  <section class="paging-caso paging-tmsi" v-motion :initial="{ opacity: 0, y: 12 }" :enter="{ opacity: 1, y: 0, transition: { delay: 1200, duration: 450 } }">
+    <div><span class="paging-paso">Caso 1</span><h2>Paging por <strong>TMSI</strong></h2></div>
+    <div class="paging-resultado"><strong>IMSI protegido</strong><span>Se difunde el alias temporal</span></div>
+  </section>
+  <section class="paging-caso paging-imsi" v-motion :initial="{ opacity: 0, y: 12 }" :enter="{ opacity: 1, y: 0, transition: { delay: 2500, duration: 450 } }">
+    <div><span class="paging-paso">Caso 2</span><h2>Paging por <strong>IMSI</strong></h2></div>
+    <div class="paging-resultado"><strong>EN CLARO</strong><span>Identificador permanente expuesto</span></div>
+  </section>
+  <div class="paging-cierre" v-motion :initial="{ opacity: 0, y: 10 }" :enter="{ opacity: 1, y: 0, transition: { delay: 3800, duration: 500 } }">
+    <div class="paging-contraste"><strong class="paging-identidad">IMSI</strong><span>vs</span><strong class="paging-alias">TMSI</strong></div>
+    <p>lo que capturamos pasivamente es el <strong>paging por IMSI</strong></p>
+  </div>
+</div>
+
+<!--
+La estación base difunde Paging Request por el PCH hacia toda la celda.
+Con TMSI se anuncia un alias temporal: el IMSI no aparece en ese paging.
+Con IMSI se anuncia el identificador permanente en claro. La herramienta captura
+pasivamente esos IMSIs del paging/PCH, sin transmitir ni solicitar la identidad.
+-->
+
+---
 layout: pantalla
 title: "Un receptor más"
 acto: "Acto 1 · la identidad"
