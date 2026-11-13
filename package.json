@@ -10,7 +10,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "build:all": "astro build && npm run build --prefix talks/openai-hf -- --out ../../dist/talks/openai-hf"
+    "build:all": "astro build && npm run build --prefix talks/openai-hf -- --out ../../dist/talks/openai-hf && npm run build --prefix talks/2g-sniffing -- --out ../../dist/talks/2g-sniffing"
   },
   "dependencies": {
     "@astrojs/mdx": "^8.0.3",

@@ -1,0 +1,51 @@
+{
+	"vb": [1000, 360],
+	"tipos": {
+		"E": { "nombre": "ESTRUCTURA / SEÑALIZACIÓN" },
+		"A": { "nombre": "RADIADO · OBSERVABLE" },
+		"I": { "nombre": "PROCESADO" },
+		"X": { "nombre": "EXTRAÍDO" }
+	},
+	"zones": {
+		"op": { "label": "Red 2G legítima", "x": 20, "y": 30, "w": 250, "h": 300, "rows": 2, "cols": 1, "tone": "oa" },
+		"rx": { "label": "Recepción pasiva · PC + SDR", "x": 300, "y": 30, "w": 440, "h": 300, "rows": 3, "cols": 2, "tone": "net" },
+		"exp": { "label": "Exposición", "x": 760, "y": 30, "w": 220, "h": 300, "rows": 2, "cols": 1, "tone": "hf" }
+	},
+	"lanes": {},
+	"nodes": {
+		"N01": { "id": "N01", "label": "Teléfono (abonado)", "short": "Teléfono", "icon": "mobile", "x": 45, "y": 80, "w": 200, "h": 50, "zone": "op", "lane": null, "nota": null },
+		"N02": { "id": "N02", "label": "Estación base 2G", "short": "BTS 2G", "icon": "cell-tower", "x": 45, "y": 220, "w": 200, "h": 50, "zone": "op", "lane": null, "nota": null },
+		"N03": { "id": "N03", "label": "Antena RX", "short": "Antena", "icon": "satellite", "x": 325, "y": 80, "w": 150, "h": 46, "zone": "rx", "lane": null, "nota": null },
+		"N04": { "id": "N04", "label": "SDR (B210 / RTL)", "short": "SDR", "icon": "radio", "x": 325, "y": 160, "w": 150, "h": 46, "zone": "rx", "lane": null, "nota": null },
+		"N05": { "id": "N05", "label": "PC · gr-gsm (demod)", "short": "gr-gsm", "icon": "laptop", "x": 520, "y": 160, "w": 190, "h": 46, "zone": "rx", "lane": null, "nota": null },
+		"N06": { "id": "N06", "label": "BCCH / CCCH abiertos", "short": "Canales", "icon": "unlocked", "x": 325, "y": 250, "w": 190, "h": 46, "zone": "rx", "lane": null, "nota": null },
+		"N07": { "id": "N07", "label": "GSMEvil2 (sniffer)", "short": "GSMEvil2", "icon": "search", "x": 550, "y": 250, "w": 160, "h": 46, "zone": "rx", "lane": null, "nota": null },
+		"N08": { "id": "N08", "label": "IMSI en claro", "short": "IMSI", "icon": "user-identification", "x": 785, "y": 95, "w": 170, "h": 50, "zone": "exp", "lane": null, "nota": null },
+		"N09": { "id": "N09", "label": "Analytics · Web", "short": "Analytics", "icon": "dashboard", "x": 785, "y": 220, "w": 170, "h": 50, "zone": "exp", "lane": null, "nota": null }
+	},
+	"links": {
+		"L01": { "id": "L01", "type": "E", "segs": [["N01", "N02"]], "label": "señalización RR / MM", "tipo": "ESTRUCTURA / SEÑALIZACIÓN" },
+		"L02": { "id": "L02", "type": "A", "segs": [["N02", "N03"]], "label": "downlink BCCH/CCCH (radiado)", "tipo": "RADIADO · OBSERVABLE" },
+		"L03": { "id": "L03", "type": "A", "segs": [["N03", "N04"]], "label": "muestras IQ", "tipo": "RADIADO · OBSERVABLE" },
+		"L04": { "id": "L04", "type": "I", "segs": [["N04", "N05"]], "label": "USB 3", "tipo": "PROCESADO" },
+		"L05": { "id": "L05", "type": "I", "segs": [["N05", "N06"]], "label": "demod GMSK", "tipo": "PROCESADO" },
+		"L06": { "id": "L06", "type": "I", "segs": [["N06", "N07"]], "label": "GSMTAP · UDP 4729", "tipo": "PROCESADO" },
+		"L07": { "id": "L07", "type": "X", "segs": [["N07", "N08"]], "label": "extrae IMSI", "tipo": "EXTRAÍDO" },
+		"L08": { "id": "L08", "type": "X", "segs": [["N08", "N09"]], "label": "agrega: roamers · presencia · búsqueda", "tipo": "EXTRAÍDO" }
+	},
+	"fronteras": {},
+	"scenes": {
+		"C02": { "id": "C02", "act": 0, "fecha": "Enlace 2G", "titulo": "Punto de partida", "nodos": ["N01", "N02"], "enlaces": ["L01"], "frontera": [], "insignias": {}, "extremos": [], "dos": [], "lineas": ["Teléfono y estación 2G: señalización RR/MM en el enlace", "GSM emite su plano de señalización sin cifrar"] },
+		"C03": { "id": "C03", "act": 1, "fecha": "Identidad", "titulo": "IMSI y TMSI", "nodos": ["N01", "N02"], "enlaces": ["L01"], "frontera": [], "insignias": {}, "extremos": [], "dos": [], "lineas": ["IMSI permanente vs TMSI temporal", "Sin autenticación mutua de la red hacia el terminal"] },
+		"C04": { "id": "C04", "act": 1, "fecha": "Downlink", "titulo": "Un receptor más", "nodos": ["N01", "N02", "N03"], "enlaces": ["L01", "L02"], "frontera": [], "insignias": {}, "extremos": [], "dos": [], "lineas": ["El downlink se radia a toda la celda", "Un receptor pasivo capta lo mismo, sin transmitir"] },
+		"C05": { "id": "C05", "act": 2, "fecha": "Setup", "titulo": "Antena y SDR", "nodos": ["N02", "N03", "N04"], "enlaces": ["L02", "L03"], "frontera": [], "insignias": {}, "extremos": [], "dos": [], "lineas": ["Antena → SDR (B210/RTL): muestras IQ de la banda"] },
+		"C06": { "id": "C06", "act": 2, "fecha": "Setup", "titulo": "Demodulación", "nodos": ["N03", "N04", "N05"], "enlaces": ["L03", "L04"], "frontera": [], "insignias": {}, "extremos": [], "dos": [], "lineas": ["PC + gr-gsm: sintonía de la ARFCN, demod GMSK"] },
+		"C07": { "id": "C07", "act": 2, "fecha": "Señalización", "titulo": "Canales de señalización abiertos", "nodos": ["N02", "N05", "N06"], "enlaces": ["L05"], "frontera": [], "insignias": {}, "extremos": [], "dos": ["N06"], "lineas": ["BCCH/CCCH: paging, system info y procedimientos MM sin cifrado de identidad", "Fuga: location update sin TMSI o paging por IMSI, antes de reasignar el TMSI"], "limite": "El canal de tráfico puede cifrarse (A5/x); la señalización de identidad temprana queda expuesta." },
+		"C08": { "id": "C08", "act": 3, "fecha": "Extracción", "titulo": "Del canal a GSMTAP", "nodos": ["N06", "N07"], "enlaces": ["L06"], "frontera": [], "insignias": {}, "extremos": [], "dos": [], "lineas": ["GSMTAP/UDP 4729 → GSMEvil2 decodifica la señalización"] },
+		"C09": { "id": "C09", "act": 3, "fecha": "Extracción", "titulo": "IMSI en claro", "nodos": ["N07", "N08"], "enlaces": ["L07"], "frontera": [], "insignias": {}, "extremos": ["N08"], "dos": [], "lineas": ["IMSI extraída pasivamente del paging / identity request"] },
+		"C10": { "id": "C10", "act": 4, "fecha": "Escala", "titulo": "No es un abonado", "nodos": ["N08", "N09"], "enlaces": ["L08"], "frontera": [], "insignias": {}, "extremos": [], "dos": [], "lineas": ["Miles de abonados únicos en la ventana de captura"] },
+		"C11": { "id": "C11", "act": 4, "fecha": "Escala", "titulo": "Roamers por MCC", "nodos": ["N08", "N09"], "enlaces": ["L08"], "frontera": [], "insignias": {}, "extremos": [], "dos": [], "lineas": ["MCC extranjero = SIM foránea; roamers observados en claro"] },
+		"C12": { "id": "C12", "act": 4, "fecha": "Escala", "titulo": "Presencia en el tiempo", "nodos": ["N08", "N09"], "enlaces": ["L08"], "frontera": [], "insignias": {}, "extremos": [], "dos": [], "lineas": ["Misma IMSI reaparece: primera y última vez vista = presencia"] },
+		"C14": { "id": "C14", "act": 5, "fecha": "Cadena completa", "titulo": "Falla conocida y reportada", "nodos": ["N01", "N02", "N03", "N04", "N05", "N06", "N07", "N08", "N09"], "enlaces": ["L01", "L02", "L03", "L04", "L05", "L06", "L07", "L08"], "frontera": [], "insignias": {}, "extremos": ["N08"], "dos": [], "lineas": ["Cadena completa: recepción pasiva de señalización 2G sin protección de identidad", "Documentado hace décadas (A5/1 roto, IMSI catchers); 2G sigue en servicio"] }
+	}
+}

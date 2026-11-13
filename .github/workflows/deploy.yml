@@ -25,11 +25,16 @@ jobs:
           cache-dependency-path: |
             package-lock.json
             talks/openai-hf/package-lock.json
+            talks/2g-sniffing/package-lock.json
 
       - run: npm ci
 
       # Chromium is only for PDF export, not for the build.
       - run: npm ci --prefix talks/openai-hf
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: "1"
+
+      - run: npm ci --prefix talks/2g-sniffing
         env:
           PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: "1"
 

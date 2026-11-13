@@ -1,0 +1,20 @@
+{
+  "name": "2g-sniffing-talk",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "icons": "node scripts/gen-icons.mjs",
+    "dev": "slidev --open",
+    "build": "slidev build --base /talks/2g-sniffing/",
+    "export": "PLAYWRIGHT_BROWSERS_PATH=0 slidev export --output public/2g-sniffing.pdf"
+  },
+  "devDependencies": {
+    "@fontsource/fira-code": "^5.3.0",
+    "@fontsource/nunito-sans": "^5.3.0",
+    "@iconify-json/carbon": "1.2.28",
+    "@slidev/cli": "^52.0.0",
+    "@slidev/theme-default": "^0.25.0",
+    "playwright-chromium": "^1.50.0",
+    "vue": "^3.5.0"
+  }
+}
