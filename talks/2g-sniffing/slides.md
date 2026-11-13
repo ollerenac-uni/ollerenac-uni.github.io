@@ -142,33 +142,50 @@ acto: "Acto 1 · la identidad"
   </template>
 </CanvasZonas>
 
+<div class="sdr-rotulo" v-motion :initial="{ opacity: 0, y: 8 }" :enter="{ opacity: 1, y: 0, transition: { delay: 300, duration: 500 } }">Software-Defined Radio + Linux (Radioconda)</div>
+
+<div class="sdr-flow">
+  <div class="fl-item" v-motion :initial="{ opacity: 0, y: 10 }" :enter="{ opacity: 1, y: 0, transition: { delay: 800, duration: 450 } }">
+    <svg class="fl-wave" viewBox="0 0 84 30" aria-hidden="true"><path d="M2 15 Q 12 1 22 15 T 42 15 T 62 15 T 82 15" fill="none" stroke="currentColor" stroke-width="2.6" /></svg>
+    <span>Señal de radio</span>
+  </div>
+  <span class="fl-arrow" v-motion :initial="{ opacity: 0 }" :enter="{ opacity: 1, transition: { delay: 1200 } }">demodula →</span>
+  <div class="fl-item" v-motion :initial="{ opacity: 0, y: 10 }" :enter="{ opacity: 1, y: 0, transition: { delay: 1600, duration: 450 } }">
+    <code class="fl-bits">0 1 0 1 1 0</code>
+    <span>Bits</span>
+  </div>
+  <span class="fl-arrow" v-motion :initial="{ opacity: 0 }" :enter="{ opacity: 1, transition: { delay: 2000 } }">framing →</span>
+  <div class="fl-item fl-canal" v-motion :initial="{ opacity: 0, scale: 0.8 }" :enter="{ opacity: 1, scale: 1, transition: { delay: 2400, type: 'spring' } }">
+    <span class="fl-canal-t">Canales</span>
+    <span class="fl-canal-s">BCCH · CCCH</span>
+  </div>
+</div>
+
 <!--
-El downlink es un broadcast a toda la celda. Un receptor pasivo capta exactamente
-lo mismo que cualquier teléfono camped en esa celda, sin emitir una sola trama.
+El downlink es un broadcast a toda la celda; un receptor pasivo capta lo mismo sin
+emitir nada. El SDR + Linux (Radioconda) entrega la señal; el software la demodula
+a bits y los organiza (framing) en canales lógicos.
 -->
 
 ---
-layout: pantalla
-title: "Antena y SDR"
-acto: "Acto 2 · setup"
-scene: C05
----
-
-<!--
-Cadena de recepción: antena → SDR (USRP B210 por USB3, o un RTL-SDR). La SDR
-entrega muestras IQ de una porción de la banda GSM (aquí GSM850).
--->
-
----
-layout: pantalla
+layout: pantalla-anim
 title: "Demodulación"
-acto: "Acto 2 · setup"
-scene: C06
 ---
 
+<CanvasZonas>
+  <template #redes><RedesMoviles /></template>
+  <template #recepcion>
+    <div class="recep-demod">
+      <img class="scan-term" src="./img/scan.png" alt="grgsm_scanner: ARFCNs detectados" v-motion :initial="{ opacity: 0, y: 14 }" :enter="{ opacity: 1, y: 0, transition: { delay: 700, duration: 600 } }" />
+      <div class="grgsm-badge" v-motion :initial="{ opacity: 0, y: -6 }" :enter="{ opacity: 1, y: 0, transition: { delay: 300, duration: 450 } }">gr-gsm · GNU Radio</div>
+      <img class="receptor-foto recep-foto-sm" src="./img/sdr-setup.webp" alt="USRP B210 + laptop" />
+    </div>
+  </template>
+</CanvasZonas>
+
 <!--
-En el PC, gr-gsm (GNU Radio) sintoniza la ARFCN de la celda y demodula GMSK.
-grgsm_livemon emite la señalización decodificada como GSMTAP.
+En el PC, gr-gsm (GNU Radio) sintoniza la ARFCN y demodula GMSK; grgsm_scanner
+lista las celdas activas (ARFCNs). La señalización decodificada sale como GSMTAP.
 -->
 
 ---
