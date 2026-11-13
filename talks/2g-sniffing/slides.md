@@ -216,25 +216,26 @@ title: "A la escucha de la celda"
   <template #recepcion>
     <div class="recep-live">
       <figure class="live-fig" v-motion :initial="{ opacity: 0, x: -12 }" :enter="{ opacity: 1, x: 0, transition: { delay: 400, duration: 500 } }">
-        <img src="./img/freqsink.png" alt="grgsm_livemon freq sink: espectro de la celda, ARFCN 181" />
-        <figcaption><b>grgsm_livemon</b> · freq sink</figcaption>
+        <img src="./img/freqsink-real.png" alt="grgsm_livemon freq sink: espectro de la celda, 879.8 MHz (ARFCN 181)" />
+        <figcaption><b>grgsm_livemon</b> · freq sink · 879.8 MHz</figcaption>
       </figure>
       <figure class="live-fig" v-motion :initial="{ opacity: 0, x: 12 }" :enter="{ opacity: 1, x: 0, transition: { delay: 1000, duration: 500 } }">
-        <img src="./img/tshark-col.png" alt="tshark: paquetes GSMTAP fluyendo, paging en claro" />
-        <figcaption><b>tshark</b> · paquetes GSMTAP en claro</figcaption>
+        <img src="./img/wireshark-imsi.png" alt="Wireshark: Paging Request con el campo IMSI en claro (MSIN enmascarado)" />
+        <figcaption><b>Wireshark</b> · Paging Request · IMSI en claro</figcaption>
       </figure>
     </div>
   </template>
 </CanvasZonas>
 
 <div class="live-note" v-motion :initial="{ opacity: 0, y: 8 }" :enter="{ opacity: 1, y: 0, transition: { delay: 1500, duration: 450 } }">
-  <p>La misma celda, en dos vistas: la <strong>señal</strong> cruda y su <strong>señalización</strong> ya decodificada. El paging viaja sin cifrar — IMSI y TMSI visibles.</p>
+  <p>La misma celda, en dos vistas: la <strong>señal</strong> cruda y el <strong>Paging Request</strong> degranulado — el <strong>IMSI</strong> viaja en claro.</p>
 </div>
 
 <!--
-Sintonizada la ARFCN 181, el frequency sink muestra la señal de la celda y tshark
-decodifica la señalización GSMTAP (UDP 4729) en claro: System Information, paging
-por TMSI y por IMSI. La captura es pasiva; no se transmite nada.
+Capturas reales desde el B210. Izquierda: frequency sink de grgsm_livemon sobre
+879.8 MHz (ARFCN 181). Derecha: Wireshark degranula un Paging Request Type 2 y
+deja ver el campo IMSI (MCC 716 = Perú); MSIN enmascarado por privacidad en el
+deck público. Captura pasiva; no se transmite nada.
 -->
 
 ---
