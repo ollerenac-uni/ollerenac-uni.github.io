@@ -1,9 +1,8 @@
 ---
 theme: default
-title: "GSM: señalización 2G observable"
+title: "Hacking RF 101: Sniffando la estación base"
 info: |
   Recepción pasiva de señalización 2G con SDR: del downlink a la identidad del abonado.
-  INICTEL-UNI.
 htmlAttrs:
   lang: es
 colorSchema: light
@@ -14,15 +13,16 @@ lang: es
 favicon: favicon.svg
 fonts:
   provider: none
-layout: center
-class: text-center portada-evento
+layout: portada
 ---
 
-# GSM: señalización 2G observable
+# Hacking RF 101: Sniffando la estación base
 
-## Del downlink a la identidad del abonado, con una SDR
+<p class="nombre">Oscar Llerena</p>
 
-INICTEL-UNI · Oscar Llerena
+<p class="desc">Consultor Ciberseguridad · Telecomunicaciones · IA aplicada</p>
+
+<img class="logo-yachaq" src="./img/yachaqlabs.svg" alt="YachaqLabs" />
 
 <!--
 Recepción PASIVA. No se transmite, no se accede a la red, no se descifra tráfico.
