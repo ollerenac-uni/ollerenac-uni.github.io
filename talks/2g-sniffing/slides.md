@@ -186,12 +186,10 @@ un individuo, no solo su nacionalidad.
 -->
 
 ---
-layout: center
+layout: pantalla
 title: "La interfaz"
-class: text-center
+acto: "Acto 4 · escala"
 ---
-
-# La interfaz
 
 <div class="galeria-web">
   <figure><img src="./img/web_imsi.png" alt="Tabla IMSI en vivo"/><figcaption>/imsi/ · tabla en vivo</figcaption></figure>
@@ -235,9 +233,9 @@ el SUCI de 5G cifra el identificador permanente (SUPI) con la clave pública de 
 -->
 
 ---
-layout: center
+layout: pantalla
 title: "Cierre"
-class: text-center
+acto: "Acto 5 · contexto"
 ---
 
 <p class="cierre">Recepción pasiva · canales abiertos · falla conocida.</p>
