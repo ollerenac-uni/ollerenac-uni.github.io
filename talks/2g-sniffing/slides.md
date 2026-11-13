@@ -189,11 +189,42 @@ lista las celdas activas (ARFCNs). La señalización decodificada sale como GSMT
 -->
 
 ---
-layout: pantalla
+layout: pantalla-anim
 title: "Canales de señalización abiertos"
-acto: "Acto 2 · setup"
-scene: C07
 ---
+
+<CanvasZonas>
+  <template #redes><RedesMoviles /></template>
+  <template #recepcion>
+    <div class="canales-stack">
+      <div class="canal-chip abierto" v-motion :initial="{ opacity: 0, x: -14 }" :enter="{ opacity: 1, x: 0, transition: { delay: 300, duration: 400 } }">
+        <carbon-unlocked class="canal-ic" />
+        <div class="canal-txt"><b>BCCH</b><span>System Information</span></div>
+        <span class="canal-tag">abierto</span>
+      </div>
+      <div class="canal-chip abierto imsi" v-motion :initial="{ opacity: 0, x: -14 }" :enter="{ opacity: 1, x: 0, transition: { delay: 700, duration: 400 } }">
+        <carbon-unlocked class="canal-ic" />
+        <div class="canal-txt"><b>CCCH · PCH</b><span>Paging</span></div>
+        <span class="canal-tag imsi-tag">IMSI aquí</span>
+      </div>
+      <div class="canal-chip abierto" v-motion :initial="{ opacity: 0, x: -14 }" :enter="{ opacity: 1, x: 0, transition: { delay: 1000, duration: 400 } }">
+        <carbon-unlocked class="canal-ic" />
+        <div class="canal-txt"><b>SDCCH</b><span>MM · location update</span></div>
+        <span class="canal-tag">abierto</span>
+      </div>
+      <div class="canal-sep" v-motion :initial="{ opacity: 0 }" :enter="{ opacity: 1, transition: { delay: 1300 } }"></div>
+      <div class="canal-chip cifrado" v-motion :initial="{ opacity: 0, x: -14 }" :enter="{ opacity: 1, x: 0, transition: { delay: 1500, duration: 400 } }">
+        <carbon-locked class="canal-ic" />
+        <div class="canal-txt"><b>TCH</b><span>Tráfico · voz / datos</span></div>
+        <span class="canal-tag cifr-tag">A5/x cifrable</span>
+      </div>
+    </div>
+  </template>
+</CanvasZonas>
+
+<div class="canales-cierre" v-motion :initial="{ opacity: 0, y: 8 }" :enter="{ opacity: 1, y: 0, transition: { delay: 1900, duration: 500 } }">
+  <p>La señalización de identidad temprana viaja <strong>sin cifrar</strong>. El tráfico puede cifrarse (A5/x), pero el <strong>IMSI ya salió</strong> por el paging.</p>
+</div>
 
 <!--
 BCCH/CCCH transportan los procedimientos de Mobility Management. El IMSI se expone
