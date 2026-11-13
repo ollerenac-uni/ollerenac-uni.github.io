@@ -176,16 +176,63 @@ title: "Demodulación"
   <template #redes><RedesMoviles /></template>
   <template #recepcion>
     <div class="recep-demod">
-      <img class="scan-term" src="./img/scan.png" alt="grgsm_scanner: ARFCNs detectados" v-motion :initial="{ opacity: 0, y: 14 }" :enter="{ opacity: 1, y: 0, transition: { delay: 700, duration: 600 } }" />
-      <div class="grgsm-badge" v-motion :initial="{ opacity: 0, y: -6 }" :enter="{ opacity: 1, y: 0, transition: { delay: 300, duration: 450 } }">gr-gsm · GNU Radio</div>
-      <img class="receptor-foto recep-foto-sm" src="./img/sdr-setup.webp" alt="USRP B210 + laptop" />
+      <div class="term-wrap" v-motion :initial="{ opacity: 0, y: 14 }" :enter="{ opacity: 1, y: 0, transition: { delay: 500, duration: 500 } }">
+        <img class="scan-term" src="./img/scan.png" alt="grgsm_scanner: ARFCNs detectados" />
+        <div class="row-selector" v-motion :initial="{ opacity: 0, scaleX: 0.6 }" :enter="{ opacity: 1, scaleX: 1, transition: { delay: 1500, duration: 450 } }"><span class="rs-tag">objetivo ▸ sniff</span></div>
+      </div>
+      <div class="rig-row">
+        <img class="receptor-foto recep-foto-xs" src="./img/sdr-setup.webp" alt="USRP B210 + laptop" />
+        <div class="rig-badge"><b>gr-gsm</b><span>GNU Radio</span></div>
+      </div>
     </div>
   </template>
 </CanvasZonas>
 
+<div class="arfcn-leyenda" v-motion :initial="{ opacity: 0, y: 8 }" :enter="{ opacity: 1, y: 0, transition: { delay: 1900, duration: 450 } }">
+  <div><b>ARFCN</b> canal RF (nº → frecuencia)</div>
+  <div><b>MCC</b> código de país</div>
+  <div><b>Freq</b> frecuencia downlink</div>
+  <div><b>MNC</b> código de operador</div>
+  <div><b>CID</b> identificador de celda</div>
+  <div><b>Pwr</b> potencia RX (dBm)</div>
+  <div><b>LAC</b> área de localización</div>
+  <div class="ley-sel"><b>▸</b> seleccionamos la celda más fuerte</div>
+</div>
+
 <!--
 En el PC, gr-gsm (GNU Radio) sintoniza la ARFCN y demodula GMSK; grgsm_scanner
-lista las celdas activas (ARFCNs). La señalización decodificada sale como GSMTAP.
+lista las celdas activas (ARFCNs). Cada fila es una estación base; elegimos la
+de mejor señal (ARFCN 181, -63 dBm) como objetivo. La señalización decodificada
+sale como GSMTAP.
+-->
+
+---
+layout: pantalla-anim
+title: "A la escucha de la celda"
+---
+
+<div class="live-slide">
+  <div class="live-panels">
+    <figure class="live-fig" v-motion :initial="{ opacity: 0, y: 14 }" :enter="{ opacity: 1, y: 0, transition: { delay: 400, duration: 500 } }">
+      <img src="./img/spectrum.webp" alt="Frequency sink: espectro GSM con la ARFCN objetivo resaltada" />
+      <figcaption><b>Frequency sink</b> · señal en vivo · ARFCN 181 resaltada</figcaption>
+    </figure>
+    <figure class="live-fig" v-motion :initial="{ opacity: 0, y: 14 }" :enter="{ opacity: 1, y: 0, transition: { delay: 1000, duration: 500 } }">
+      <img src="./img/tshark-capture.png" alt="tshark: señalización GSMTAP capturada en claro" />
+      <figcaption><b>tshark</b> · señalización GSMTAP en claro</figcaption>
+    </figure>
+  </div>
+  <div class="live-rig" v-motion :initial="{ opacity: 0 }" :enter="{ opacity: 1, transition: { delay: 1500, duration: 450 } }">
+    <img class="receptor-foto" src="./img/sdr-setup.webp" alt="USRP B210 + laptop" />
+    <div class="rig-badge"><b>gr-gsm</b><span>GNU Radio</span></div>
+    <p class="live-note">La misma celda, en dos vistas: la <strong>señal</strong> cruda y su <strong>señalización</strong> ya decodificada. El paging viaja sin cifrar — IMSI y TMSI visibles.</p>
+  </div>
+</div>
+
+<!--
+Sintonizada la ARFCN 181, el frequency sink muestra la señal de la celda y tshark
+decodifica la señalización GSMTAP (UDP 4729) en claro: System Information, paging
+por TMSI y por IMSI. La captura es pasiva; no se transmite nada.
 -->
 
 ---
@@ -235,29 +282,25 @@ aquí: los canales abiertos son el puente al Acto 3.
 -->
 
 ---
-layout: pantalla
-title: "Del canal a GSMTAP"
-acto: "Acto 3 · extracción"
-scene: C08
----
-
-<!--
-Los paquetes GSMTAP llegan a lo:4729. GSMEvil2 (pyshark) los sniffea y parsea la
-señalización GSM_A.CCCH.
--->
-
----
-layout: pantalla
+layout: pantalla-anim
 title: "IMSI en claro"
-acto: "Acto 3 · extracción"
-scene: C09
 ---
 
-<p class="cierre">Un identificador permanente, extraído sin transmitir nada.</p>
+<div class="imsi-claro">
+  <figure class="imsi-fig" v-motion :initial="{ opacity: 0, y: 14 }" :enter="{ opacity: 1, y: 0, transition: { delay: 400, duration: 500 } }">
+    <img src="./img/imsi-detail.png" alt="Disección del Paging Request: el campo IMSI en claro" />
+  </figure>
+  <div class="imsi-rig" v-motion :initial="{ opacity: 0 }" :enter="{ opacity: 1, transition: { delay: 1100, duration: 450 } }">
+    <img class="receptor-foto" src="./img/sdr-setup.webp" alt="USRP B210 + laptop" />
+    <div class="rig-badge"><b>GSMEvil2</b><span>sniffer</span></div>
+    <p class="imsi-cierre">Un identificador <strong>permanente</strong>, extraído del paging — sin transmitir nada. "Este teléfono estuvo al alcance de la antena."</p>
+  </div>
+</div>
 
 <!--
-El momento central: del paging/identity request sale el IMSI del abonado, en claro.
-"Este teléfono estuvo en el alcance de la antena."
+El momento central: GSMEvil2 parsea el Paging Request Type 1 y saca el IMSI del
+abonado en claro (310 260… · T-Mobile USA, un roamer). MSIN enmascarado por
+privacidad. Del paging al identificador permanente, sin transmitir nada.
 -->
 
 ---
