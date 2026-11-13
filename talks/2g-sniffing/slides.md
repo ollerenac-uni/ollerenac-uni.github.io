@@ -215,13 +215,13 @@ title: "A la escucha de la celda"
   <template #redes><RedesMoviles /></template>
   <template #recepcion>
     <div class="recep-live">
-      <figure class="live-fig" v-motion :initial="{ opacity: 0, y: 12 }" :enter="{ opacity: 1, y: 0, transition: { delay: 400, duration: 500 } }">
-        <img src="./img/spectrum.webp" alt="Frequency sink: espectro GSM con la ARFCN objetivo resaltada" />
-        <figcaption><b>frequency sink</b> · señal en vivo · ARFCN 181</figcaption>
+      <figure class="live-fig" v-motion :initial="{ opacity: 0, x: -12 }" :enter="{ opacity: 1, x: 0, transition: { delay: 400, duration: 500 } }">
+        <img src="./img/freqsink.png" alt="grgsm_livemon freq sink: espectro de la celda, ARFCN 181" />
+        <figcaption><b>grgsm_livemon</b> · freq sink</figcaption>
       </figure>
-      <figure class="live-fig" v-motion :initial="{ opacity: 0, y: 12 }" :enter="{ opacity: 1, y: 0, transition: { delay: 1000, duration: 500 } }">
-        <img src="./img/tshark-mini.png" alt="tshark: señalización GSMTAP capturada en claro" />
-        <figcaption><b>tshark</b> · señalización GSMTAP en claro</figcaption>
+      <figure class="live-fig" v-motion :initial="{ opacity: 0, x: 12 }" :enter="{ opacity: 1, x: 0, transition: { delay: 1000, duration: 500 } }">
+        <img src="./img/tshark-col.png" alt="tshark: paquetes GSMTAP fluyendo, paging en claro" />
+        <figcaption><b>tshark</b> · paquetes GSMTAP en claro</figcaption>
       </figure>
     </div>
   </template>
