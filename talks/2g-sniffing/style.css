@@ -802,3 +802,30 @@
 .exp-more { margin-top: 0.3rem; text-align: center; font-size: 0.72rem; line-height: 1.1; color: #78350f; }
 .escala-nota { text-align: center; margin: 0.7rem 0 0; font-size: 1rem; line-height: 1.3; color: #172641; }
 .escala-nota strong { color: #b91c1c; }
+
+/* ===== Slide "A la escucha": altura común y captions en una línea ===== */
+.recep-live { align-items: flex-start; }
+.recep-live .live-fig img { height: 12rem; width: auto; max-width: 100%; max-height: none; }
+.recep-live .live-fig figcaption { white-space: nowrap; }
+
+/* ===== Slide "De la señal a los datos": pipeline de procesamiento (2 filas) ===== */
+.proc-slide { display: flex; flex-direction: column; height: 100%; justify-content: center; gap: 0.9rem; padding: 0.3rem 0.5rem 0; }
+.proc-top { display: flex; align-items: center; justify-content: center; gap: 0.8rem; }
+.proc-fig { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 0.2rem; }
+.proc-fig img { height: 9rem; width: auto; max-width: 100%; border-radius: 7px; border: 1px solid #334155; box-shadow: 0 2px 10px rgba(15,23,42,.2); }
+.proc-fig figcaption { font-size: 0.72rem; color: #475569; white-space: nowrap; }
+.proc-fig figcaption b { color: #1e3a8a; font-family: ui-monospace, monospace; }
+.proc-arrow { font-size: 1.6rem; color: #94a3b8; font-weight: 700; }
+.proc-box { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; padding: 0.7rem 0.9rem; border: 1.5px dashed #3b5bdb; border-radius: 10px; background: #eff6ff; color: #1e3a8a; }
+.proc-ic { width: 2.4rem; height: 2.4rem; color: #3b5bdb; }
+.proc-lab { font-size: 0.82rem; font-weight: 800; }
+.proc-out { display: flex; gap: 0.4rem; }
+.proc-chip { font-size: 0.72rem; font-weight: 700; background: #1e3a8a; color: #fff; border-radius: 0.35rem; padding: 0.12rem 0.5rem; }
+.proc-bottom { display: flex; flex-direction: column; align-items: center; gap: 0.2rem; }
+.proc-rig { height: auto; max-height: 6rem; width: auto; }
+.proc-rig-lab { font-size: 0.74rem; color: #64748b; }
+
+/* ===== Slide "No es un abonado": encabezado cualitativo ===== */
+.exp-head { display:flex; flex-direction:column; align-items:center; color:#78350f; line-height:1.15; }
+.exp-head b { font-size:1.2rem; font-weight:800; color:#b45309; }
+.exp-head span { font-size:0.72rem; font-weight:700; }

@@ -215,13 +215,13 @@ title: "A la escucha de la celda"
   <template #redes><RedesMoviles /></template>
   <template #recepcion>
     <div class="recep-live">
-      <figure class="live-fig" v-motion :initial="{ opacity: 0, x: -12 }" :enter="{ opacity: 1, x: 0, transition: { delay: 400, duration: 500 } }">
+      <figure class="live-fig" v-motion :initial="{ opacity: 0, x: -12 }" :enter="{ opacity: 1, x: 0, transition: { delay: 300, duration: 500 } }">
         <img src="./img/freqsink-real.png" alt="grgsm_livemon freq sink: espectro de la celda, 879.8 MHz (ARFCN 181)" />
-        <figcaption><b>grgsm_livemon</b> · freq sink · 879.8 MHz</figcaption>
+        <figcaption><b>grgsm_livemon</b> · freq sink</figcaption>
       </figure>
-      <figure class="live-fig" v-motion :initial="{ opacity: 0, x: 12 }" :enter="{ opacity: 1, x: 0, transition: { delay: 1000, duration: 500 } }">
+      <figure class="live-fig" v-motion :initial="{ opacity: 0, x: 12 }" :enter="{ opacity: 1, x: 0, transition: { delay: 5300, duration: 500 } }">
         <img src="./img/wireshark-imsi.png" alt="Wireshark: Paging Request con el campo IMSI en claro (MSIN enmascarado)" />
-        <figcaption><b>Wireshark</b> · Paging Request · IMSI en claro</figcaption>
+        <figcaption><b>Wireshark</b> · IMSI en claro</figcaption>
       </figure>
     </div>
   </template>
@@ -286,24 +286,39 @@ aquí: los canales abiertos son el puente al Acto 3.
 
 ---
 layout: pantalla-anim
-title: "IMSI en claro"
+title: "De la señal a los datos"
 ---
 
-<div class="imsi-claro">
-  <figure class="imsi-fig" v-motion :initial="{ opacity: 0, y: 14 }" :enter="{ opacity: 1, y: 0, transition: { delay: 400, duration: 500 } }">
-    <img src="./img/imsi-detail.png" alt="Disección del Paging Request: el campo IMSI en claro" />
-  </figure>
-  <div class="imsi-rig" v-motion :initial="{ opacity: 0 }" :enter="{ opacity: 1, transition: { delay: 1100, duration: 450 } }">
-    <img class="receptor-foto" src="./img/sdr-setup.webp" alt="USRP B210 + laptop" />
-    <div class="rig-badge"><b>GSMEvil2</b><span>sniffer</span></div>
-    <p class="imsi-cierre">Un identificador <strong>permanente</strong>, extraído del paging — sin transmitir nada. "Este teléfono estuvo al alcance de la antena."</p>
+<div class="proc-slide">
+  <div class="proc-top">
+    <figure class="proc-fig" v-motion :initial="{ opacity: 0, y: 12 }" :enter="{ opacity: 1, y: 0, transition: { delay: 700, duration: 450 } }">
+      <img src="./img/freqsink-real.png" alt="frequency sink" />
+      <figcaption><b>frequency sink</b></figcaption>
+    </figure>
+    <figure class="proc-fig" v-motion :initial="{ opacity: 0, y: 12 }" :enter="{ opacity: 1, y: 0, transition: { delay: 1100, duration: 450 } }">
+      <img src="./img/wireshark-imsi.png" alt="Wireshark · Paging · IMSI" />
+      <figcaption><b>Wireshark</b> · IMSI</figcaption>
+    </figure>
+    <div class="proc-arrow" v-motion :initial="{ opacity: 0 }" :enter="{ opacity: 1, transition: { delay: 1500 } }">→</div>
+    <div class="proc-box" v-motion :initial="{ opacity: 0, scale: 0.8 }" :enter="{ opacity: 1, scale: 1, transition: { delay: 1600, type: 'spring' } }">
+      <carbon-flow class="proc-ic" />
+      <span class="proc-lab">procesamiento</span>
+      <div class="proc-out">
+        <span class="proc-chip">IMSI</span>
+        <span class="proc-chip">Analytics</span>
+      </div>
+    </div>
+  </div>
+  <div class="proc-bottom" v-motion :initial="{ opacity: 0, y: 10 }" :enter="{ opacity: 1, y: 0, transition: { delay: 200, duration: 450 } }">
+    <img class="proc-rig" src="./img/sdr-setup.webp" alt="USRP B210 + laptop" />
+    <span class="proc-rig-lab">SDR + PC · el origen de todo lo de arriba</span>
   </div>
 </div>
 
 <!--
-El momento central: GSMEvil2 parsea el Paging Request Type 1 y saca el IMSI del
-abonado en claro (310 260… · T-Mobile USA, un roamer). MSIN enmascarado por
-privacidad. Del paging al identificador permanente, sin transmitir nada.
+El arreglo SDR + PC (abajo) produce las dos vistas de arriba (freq sink y el
+paquete en Wireshark). De ahí, el procesamiento (GSMEvil2 + agregación) genera
+las páginas /imsi/ y /analytics/. Capturas reales; IMSI con MSIN enmascarado.
 -->
 
 ---
@@ -320,9 +335,7 @@ title: "No es un abonado"
     </div>
   </template>
   <template #exposicion>
-    <div class="exp-count" v-motion :initial="{ opacity: 0, scale: 0.6 }" :enter="{ opacity: 1, scale: 1, transition: { delay: 400, type: 'spring' } }">
-      <b>49</b><span>IMSIs únicas</span>
-    </div>
+    <div class="exp-head" v-motion :initial="{ opacity: 0, y: -6 }" :enter="{ opacity: 1, y: 0, transition: { delay: 400, duration: 400 } }"><b>IMSIs únicas</b><span>de varios países</span></div>
     <div class="exp-chips">
       <div class="exp-chip" v-motion :initial="{ opacity: 0, x: 14 }" :enter="{ opacity: 1, x: 0, transition: { delay: 900, duration: 350 } }">
         <span class="chip-id">310 260 ···</span><span class="chip-pais">USA</span>
@@ -343,44 +356,19 @@ title: "No es un abonado"
         <span class="chip-id">901 43 ···</span><span class="chip-pais">Internacional</span>
       </div>
     </div>
-    <div class="exp-more" v-motion :initial="{ opacity: 0 }" :enter="{ opacity: 1, transition: { delay: 1850, duration: 350 } }">+ 43 más …</div>
+    <div class="exp-more" v-motion :initial="{ opacity: 0 }" :enter="{ opacity: 1, transition: { delay: 1850, duration: 350 } }">+ muchas más …</div>
   </template>
 </CanvasZonas>
 
 <div class="escala-nota" v-motion :initial="{ opacity: 0, y: 8 }" :enter="{ opacity: 1, y: 0, transition: { delay: 2100, duration: 450 } }">
-  No es un teléfono: <strong>49 identidades únicas</strong> en minutos de escucha — <strong>27 roamers</strong> de 6 países.
+  No es un teléfono: <strong>decenas de identidades únicas</strong> en minutos de escucha — muchas, <strong>roamers</strong> de varios países.
 </div>
 
 <!--
-Datos reales de captura pasiva: 49 IMSIs únicas, 27 roamers extranjeros
-(MCC ≠ 716 Perú). Países observados: Perú, España, USA, Chile, Liechtenstein
-e "internacional" (MCC 901). MSIN enmascarado por privacidad en este deck público.
--->
-
----
-layout: pantalla
-title: "Roamers por MCC"
-acto: "Acto 4 · escala"
-scene: C11
----
-
-<p class="paises">USA · España · Liechtenstein · Chile · Argentina · …</p>
-
-<!--
-El MCC/MNC del IMSI es la red de origen del abonado. Un MCC != 716 (Perú) = roamer.
-Datos reales de la captura: decenas de roamers de distintos países.
--->
-
----
-layout: pantalla
-title: "Presencia en el tiempo"
-acto: "Acto 4 · escala"
-scene: C12
----
-
-<!--
-La misma IMSI reaparece: primera y última vez vista. Eso es rastreo de presencia de
-un individuo, no solo su nacionalidad.
+Las cifras varían según el lugar y la hora de la captura pasiva. El patrón:
+muchas IMSIs únicas y varios roamers por MCC ≠ 716 (Perú). Países observados:
+Perú, España, USA, Chile, Liechtenstein e "internacional" (MCC 901).
+MSIN enmascarado por privacidad en este deck público.
 -->
 
 ---
@@ -398,19 +386,6 @@ acto: "Acto 4 · escala"
 GSMEvil2 + panel propio: /imsi/ (tabla en vivo), /analytics/ (combos MCC/MNC,
 roamers marcados, presencia) y /search/ (¿está tu IMSI entre las capturadas?).
 Demo real corriendo en Docker con el B210.
--->
-
----
-layout: pantalla
-title: "Falla conocida y reportada"
-acto: "Acto 5 · contexto"
-scene: C14
----
-
-<!--
-La cadena completa. Nada de esto es nuevo: ausencia de autenticación mutua, A5/1
-roto hace años, IMSI catchers documentados. Falla de diseño de 2G, reportada hace
-décadas. El punto: 2G sigue en servicio en muchas redes.
 -->
 
 ---
