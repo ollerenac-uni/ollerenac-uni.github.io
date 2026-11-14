@@ -6,7 +6,7 @@ import Banner from '../components/Banner.vue'
 
 <template>
 	<div class="slidev-layout pantalla pantalla-anim">
-		<Banner marca />
+		<Banner />
 		<header><h1>{{ $frontmatter.title }}</h1></header>
 		<div class="lienzo"><slot /></div>
 	</div>

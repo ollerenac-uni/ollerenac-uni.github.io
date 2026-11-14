@@ -22,7 +22,7 @@ layout: portada
 
 <p class="desc">Consultor Ciberseguridad · Telecomunicaciones · IA aplicada</p>
 
-<img class="logo-yachaq" src="./img/yachaqlabs.svg" alt="YachaqLabs" />
+<div class="portada-espacio" aria-hidden="true"></div>
 
 <!--
 Recepción PASIVA. No se transmite, no se accede a la red, no se descifra tráfico.

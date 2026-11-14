@@ -7,7 +7,7 @@ import Banner from '../components/Banner.vue'
 
 <template>
 	<div class="slidev-layout pantalla" :class="{ 'sin-mapa': !$frontmatter.scene && !$frontmatter.mini && !$frontmatter.respaldo }">
-		<Banner marca />
+		<Banner />
 		<header>
 			<h1>{{ $frontmatter.title }}</h1>
 		</header>

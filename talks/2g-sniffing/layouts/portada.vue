@@ -1,5 +1,5 @@
 <script setup>
-// Portada (solo slide 1): banner, título/autor/descripción/logo y, al fondo,
+// Portada (solo slide 1): banner, título/autor/descripción y, al fondo,
 // una franja con el espectro GSM (retrogram) y un barrido animado "en vivo".
 import Banner from '../components/Banner.vue'
 import spectrum from '../img/spectrum.webp'
