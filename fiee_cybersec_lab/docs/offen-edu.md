@@ -15,3 +15,21 @@ El profesor Oscar Llerena generará tus credenciales y te las enviará por corre
 ## Cómo ingresar al laboratorio
 
 Cuando recibas tus credenciales, coordina con el profesor el día y el horario en que quieres ingresar. Después, completa el [formulario de acceso al laboratorio](index.md#solicitud-de-acceso) para solicitar la reserva o registrar tu ingreso.
+
+## Cómo configurar la IP estática en Windows 11 { #ip-estatica-windows-11 }
+
+Antes de abrir OFFEN EDU, busca la etiqueta en el escritorio de tu terminal. Allí está escrita la dirección IPv4 que debes usar en ese equipo.
+
+1. Presiona **Windows + I** para abrir **Configuración**.
+2. Entra en **Red e Internet → Ethernet** y selecciona la conexión del laboratorio si Windows muestra más de una.
+3. Junto a **Asignación de IP**, pulsa **Editar**. Selecciona **Manual** y activa **IPv4**.
+4. Configura los campos de IPv4.
+
+    - En **Dirección IP**, escribe la dirección impresa en la etiqueta de tu escritorio.
+    - En **Máscara de subred**, escribe `255.255.255.0`. Si Windows muestra **Longitud del prefijo de subred**, escribe `24`.
+    - Deja vacío el campo **Puerta de enlace**.
+
+5. Pulsa **Guardar**.
+6. Abre **Símbolo del sistema** y ejecuta `ipconfig`. En el adaptador Ethernet, verifica que la IPv4 coincida con la etiqueta, que la máscara sea `255.255.255.0` y que no aparezca una puerta de enlace IPv4. Luego abre OFFEN EDU e inicia sesión con tus credenciales.
+
+[Configuración de red en Windows — Microsoft](https://support.microsoft.com/es-es/windows/experience/connectivity-networking/essential-network-settings-and-tasks-in-windows)
