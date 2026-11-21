@@ -17,6 +17,15 @@ Un espacio para aprender, investigar y colaborar en la protección de redes, sis
 
 </header>
 
+<details class="lab-qr" markdown="1">
+<summary>Código QR del laboratorio</summary>
+
+![Código QR de la portada del Laboratorio de Ciberseguridad FIEE](assets/qr-laboratorio.png){ width=246 height=246 loading=lazy }
+
+[Enlace público del laboratorio](https://ollerenac-uni.github.io/fiee_cybersec_lab/)
+
+</details>
+
 ## Sobre el laboratorio { #sobre-el-laboratorio }
 
 El Laboratorio de Ciberseguridad de la FIEE busca conectar la formación en ingeniería con los desafíos de proteger la infraestructura digital. Está dirigido a estudiantes, docentes y personas interesadas en la ciberseguridad aplicada.

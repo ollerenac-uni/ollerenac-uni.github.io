@@ -55,6 +55,36 @@
   outline-offset: 4px;
 }
 
+.md-typeset .lab-qr {
+  max-width: 15rem;
+  font-size: 0.8rem;
+  border-color: var(--md-primary-fg-color);
+}
+
+.md-typeset .lab-qr > summary {
+  padding-block: 0.55rem;
+  padding-inline-start: 0.8rem;
+  color: var(--md-primary-fg-color);
+  background-color: var(--md-admonition-bg-color);
+}
+
+.md-typeset .lab-qr > summary::before {
+  display: none;
+}
+
+.md-typeset .lab-qr > summary:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: -4px;
+}
+
+.md-typeset .lab-qr p {
+  text-align: center;
+}
+
+.md-typeset .lab-qr img {
+  height: auto;
+}
+
 .md-typeset #sobre-el-laboratorio + p,
 .md-typeset #solicitud-de-acceso + p {
   max-width: 72ch;
