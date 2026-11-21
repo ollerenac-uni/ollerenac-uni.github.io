@@ -3,3 +3,4 @@
 
 export const SITE_TITLE = 'cybersecnews';
 export const SITE_DESCRIPTION = 'Serie de seguridad informática: posts y charlas sobre incidentes reales.';
+export const FIEE_LAB_PATH = '/fiee_cybersec_lab/';

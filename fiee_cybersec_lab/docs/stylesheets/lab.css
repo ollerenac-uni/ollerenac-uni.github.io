@@ -1,0 +1,88 @@
+[data-md-color-primary="custom"] {
+  --md-primary-fg-color: #990000;
+  --md-primary-fg-color--light: #a53030;
+  --md-primary-fg-color--dark: #680b17;
+  --md-primary-bg-color: #fff;
+  --md-typeset-a-color: #990000;
+}
+
+[data-md-color-accent="custom"] {
+  --md-accent-fg-color: #680b17;
+}
+
+.md-typeset .lab-hero {
+  padding: clamp(1.4rem, 5vw, 4rem);
+  margin-bottom: 2.5rem;
+  color: #fff;
+  background-color: var(--md-primary-fg-color);
+}
+
+.md-typeset .lab-affiliation {
+  margin-top: 0;
+  font-weight: 600;
+}
+
+.md-typeset .lab-hero h1 {
+  max-width: 15ch;
+  margin: 0.3em 0;
+  color: inherit;
+  font-family: Georgia, serif;
+  font-size: clamp(1.6rem, 5.8vw, 4.2rem);
+  line-height: 1.03;
+  overflow-wrap: anywhere;
+}
+
+.md-typeset .lab-intro {
+  max-width: 49ch;
+  font-size: 1rem;
+}
+
+.md-typeset .lab-hero .md-button {
+  margin-top: 0.35rem;
+  color: inherit;
+  border-color: currentColor;
+}
+
+.md-typeset .lab-hero .md-button:hover,
+.md-typeset .lab-hero .md-button:focus-visible {
+  color: var(--md-primary-fg-color--dark);
+  background-color: #fff;
+  border-color: #fff;
+}
+
+.md-typeset .lab-hero .md-button:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
+}
+
+.md-typeset #sobre-el-laboratorio + p,
+.md-typeset #solicitud-de-acceso + p {
+  max-width: 72ch;
+}
+
+.md-typeset .lab-areas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  gap: 1.25rem 2rem;
+  margin-top: 1.5rem;
+}
+
+.md-typeset .lab-areas section {
+  border-top: 2px solid var(--md-primary-fg-color);
+}
+
+.md-typeset .lab-areas h3 {
+  margin-top: 0.7rem;
+  font-weight: 650;
+}
+
+@media (max-width: 37.5em) {
+  .md-header__topic:first-child .md-ellipsis {
+    white-space: normal;
+    line-height: 1.25;
+  }
+
+  .md-typeset .lab-hero .md-button {
+    padding-inline: 1.25em;
+  }
+}

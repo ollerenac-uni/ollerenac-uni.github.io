@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import logo from '../assets/inictel_peru_logo.jpeg';
-import { SITE_TITLE } from '../consts';
+import { FIEE_LAB_PATH, SITE_TITLE } from '../consts';
 import HeaderLink from './HeaderLink.astro';
 ---
 
@@ -17,6 +17,7 @@ import HeaderLink from './HeaderLink.astro';
 			<HeaderLink href="/">Inicio</HeaderLink>
 			<HeaderLink href="/posts/">Posts</HeaderLink>
 			<HeaderLink href="/talks/">Charlas</HeaderLink>
+			<HeaderLink href={FIEE_LAB_PATH}>FIEE-Cybersec-Lab</HeaderLink>
 		</div>
 	</nav>
 </header>
@@ -38,8 +39,14 @@ import HeaderLink from './HeaderLink.astro';
 	}
 	nav {
 		display: flex;
+		flex-wrap: wrap;
 		align-items: center;
 		justify-content: space-between;
+		column-gap: 0.75em;
+	}
+	.internal-links {
+		display: flex;
+		flex-wrap: wrap;
 	}
 	nav a {
 		padding: 1em 0.5em;
@@ -50,5 +57,14 @@ import HeaderLink from './HeaderLink.astro';
 	nav a.active {
 		text-decoration: none;
 		border-bottom-color: var(--accent);
+	}
+	@media (max-width: 36em) {
+		.internal-links {
+			column-gap: 0.375em;
+		}
+		.internal-links a {
+			padding: 0.5em 0;
+			font-size: 0.85em;
+		}
 	}
 </style>

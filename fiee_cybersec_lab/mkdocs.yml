@@ -1,0 +1,33 @@
+site_name: Laboratorio de Ciberseguridad FIEE
+site_description: Espacio académico de la FIEE–UNI para la formación y la investigación en ciberseguridad, en Lima, Perú.
+site_url: https://ollerenac-uni.github.io/fiee_cybersec_lab/
+site_dir: ../dist/fiee_cybersec_lab
+
+theme:
+  name: material
+  language: es
+  font: false
+  features:
+    - navigation.tabs
+  palette:
+    scheme: default
+    primary: custom
+    accent: custom
+  icon:
+    logo: material/shield-outline
+
+nav:
+  - Laboratorio: index.md
+  - OFFEN EDU - CTFs: offen-edu.md
+  - Líneas de Investigación: lineas-de-investigacion.md
+  - Publicaciones: publicaciones.md
+  - Servicios: servicios.md
+
+plugins: []
+
+markdown_extensions:
+  - attr_list
+  - md_in_html
+
+extra_css:
+  - stylesheets/lab.css
