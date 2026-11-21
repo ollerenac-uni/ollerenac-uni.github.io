@@ -30,6 +30,7 @@ Antes de abrir OFFEN EDU, busca la etiqueta en el escritorio de tu terminal. All
     - Deja vacío el campo **Puerta de enlace**.
 
 5. Pulsa **Guardar**.
-6. Abre **Símbolo del sistema** y ejecuta `ipconfig`. En el adaptador Ethernet, verifica que la IPv4 coincida con la etiqueta, que la máscara sea `255.255.255.0` y que no aparezca una puerta de enlace IPv4. Luego abre OFFEN EDU e inicia sesión con tus credenciales.
+6. Abre **Símbolo del sistema** y ejecuta `ipconfig`. En el adaptador Ethernet, verifica que la IPv4 coincida con la etiqueta, que la máscara sea `255.255.255.0` y que no aparezca una puerta de enlace IPv4.
+7. Desde la red del laboratorio, abre [https://192.168.22.147](https://192.168.22.147) en el navegador. En la pantalla de inicio de sesión de OFFEN EDU, introduce las credenciales que te envió el profesor.
 
 [Configuración de red en Windows — Microsoft](https://support.microsoft.com/es-es/windows/experience/connectivity-networking/essential-network-settings-and-tasks-in-windows)
