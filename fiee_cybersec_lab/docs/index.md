@@ -44,3 +44,17 @@ Completa el formulario para solicitar una reserva en la sala **Q2-103** o **Q2-1
 Si vas a usar OFFEN EDU, [solicita primero tus credenciales](offen-edu.md#como-obtener-credenciales).
 
 [Descargar formulario de acceso (Word)](formularios/Template_Solicitud_Acceso_Laboratorio_Ciberseguridad.docx){ .md-button .md-button--primary download }
+
+<!-- Galería pendiente. Añadir las dos fotos, ajustar sus rutas y textos alternativos, y quitar este comentario para mostrarla.
+
+## Fotos del laboratorio
+
+<div class="grid" markdown="1">
+
+![Descripción de la primera foto](assets/fotos/laboratorio-01.jpg){ loading=lazy }
+
+![Descripción de la segunda foto](assets/fotos/laboratorio-02.jpg){ loading=lazy }
+
+</div>
+
+-->
