@@ -13,6 +13,10 @@ Facultad de Ingeniería Eléctrica y Electrónica · UNI
 Un espacio para aprender, investigar y colaborar en la protección de redes, sistemas y servicios digitales.
 { .lab-intro }
 
+Horario de uso de los laboratorios
+**Lunes a viernes, de 9:00 a. m. a 4:30 p. m.**
+{ .lab-hours }
+
 [Conoce el laboratorio](#sobre-el-laboratorio){ .md-button }
 
 </header>

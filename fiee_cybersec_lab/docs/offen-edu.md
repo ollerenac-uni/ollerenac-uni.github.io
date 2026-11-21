@@ -14,6 +14,8 @@ El profesor Oscar Llerena generará tus credenciales y te las enviará por corre
 
 ## Cómo ingresar al laboratorio
 
+**Los laboratorios se pueden usar de lunes a viernes, de 9:00 a. m. a 4:30 p. m.**
+
 Cuando recibas tus credenciales, coordina con el profesor el día y el horario en que quieres ingresar. Después, completa el [formulario de acceso al laboratorio](index.md#solicitud-de-acceso) para solicitar la reserva o registrar tu ingreso.
 
 ## Cómo configurar la IP estática en Windows 11 { #ip-estatica-windows-11 }
